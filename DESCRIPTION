@@ -1,0 +1,29 @@
+Package: TMEM
+Type: Package
+Title: TMEM
+Version: 1.0.0
+Author: c(person("Erik", "Larsen", email = "eriklarsen@arizona.edu", role = c("cre", "aut"), ORCID = '0000-0002-5878-1538'))
+Maintainer: Erik Larsen <eriklarsen@arizona.edu>
+Description: Data wrangling and downstream bioinformatics analysis of NGS data (gene or protein lists).
+    Gathers and organizes gene symbol aliases, orthologs, and species of the five model biological organisms for a given list of interest.
+    Facilitates the organization of gene ontology information for analysis and annotation.
+    Will eventually include additional packages and functions.
+    Used in the analysis of multiple papers, each with their own repositories.
+    Example data used from eriklarsen/Itch repository.
+URL: https://github.com/eriklarsen4/TMEM
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports:
+    dplyr,
+    tidyr,
+    purrr,
+    stringr,
+    orthogene,
+    GO.db,
+    org.Hs.eg.db,
+    org.Mm.eg.db,
+    org.Dm.eg.db,
+    AnnotationDbi,
+    stats
+RoxygenNote: 7.3.1
