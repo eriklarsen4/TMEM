@@ -4,26 +4,28 @@
 \alias{Find_GOs_of_Gene_X_fn}
 \title{Find_GOs_of_Gene_X_fn}
 \usage{
-Find_GOs_of_Gene_X_fn(GeneID, GENE_GO_INFO_DF)
+Find_GOs_of_Gene_X_fn(GeneID, GENE_GO_INFO_DF, UniqueGOs)
 }
 \arguments{
 \item{GeneID}{a string of one gene symbol}
 
-\item{GENE_GO_INFO_DF}{a dataframe returned by the \strong{`GO_INFO_fn()`} as \strong{`GENE_GO_INFO_df`}}
+\item{GENE_GO_INFO_DF}{a dataframe returned by the \strong{`GO_INFO_fn`} as \strong{`GENE_GO_INFO_df`}}
+
+\item{UniqueGOs}{a character vector returned by the \strong{`GO_INFO_fn`} as \strong{`Unique_GOs`} inside \strong{`GO_INFO_list`}}
 }
 \value{
 prints the list of GO Terms associated with the provided gene symbol to the console
 }
 \description{
-\strong{`Find_GOs_of_Gene_X_fn()`} is a function that extracts all the GO Terms
+\strong{`Find_GOs_of_Gene_X_fn`} is a function that extracts all the GO Terms
 associated with a given gene symbol
 }
 \details{
-This function requires having executed the \strong{`GO_INFO_fn()`} and the input string
-must be in the same format as provided to the \strong{`GO_INFO_fn()`}.
+This function requires having executed the \strong{`GO_INFO_fn`} and the input string
+must be in the same format as provided to the \strong{`GO_INFO_fn`}.
 An alternative to this function is:
 
- + \code{`GENE_GO_INFO_df` |>
+ + \code{`GO_INFO_list`$`GENE_GO_INFO_df` |>
            dplyr::filter(GeneID == 'my gene') |>
            dplyr::distinct(GO_Term_IDs) |>
            unlist() |>
@@ -33,7 +35,8 @@ An alternative to this function is:
 \dontrun{
 Find_GOs_of_Gene_X_fn(
     GeneID = 'MTOR',
-    GENE_GO_INFO_DF = GENE_GO_INFO_df
+    GENE_GO_INFO_DF = GENE_GO_INFO_df,
+    UniqueGOs = Unique_GOs
     )}
 
 }

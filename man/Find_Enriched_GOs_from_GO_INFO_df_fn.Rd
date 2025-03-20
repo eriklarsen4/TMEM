@@ -4,29 +4,32 @@
 \alias{Find_Enriched_GOs_from_GO_INFO_df_fn}
 \title{Find_Enriched_GOs_from_GO_INFO_df_fn}
 \usage{
-Find_Enriched_GOs_from_GO_INFO_df_fn(Gene_Indeces, GENE_GO_INFO_DF)
+Find_Enriched_GOs_from_GO_INFO_df_fn(Gene_Indeces, GENE_GO_INFO_DF, UniqueGOs)
 }
 \arguments{
 \item{Gene_Indeces}{an integer vector ranging, whose length can be, at most,
-the length of the character vector passed to \strong{`GO_INFO_fn()`}}
+the length of the character vector passed to \strong{`GO_INFO_fn`}}
 
-\item{GENE_GO_INFO_DF}{a dataframe returned by the \strong{`GO_INFO_fn()`}}
+\item{GENE_GO_INFO_DF}{a dataframe returned by the \strong{`GO_INFO_fn`} as \strong{`GENE_GO_INFO_df`} inside \strong{`GO_INFO_list`}}
+
+\item{UniqueGOs}{a character vector returned by the \strong{`GO_INFO_fn`} as \strong{`Unique_GOs`} inside \strong{`GO_INFO_list`}}
 }
 \description{
-\strong{`Find_Enriched_GOs_from_GO_INFO_df_fn()`} is a function that finds how many
+\strong{`Find_Enriched_GOs_from_GO_INFO_df_fn`} is a function that finds how many
 times each GO Term is identified as being associated with any/all genes from
-the character vector of gene symbols passed into \strong{`GO_INFO_fn()`}
+the character vector of gene symbols passed into \strong{`GO_INFO_fn`}
 }
 \details{
-This function requires having executed the \strong{`GO_INFO_fn()`}.
+This function requires having executed the \strong{`GO_INFO_fn`}.
 This helps determine how frequently a GO Term is identified as being associated with
-all gene symbols from the character vector passed to \strong{`GO_INFO_fn()`}
+all gene symbols from the character vector passed to \strong{`GO_INFO_fn`}
 }
 \examples{
 \dontrun{
 Find_Enriched_GOs_from_GO_INFO_df_fn(
     Gene_Indeces = c(1:length(my_character_vec)),
-    GENE_GO_INFO_DF = GENE_GO_INFO_df)
+    GENE_GO_INFO_DF = GENE_GO_INFO_df,
+    UniqueGOs = Unique_GOs)
 }
 
 }

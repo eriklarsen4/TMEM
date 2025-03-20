@@ -21,7 +21,7 @@ ortholog_and_alias_fn(ref_species, list_of_interest)
  + target species' orthologous gene Ensembl IDs
 }
 \description{
-\strong{`ortholog_and_alias_fn()`} is a function that finds all the aliases and
+\strong{`ortholog_and_alias_fn`} is a function that finds all the aliases and
 orthologs of the other four main model organsims from a character vector of
 gene symbols of another
 }

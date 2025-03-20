@@ -16,6 +16,7 @@ Query_GO_fn(model_org, GO_db, string_terms)
 \item{string_terms}{any GO Term string}
 }
 \value{
+\strong{`Query_GO_list`}: a list containing the following objects:
 \strong{`GO.Terms`}: a character vector of all the GO Terms associated with the organism and string of interest
 \strong{`GO.IDs`}: a character vector of all the GO IDs of the GO Terms associated with the organism and string of interest
 \strong{`all_unique_genes`}: a character vector of all the gene symbols associated with provided string
@@ -24,7 +25,7 @@ Query_GO_fn(model_org, GO_db, string_terms)
 \strong{`aliases`}: a character vector of the gene symbol aliases associated with the provided GO string
 }
 \description{
-\strong{`Query_GO_fn()`} is a function that queries the GO.db with a string
+\strong{`Query_GO_fn`} is a function that queries the GO.db with a string
 term of interest for a given model organism
 }
 \details{

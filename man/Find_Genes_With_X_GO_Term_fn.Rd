@@ -9,21 +9,21 @@ Find_Genes_With_X_GO_Term_fn(GO_Term, GENE_GO_INFO_DF)
 \arguments{
 \item{GO_Term}{a character string of a GO Term}
 
-\item{GENE_GO_INFO_DF}{a dataframe returned by the \strong{`GO_INFO_fn()`} as \strong{`GENE_GO_INFO_df`}}
+\item{GENE_GO_INFO_DF}{a dataframe returned by the \strong{`GO_INFO_fn`} as \strong{`GENE_GO_INFO_df`}}
 }
 \value{
 prints the gene symbols associated with the provided GO Term to the console
 }
 \description{
-\strong{`Find_Genes_With_X_GO_Term_fn()`} is a function that finds all the gene
+\strong{`Find_Genes_With_X_GO_Term_fn`} is a function that finds all the gene
 symbols associated with a provided GO Term
 }
 \details{
-This function requires having executed the \strong{`GO_INFO_fn()`} and the input string
+This function requires having executed the \strong{`GO_INFO_fn`} and the input string
 must exactly match a string in the \strong{`GENE_GO_INFO_df$GO_Term`}.
 An alternative to this function is:
 
-   + \code{`GENE_GO_INFO_df` |>
+   + \code{`GO_INFO_list`$`GENE_GO_INFO_df` |>
              dplyr::filter(GO_Term == 'my term') |>
              dplyr::distinct(GeneID) |>
              unlist() |>

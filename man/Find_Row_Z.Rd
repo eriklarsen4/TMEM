@@ -11,7 +11,7 @@ Find_Row_Z(Expression_Profile)
 remaining columns comprising samples (iterations) of expression values}
 }
 \value{
-\strong{`Z`}: a dataframe with Z-scored expression values
+\strong{`GeneZ`}: a dataframe with Z-scored expression values
 }
 \description{
 \strong{`Find_Row_Z`} is a function that determines Z-scores of an expression matrix

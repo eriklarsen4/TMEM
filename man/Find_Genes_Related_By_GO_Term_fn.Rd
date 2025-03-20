@@ -11,16 +11,16 @@ Find_Genes_Related_By_GO_Term_fn(GO_Term1, GO_Term2, GENE_GO_INFO_DF)
 
 \item{GO_Term2}{a string comprising another GO Term}
 
-\item{GENE_GO_INFO_DF}{a dataframe; returned by the \strong{`GO_INFO_fn()`} as \strong{`GENE_GO_INFO_df`}}
+\item{GENE_GO_INFO_DF}{a dataframe; returned by the \strong{`GO_INFO_fn`} as \strong{`GENE_GO_INFO_df`}}
 }
 \value{
 prints the list of overlapping gene symbols to the console
 }
 \description{
-\strong{`Find_Genes_Related_By_GO_Term_fn()`} is a function that extracts the gene symbols that are all associated with two GO terms
+\strong{`Find_Genes_Related_By_GO_Term_fn`} is a function that extracts the gene symbols that are all associated with two GO terms
 }
 \details{
-This function requires having executed the \strong{`GO_INFO_fn()`}.
+This function requires having executed the \strong{`GO_INFO_fn`}.
 Parameters need the terms of interest to be directly extracted from
 \strong{`GO_INFO_by_TERM_df`}
 }

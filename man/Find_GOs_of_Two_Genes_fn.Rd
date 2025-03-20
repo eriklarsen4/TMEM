@@ -4,25 +4,27 @@
 \alias{Find_GOs_of_Two_Genes_fn}
 \title{Find_GOs_of_Two_Genes_fn}
 \usage{
-Find_GOs_of_Two_Genes_fn(GeneID1, GeneID2, GENE_GO_INFO_DF)
+Find_GOs_of_Two_Genes_fn(GeneID1, GeneID2, GENE_GO_INFO_DF, UniqueGOs)
 }
 \arguments{
 \item{GeneID1}{a string of one gene symbol}
 
 \item{GeneID2}{a string of another gene symbol}
 
-\item{GENE_GO_INFO_DF}{a dataframe returned by the \strong{`GO_INFO_fn()`}}
+\item{GENE_GO_INFO_DF}{a dataframe returned by the \strong{`GO_INFO_fn`} as \strong{`GENE_GO_INFO_df` in the `GO_INFO_list`}}
+
+\item{UniqueGOs}{a character vector of GO Terms returned by the \strong{`GO_INFO_fn`}}
 }
 \value{
 prints the list of overlapping GO Terms to the console
 }
 \description{
-\strong{`Find_GOs_of_Two_Genes_fn()`} is a function that finds all the GO Terms
+\strong{`Find_GOs_of_Two_Genes_fn`} is a function that finds all the GO Terms
 that share an association with two genes
 }
 \details{
-This function requires having executed the \strong{`GO_INFO_fn()`}.
-Parameters need to be in the same format as provided to \strong{`GO_INFO_fn()`}.
+This function requires having executed the \strong{`GO_INFO_fn`}.
+Parameters need to be in the same format as provided to \strong{`GO_INFO_fn`}.
 Alternatively, can be extracted from \strong{`GENE_GO_INFO_df$GeneID`}
 }
 \examples{
@@ -30,7 +32,8 @@ Alternatively, can be extracted from \strong{`GENE_GO_INFO_df$GeneID`}
 Find_GOs_of_Two_Genes_fn(
    GeneID1 = my_character_vec[1],
    GeneID2 = my_character_vec[2],
-   GENE_GO_INFO_DF = GENE_GO_INFO_df
+   GENE_GO_INFO_DF = GENE_GO_INFO_df,
+   UniqueGOs = Unique_GOs
    )
    }
 
