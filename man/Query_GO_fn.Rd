@@ -7,9 +7,9 @@
 Query_GO_fn(model_org, GO_db, string_terms)
 }
 \arguments{
-\item{model_org}{a string comprising one of:
-+ 'human', 'HS', 'homo sapiens', 'mouse', 'MM', 'mus musculus', 'drosophila',
-'DM', 'fly'}
+\item{model_org}{a string comprising one of: (for human)
+'human', 'HS', 'homo sapiens', (for mouse) 'mouse', 'MM', 'mus musculus',
+(for fly) drosophila', DM', 'fly'}
 
 \item{GO_db}{GO.db}
 
@@ -40,7 +40,7 @@ For example, parsing which genes are associated with multiple MTOR terms (comple
 Query_GO_fn(
            model_org = 'human',
            GO_db = GO.db,
-           string_terms = 'MTOR|mTORC1|mTORC2|mTORC1 signaling|mTORC complex'
+           string_terms = 'dense core vesicle'
            )
            }
 

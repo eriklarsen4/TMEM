@@ -470,6 +470,7 @@ ortholog_and_alias_fn <- function(ref_species, list_of_interest) {
 #' @export
 Query_GO_fn <- function(model_org, GO_db, string_terms) {
 
+  # GO_db<- eval(parse(text = GO.db::GO.db))
   abbrev_species_name <- vector()
 
   if (grepl(model_org, pattern = 'human|HS|homo sapiens', ignore.case = T)) {
@@ -487,33 +488,33 @@ Query_GO_fn <- function(model_org, GO_db, string_terms) {
   }
 
   ## first check that there are GO Terms associated with a provided string
-  keys_var <- c(AnnotationDbi::keys(GO.db, keytype = 'TERM')[
+  keys_var <- c(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM')[
     which(
-      grepl(AnnotationDbi::keys(GO.db, keytype = 'TERM'), pattern = string_terms) == TRUE
+      grepl(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM'), pattern = string_terms) == TRUE
     )
   ])
 
   if (length(keys_var) > 0 ) {
 
-    GO.Terms = c(AnnotationDbi::keys(GO.db, keytype = 'TERM')[
+    GO.Terms = c(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM')[
       which(
-        grepl(AnnotationDbi::keys(GO.db, keytype = 'TERM'), pattern = string_terms) == TRUE
+        grepl(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM'), pattern = string_terms) == TRUE
       )
     ])
 
-    GO.IDs = c(AnnotationDbi::keys(GO.db, keytype = 'GOID')[
+    GO.IDs = c(AnnotationDbi::keys(GO.db::GO.db, keytype = 'GOID')[
       which(
-        grepl(AnnotationDbi::keys(GO.db, keytype = 'TERM'), pattern = string_terms) == TRUE
+        grepl(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM'), pattern = string_terms) == TRUE
       )
     ])
 
     GO.list = c(AnnotationDbi::mapIds(abbrev_species_name,
                        keys = c(as.character(
-                         AnnotationDbi::mapIds(GO.db,
+                         AnnotationDbi::mapIds(GO.db::GO.db,
                                 keys = c(
-                                  AnnotationDbi::keys(GO.db, keytype = 'TERM')[
+                                  AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM')[
                                     which(
-                                      grepl(AnnotationDbi::keys(GO.db, keytype = 'TERM'), pattern = string_terms) == TRUE
+                                      grepl(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM'), pattern = string_terms) == TRUE
                                     )
                                   ]
                                 ),
@@ -558,9 +559,9 @@ Query_GO_fn <- function(model_org, GO_db, string_terms) {
           unlist(
             AnnotationDbi::mapIds(abbrev_species_name,
                    keys = c(as.character(
-                     AnnotationDbi::mapIds(GO.db,
-                            keys = c(AnnotationDbi::keys(GO.db, keytype = 'TERM')[
-                              which(grepl(AnnotationDbi::keys(GO.db, keytype = 'TERM'), pattern = string_terms) == TRUE)
+                     AnnotationDbi::mapIds(GO.db::GO.db,
+                            keys = c(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM'))[
+                              which(grepl(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM'), pattern = string_terms) == TRUE)
                             ],
                             keytype = 'TERM',
                             column = 'GOID',
@@ -571,7 +572,6 @@ Query_GO_fn <- function(model_org, GO_db, string_terms) {
             )
           )
         )
-      )
     aliases = unique(
       as.character(
         unlist(
@@ -583,12 +583,12 @@ Query_GO_fn <- function(model_org, GO_db, string_terms) {
         )
       )
     )
-    print(head(all_unique_genes))
-    print(c("GO Terms = 'GO.Terms' in Global Env.",
-            "List of genes in all GO Terms = 'all_unique_genes' in Global Env.",
-            "Dataframe housing all info = 'GO_df' in Global Env.",
-            "List of list housing raw search results = 'GO.list' in Global Env.",
-            "aliases = 'aliases' in Global Env."))
+    # print(head(all_unique_genes))
+    # print(c("GO Terms = 'GO.Terms' in Global Env.",
+    #         "List of genes in all GO Terms = 'all_unique_genes' in Global Env.",
+    #         "Dataframe housing all info = 'GO_df' in Global Env.",
+    #         "List of list housing raw search results = 'GO.list' in Global Env.",
+    #         "aliases = 'aliases' in Global Env."))
     Query_GO_list <- list("GO.Terms" = GO.Terms,
                           "GO.IDs" = GO.IDs,
                           "all_unique_genes" = all_unique_genes[!is.na(all_unique_genes)],
@@ -640,11 +640,11 @@ Query_GO_fn <- function(model_org, GO_db, string_terms) {
 
     }
 
-    print(c("GO Terms = 'GO.Terms' in Global Env.",
-            "List of genes in all GO Terms = 'all_unique_genes' in Global Env.",
-            "Dataframe housing all info = 'GO_df' in Global Env.",
-            "List of list housing raw search results = 'GO.list' in Global Env.",
-            "aliases = 'aliases' in Global Env."))
+    # print(c("GO Terms = 'GO.Terms' in Global Env.",
+    #         "List of genes in all GO Terms = 'all_unique_genes' in Global Env.",
+    #         "Dataframe housing all info = 'GO_df' in Global Env.",
+    #         "List of list housing raw search results = 'GO.list' in Global Env.",
+    #         "aliases = 'aliases' in Global Env."))
     Query_GO_list <- list("GO.Terms" = GO.Terms,
                           "GO.IDs" = GO.IDs,
                           "all_unique_genes" = all_unique_genes,
@@ -699,16 +699,16 @@ Find_Genes_Related_By_GO_Term_fn <- function(GO_Term1, GO_Term2, GENE_GO_INFO_DF
 
   MatchIdx <- NULL
   MatchIdx = c(which(GENE_GO_INFO_DF$GeneID[which(
-    apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(.data$GO_Term1, x)))
+    apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(GO_Term1, x)))
   )] %in% GENE_GO_INFO_DF$GeneID[which(
-    apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(.data$GO_Term2, x)))
+    apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(GO_Term2, x)))
   )]))
 
-  GENE_GO_INFO_DF$GeneID[which(
-    apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(.data$GO_term1, x)))
-  )][MatchIdx]
+  # GENE_GO_INFO_DF$GeneID[which(
+  #   apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(GO_term1, x)))
+  # )][MatchIdx]
   return(GENE_GO_INFO_DF$GeneID[which(
-    apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(.data$GO_term1, x)))
+    apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(GO_term1, x)))
   )][MatchIdx])
 }
 
@@ -720,7 +720,6 @@ Find_Genes_Related_By_GO_Term_fn <- function(GO_Term1, GO_Term2, GENE_GO_INFO_DF
 #' @param GeneID1 a string of one gene symbol
 #' @param GeneID2 a string of another gene symbol
 #' @param GENE_GO_INFO_DF a dataframe returned by the \strong{`GO_INFO_fn`} as \strong{`GENE_GO_INFO_df` in the `GO_INFO_list`}
-#' @param UniqueGOs a character vector of GO Terms returned by the \strong{`GO_INFO_fn`}
 #'
 #' @returns
 #' prints the list of overlapping GO Terms to the console
@@ -735,8 +734,7 @@ Find_Genes_Related_By_GO_Term_fn <- function(GO_Term1, GO_Term2, GENE_GO_INFO_DF
 #' Find_GOs_of_Two_Genes_fn(
 #'    GeneID1 = my_character_vec[1],
 #'    GeneID2 = my_character_vec[2],
-#'    GENE_GO_INFO_DF = GENE_GO_INFO_df,
-#'    UniqueGOs = Unique_GOs
+#'    GENE_GO_INFO_DF = GENE_GO_INFO_df
 #'    )
 #'    }
 #'
@@ -747,23 +745,23 @@ Find_GOs_of_Two_Genes_fn <- function(GeneID1, GeneID2, GENE_GO_INFO_DF, UniqueGO
 
   ## Requires calling the GO_INFO_fn
 
-  Term_Idx <- NULL
-  ## Find the indeces of GOs in the GENE_GO_INFO_df that are shared by two genes/proteins of interest
-  Term_Idx = c(which(
-    str_split(
-      as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID1"), 4]), pattern = ';', simplify = TRUE
-    )[which(
-      str_split(
-        as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID1"), 4]), pattern = ';', simplify = TRUE
-      ) %in% UniqueGOs)] %in%
-
-      str_split(
-        as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID2"), 4]), pattern = ';', simplify = TRUE
-      )[which(
-        str_split(
-          as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID2"), 4]), pattern = ';', simplify = TRUE
-        ) %in% UniqueGOs)]
-  ))
+  # Term_Idx <- NULL
+  # ## Find the indeces of GOs in the GENE_GO_INFO_df that are shared by two genes/proteins of interest
+  # Term_Idx = c(which(
+  #   str_split(
+  #     as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID1"), 4]), pattern = ';', simplify = TRUE
+  #   )[which(
+  #     str_split(
+  #       as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID1"), 4]), pattern = ';', simplify = TRUE
+  #     ) %in% UniqueGOs)] %in%
+  #
+  #     str_split(
+  #       as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID2"), 4]), pattern = ';', simplify = TRUE
+  #     )[which(
+  #       str_split(
+  #         as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID2"), 4]), pattern = ';', simplify = TRUE
+  #       ) %in% UniqueGOs)]
+  # ))
 
   ## What GO terms are shared by those two genes/proteins of interest?
   # str_split(
@@ -774,12 +772,24 @@ Find_GOs_of_Two_Genes_fn <- function(GeneID1, GeneID2, GENE_GO_INFO_DF, UniqueGO
   #   ) %in% UniqueGOs)][TermIdx]
 
 
-  return(str_split(
-    as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID1"), 4]), pattern = ';', simplify = TRUE
-  )[which(
-    str_split(
-      as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID1"), 4]), pattern = ';', simplify = TRUE
-    ) %in% UniqueGOs)][Term_Idx])
+  return(c(GENE_GO_INFO_DF |>
+             dplyr::filter(grepl(.data$GeneID, pattern = GeneID1)) |>
+             dplyr::select(.data$GO_Terms) |>
+             unlist() |>
+             as.character() %>%
+             stringr::str_split_1(., pattern = ';'))[which(c(GENE_GO_INFO_DF |>
+                                                               dplyr::filter(grepl(.data$GeneID, pattern = GeneID1)) |>
+                                                               dplyr::select(.data$GO_Terms) |>
+                                                               unlist() |>
+                                                               as.character() %>%
+                                                               stringr::str_split_1(., pattern = ';')) %in%
+
+                                                             c(GENE_GO_INFO_DF |>
+                                                                 dplyr::filter(grepl(.data$GeneID, pattern = GeneID2)) |>
+                                                                 dplyr::select(.data$GO_Terms) |>
+                                                                 unlist() |>
+                                                                 as.character() %>%
+                                                                 stringr::str_split_1(., pattern = ';')) == TRUE)])
 
 }
 

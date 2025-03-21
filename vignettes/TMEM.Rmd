@@ -13,7 +13,7 @@ vignette: >
 
 Install the package from `github`
 
-```{r Github install package, include = F, warning = F, message = F, echo = T}
+```{r Github install package, include = T, eval = F, warning = F, message = F, echo = T}
 devtools::install_github('https://github.com/eriklarsen4/TMEM')
 ```
 
@@ -21,31 +21,52 @@ devtools::install_github('https://github.com/eriklarsen4/TMEM')
 
 Alternatively, if the package is accepted by CRAN, install from CRAN
 
-```{r CRAN install TMEM package, include = F, warning = F, message = F, echo = T}
+```{r CRAN install TMEM package, include = T, eval = F, warning = F, message = F, echo = T}
 utils::install.packages('TMEM')
 ```
 
-### **Attach TMEM Package
+```{r Local install for dev, include = F, eval = F, warning = F, message = F, echo = F}
+install.packages('C:/Users/Erik/Desktop/Programming/R/Bio/TMEM/TMEM_1.0.0.zip')
+library(TMEM)
+devtools::load_all()
+```
+
+
+### **Attach TMEM Package**
 
 ```{r Attach package, include = T, warning = F, message = F, echo = T}
 library(TMEM)
 devtools::load_all()
 ```
 
-We'll use the datasets included in the `TMEM` package to demonstrate the functions in the package.
+We'll use the datasets included in the `TMEM` package to demonstrate its functions.
 
 ## Functions {.tabset .tabset-pills .tabset-fade}
 
 ### **GO_INFO_fn**
 
-After installing and attaching the `TMEM` package, one crucial function of the package
-is the `GO_INFO_fn` that gathers all the gene ontology information of a list of gene
-or protein identifiers.
+After installing and attaching the `TMEM` package, one of its crucial functions is
+the `GO_INFO_fn` that gathers all the gene ontology information of a list of gene
+or protein identifiers
 
-This is what is called `gene set enrichment analysis (GSEA)`.
+This is what is called **gene set enrichment analysis (GSEA)**
 
-The GSEA conducted on this dataset is included in full in [a markdown of another repository](https://github.com/eriklarsen4/Itch/blob/main/Code/GSEA/ItchGSEA.md),
-along with additional analyses for [that paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/#_ad93_).
+The `GSEA` conducted on this dataset is included in full in [a markdown of another repository](https://github.com/eriklarsen4/Itch/blob/main/Code/GSEA/ItchGSEA.md),
+along with additional analyses for [that paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/#_ad93_)
+
+The real utility of the function is gathering all the relevant information in one
+place without needing to generate multiple files and analyses in a browser-- it's
+all in-house
+
+However, this GSEA utilizes `Bioconductor`'s **AnnotationDbi** package, thus, there are discrepancies
+with, for example, `geneontology.org`'s annotations and `Bioconductor`'s
+
+`Bioconductor` also does not employ `geneontology.org`'s gene ontology (nesting) structure,
+which effects any statistics a user might try to extract
+
+I suggest using this function for exploratory work and plotting, while relying on
+`geneontology.org`'s [web browser](https://geneontology.org/) directly for publications-- I've
+noticed differences between `GO.db R package` results and those from the browser
 
 ```{r GO_INFO_fn call, include = T, warning = F, message = F, echo = T}
 ## First import the data in the package
@@ -92,7 +113,7 @@ Unique_GO_IDs <- results |>
 Print the `GO_INFO_by_TERM_df` to the console
 
 ```{r Show GO_INFO_df, include = T, message = F, warning = F, echo = T}
-GO_INFO_by_TERM_df
+head(GO_INFO_by_TERM_df)
 ```
 
 ### **ortholog_and_alias_fn**
@@ -108,31 +129,103 @@ ortholog_df <- TMEM::ortholog_and_alias_fn(ref_species = 'mouse', list_of_intere
 Print the `ortholog_and_alias_fn` output to console
 
 ```{r Show ortholog results, include = T, message = F, warning = F, echo = T}
-ortholog_df
+head(ortholog_df)
 ```
 
-Very useful to pass the list of genes with their aliases 
+It may be very useful to pass the list of genes with their aliases 
 (c(`list_of_interest_aliases`, `aDRG_DEG_list`)) to the `GO_INFO_fn`
+
+### **Find_Genes_Related_By_GO_Term_fn**
+
+A simple function in this package determines which gene/protein IDs in the list of interest are
+associated by two `GO Term`s
+
+```{r Find_Genes_Related_By_GO_Term_fn call, include = T, message = F, warning = F, echo = T}
+TMEM::Find_Genes_Related_By_GO_Term_fn(GO_Term1 = 'MAPK cascade', GO_Term2 = 'immune system process', GENE_GO_INFO_DF = GENE_GO_INFO_df)
+```
+
+### **Find_GOs_of_Two_Genes_fn**
+
+Another simple wrapper function in this package determines which `GO Terms` are shared by 
+two gene/protein IDs from the user's list of interest.
+
+```{r Find_GOs_of_Two_Genes_fn call, include = T, message = F, warning = F, echo = T}
+TMEM::Find_GOs_of_Two_Genes_fn(GeneID1 = 'Lpar3', GeneID2 = 'Lpar5', GENE_GO_INFO_DF = GENE_GO_INFO_df)
+```
+
+### **Find_GOs_of_Gene_X_fn**
+
+### **Find_Genes_With_X_GO_Term_fn**
+
+### **Find_Enriched_GOs_from_GO_INFO_fn**
+
+```{r Find_Enriched_GOs call, include = T, message = F, warning = F, echo = T}
+TMEM::Find_Enriched_GOs_from_GO_INFO_df_fn(Gene_Indeces = c(1:length(aDRG_DEG_list)), GENE_GO_INFO_DF = GENE_GO_INFO_df, UniqueGOs = Unique_GOs)
+```
+
+
+```{r Find_GOs_of_Gene_X_fn call, include = T, message = F, warning = F, echo = T}
+TMEM::Find_Genes_With_X_GO_Term_fn(GO_Term = 'dense core vesicle', GENE_GO_INFO_DF = GENE_GO_INFO_df)
+
+GO_INFO_by_TERM_df |> 
+  dplyr::filter(grepl(GO_Term, pattern = 'dense core vesicle')) |> 
+  dplyr::select(Gene_IDs_from_List) |> 
+  unlist() |> 
+  as.character() %>%
+  stringr::str_split_1(., pattern = ';')
+
+GENE_GO_INFO_df |> 
+  dplyr::filter(grepl(GO_Terms, pattern = 'dense core vesicle')) |>
+  dplyr::select(GeneID) |> 
+  unlist() |> 
+  as.character()
+```
+
 
 ### **Query_GO_fn**
 
 Another useful function with multiple uses is finding genes/proteins annotated 
-to certain GO Terms.
+to certain `GO Terms`
 
 This can be useful for:
 + investigating molecular pathways
-+ investigating complexes for cross-checking or discovery
-+ finding GO Terms that contain a regular expression string
++ investigating complexes (for cross-checking or discovery)
++ finding multiple `GO Terms` that contain a regular expression string
 
 ```{r Query_GO_fn call, include = T, message = F, warning = F, echo = T}
-TMEM::Query_GO_fn(model_org = 'human', GO_db = GO.db, string_terms = 'dense core vesicle') |> unlist()
+TMEM::Query_GO_fn(model_org = 'human', GO_db = GO.db::GO.db, string_terms = 'dense core vesicle|lysosome')
+```
 
-c(AnnotationDbi::keys(GO.db, keytype = 'TERM')[
-    which(
-      grepl(AnnotationDbi::keys(GO.db, keytype = 'TERM'), pattern = 'dense core vesicle') == TRUE
-    )
-  ])
+Extracting the gene/protein IDs associated with the `GO Terms` derived from the given
+regular expression(s) is non-trivial, depending on the function call.
 
-AnnotationDbi::keys(GO.db, keytype = 'TERM')
+Those gene/protein IDs associated with a given term can be extracted directly using
+`dplyr` without storing all the function's results to an object in the global environment: 
+  
+```{r Query_GO_fn dplyr extraction, include = T, message = F, warning = F, echo = T}
+TMEM::Query_GO_fn(model_org = 'human', GO_db = GO.db::GO.db, string_terms = 'dense core vesicle|lysosome') |> 
+  purrr::keep_at("GO_df") |> 
+  as.data.frame() %>%
+  dplyr::rename_with(., ~gsub(.x, pattern = 'GO_df.', replacement = '')) %>%
+  dplyr::rename_with(., ~gsub(.x, pattern = '\\.\\.', replacement = 'N.')) |>
+  dplyr::filter(GO.Term == 'endolysosome membrane') |> 
+  dplyr::select(Genes) |> 
+  unlist() |> 
+  as.character() %>%
+  stringr::str_split_1(., pattern = ';')
+```
+
+Alternatively, all of the results can be stored to an object in the global
+environment from which (in this example) the gene/protein IDs can be extracted:
+  
+```{r Query_GO_fn extraction, include = T, message = F, warning = F, echo = T}
+query_GO_results <- TMEM::Query_GO_fn(model_org = 'human', GO_db = GO.db::GO.db, string_terms = 'dense core vesicle|lysosome')
+  
+query_GO_results$GO_df |> 
+  dplyr::filter(`GO Term` == 'endolysosome membrane') |> 
+  dplyr::select(Genes) |> 
+  unlist() |> 
+  as.character() %>%
+  stringr::str_split_1(., pattern = ';')
 ```
 
