@@ -59,15 +59,17 @@ The real utility of the function is gathering all the relevant information in on
 place without needing to generate multiple files and analyses in a browser-- it's
 all in-house
 
-However, this GSEA utilizes `Bioconductor`'s **AnnotationDbi** package, thus, there are discrepancies
-with, for example, `geneontology.org`'s annotations and `Bioconductor`'s
+However, this `GSEA` utilizes `Bioconductor`'s **AnnotationDbi** package, thus, there are discrepancies
+with, for example, `geneontology.org`'s annotations
 
 `Bioconductor` also does not employ `geneontology.org`'s gene ontology (nesting) structure,
 which effects any statistics a user might try to extract
 
 I suggest using this function for exploratory work and plotting, while relying on
 `geneontology.org`'s [web browser](https://geneontology.org/) directly for publications-- I've
-noticed differences between `GO.db R package` results and those from the browser
+noticed differences between `GO.db R package` results and those from the browser.
+
+The statistical discrepancies are noted in the examples section of this vignette
 
 ```{r GO_INFO_fn call, include = T, warning = F, message = F, echo = T}
 ## First import the data in the package
@@ -459,7 +461,4 @@ GO_INFO_by_TERM_df2 <- GO_INFO_by_TERM_df2 |>
 
 GO_INFO_by_TERM_df2$binom_adjp = p.adjust(p = GO_INFO_by_TERM_df2$binom_pval, method = 'BH')
 ```
-
-
-
 
