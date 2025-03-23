@@ -47,8 +47,10 @@
 #' \strong{`species`} can be one of 'human', 'HS', 'homo sapiens', 'mouse', 'Mm', 'mus musculus', 'drosophila', 'fly', 'fruit fly', 'DM' (all case insensitive)
 #'
 #' @examples
-#' \dontrun{
-#' GO_INFO_fn(list_of_interest = my_character_vec, species = 'human') }
+#' data(aDRG_DEG_list)
+#' \donttest{
+#' GO_INFO_fn(list_of_interest = aDRG_DEG_list, species = 'mouse')
+#' }
 #'
 #' @import AnnotationDbi
 #' @import stringr
@@ -294,10 +296,10 @@ GO_INFO_fn <- function(list_of_interest, species) {
 #' \strong{`ref_species`} can be one of 'human', 'mouse', or 'fly'
 #'
 #' @examples
-#' \dontrun{
-#' ortholog_and_alias_fn(ref_species = 'human',
-#'                      list_of_interest = my_character_vec)
-#'                      }
+#' \donttest{data("aDRG_DEG_list")
+#' ortholog_and_alias_fn(ref_species = 'mouse',
+#'                      list_of_interest = aDRG_DEG_list)
+#' }
 #'
 #' @import org.Hs.eg.db
 #' @import org.Mm.eg.db
@@ -455,13 +457,14 @@ ortholog_and_alias_fn <- function(ref_species, list_of_interest) {
 #' For example, parsing which genes are associated with multiple MTOR terms (complexes, etc.)
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' Query_GO_fn(
 #'            model_org = 'human',
 #'            GO_db = GO.db,
 #'            string_terms = 'dense core vesicle'
 #'            )
-#'            }
+#' }
+#'
 #'
 #' @import GO.db
 #' @import AnnotationDbi
@@ -662,307 +665,6 @@ Query_GO_fn <- function(model_org, GO_db, string_terms) {
 
 }
 
-#' @title Find_Genes_Related_By_GO_Term_fn
-#' @description
-#' \strong{`Find_Genes_Related_By_GO_Term_fn`} is a function that extracts the gene symbols that are all associated with two GO terms
-#'
-#' @param GO_Term1 a string comprising one GO Term
-#' @param GO_Term2 a string comprising another GO Term
-#' @param GENE_GO_INFO_DF a dataframe; returned by the \strong{`GO_INFO_fn`} as \strong{`GENE_GO_INFO_df`}
-#'
-#' @returns
-#' prints the list of overlapping gene symbols to the console
-#'
-#' @details
-#' This function requires having executed the \strong{`GO_INFO_fn`}.
-#' Parameters need the terms of interest to be directly extracted from
-#' \strong{`GO_INFO_by_TERM_df`}
-#'
-#' @examples
-#' \dontrun{
-#' Find_Genes_Related_By_GO_Term_fn(
-#'    GO_Term1 = 'proton-transporting V-type ATPase complex',
-#'    GO_Term2 = 'ATPase dependent transmembrane transport complex',
-#'    GENE_GO_INFO_DF = GENE_GO_INFO_df
-#'    )
-#'    }
-#'
-#' @import dplyr
-#' @importFrom rlang .data
-#'
-#' @export
-Find_Genes_Related_By_GO_Term_fn <- function(GO_Term1, GO_Term2, GENE_GO_INFO_DF) {
-
-  ## Requires calling the GO_INFO_fn
-
-  ## Find which GO Terms are shared by all genes/proteins from a list of interest
-
-  MatchIdx <- NULL
-  MatchIdx = c(which(GENE_GO_INFO_DF$GeneID[which(
-    apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(GO_Term1, x)))
-  )] %in% GENE_GO_INFO_DF$GeneID[which(
-    apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(GO_Term2, x)))
-  )]))
-
-  # GENE_GO_INFO_DF$GeneID[which(
-  #   apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(GO_term1, x)))
-  # )][MatchIdx]
-  return(GENE_GO_INFO_DF$GeneID[which(
-    apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(GO_term1, x)))
-  )][MatchIdx])
-}
-
-#' @title Find_GOs_of_Two_Genes_fn
-#' @description
-#' \strong{`Find_GOs_of_Two_Genes_fn`} is a function that finds all the GO Terms
-#' that share an association with two genes
-#'
-#' @param GeneID1 a string of one gene symbol
-#' @param GeneID2 a string of another gene symbol
-#' @param GENE_GO_INFO_DF a dataframe returned by the \strong{`GO_INFO_fn`} as \strong{`GENE_GO_INFO_df` in the `GO_INFO_list`}
-#'
-#' @returns
-#' prints the list of overlapping GO Terms to the console
-#'
-#' @details
-#' This function requires having executed the \strong{`GO_INFO_fn`}.
-#' Parameters need to be in the same format as provided to \strong{`GO_INFO_fn`}.
-#' Alternatively, can be extracted from \strong{`GENE_GO_INFO_df$GeneID`}
-#'
-#' @examples
-#' \dontrun{
-#' Find_GOs_of_Two_Genes_fn(
-#'    GeneID1 = my_character_vec[1],
-#'    GeneID2 = my_character_vec[2],
-#'    GENE_GO_INFO_DF = GENE_GO_INFO_df
-#'    )
-#'    }
-#'
-#' @import stringr
-#'
-#' @export
-Find_GOs_of_Two_Genes_fn <- function(GeneID1, GeneID2, GENE_GO_INFO_DF, UniqueGOs) {
-
-  ## Requires calling the GO_INFO_fn
-
-  # Term_Idx <- NULL
-  # ## Find the indeces of GOs in the GENE_GO_INFO_df that are shared by two genes/proteins of interest
-  # Term_Idx = c(which(
-  #   str_split(
-  #     as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID1"), 4]), pattern = ';', simplify = TRUE
-  #   )[which(
-  #     str_split(
-  #       as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID1"), 4]), pattern = ';', simplify = TRUE
-  #     ) %in% UniqueGOs)] %in%
-  #
-  #     str_split(
-  #       as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID2"), 4]), pattern = ';', simplify = TRUE
-  #     )[which(
-  #       str_split(
-  #         as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID2"), 4]), pattern = ';', simplify = TRUE
-  #       ) %in% UniqueGOs)]
-  # ))
-
-  ## What GO terms are shared by those two genes/proteins of interest?
-  # str_split(
-  #   as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID1"), 4]), pattern = ';', simplify = TRUE
-  # )[which(
-  #   str_split(
-  #     as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == "GeneID1"), 4]), pattern = ';', simplify = TRUE
-  #   ) %in% UniqueGOs)][TermIdx]
-
-
-  return(c(GENE_GO_INFO_DF |>
-             dplyr::filter(grepl(.data$GeneID, pattern = GeneID1)) |>
-             dplyr::select(.data$GO_Terms) |>
-             unlist() |>
-             as.character() %>%
-             stringr::str_split_1(., pattern = ';'))[which(c(GENE_GO_INFO_DF |>
-                                                               dplyr::filter(grepl(.data$GeneID, pattern = GeneID1)) |>
-                                                               dplyr::select(.data$GO_Terms) |>
-                                                               unlist() |>
-                                                               as.character() %>%
-                                                               stringr::str_split_1(., pattern = ';')) %in%
-
-                                                             c(GENE_GO_INFO_DF |>
-                                                                 dplyr::filter(grepl(.data$GeneID, pattern = GeneID2)) |>
-                                                                 dplyr::select(.data$GO_Terms) |>
-                                                                 unlist() |>
-                                                                 as.character() %>%
-                                                                 stringr::str_split_1(., pattern = ';')) == TRUE)])
-
-}
-
-#' @title Find_GOs_of_Gene_X_fn
-#' @description
-#' \strong{`Find_GOs_of_Gene_X_fn`} is a function that extracts all the GO Terms
-#' associated with a given gene symbol
-#'
-#' @param GeneID a string of one gene symbol
-#' @param GENE_GO_INFO_DF a dataframe returned by the \strong{`GO_INFO_fn`} as \strong{`GENE_GO_INFO_df`}
-#' @param UniqueGOs a character vector returned by the \strong{`GO_INFO_fn`} as \strong{`Unique_GOs`} inside \strong{`GO_INFO_list`}
-#'
-#' @returns
-#' prints the list of GO Terms associated with the provided gene symbol to the console
-#'
-#' @details
-#' This function requires having executed the \strong{`GO_INFO_fn`} and the input string
-#' must be in the same format as provided to the \strong{`GO_INFO_fn`}.
-#' An alternative to this function is:
-#'
-#'  + \code{`GO_INFO_list`$`GENE_GO_INFO_df` |>
-#'            dplyr::filter(GeneID == 'my gene') |>
-#'            dplyr::distinct(GO_Term_IDs) |>
-#'            unlist() |>
-#'            as.character()}
-#'
-#' @examples
-#' \dontrun{
-#' Find_GOs_of_Gene_X_fn(
-#'     GeneID = 'MTOR',
-#'     GENE_GO_INFO_DF = GENE_GO_INFO_df,
-#'     UniqueGOs = Unique_GOs
-#'     )}
-#'
-#' @import stringr
-#'
-#' @export
-Find_GOs_of_Gene_X_fn <- function(GeneID, GENE_GO_INFO_DF, UniqueGOs) {
-
-  ## Requires calling the GO_INFO_fn
-
-  ## Find the GOs of a gene/protein of interest
-  return(str_split(
-    as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == GeneID), 3]), pattern = ';', simplify = TRUE
-  )[which(str_split(
-    as.vector(GENE_GO_INFO_DF[ which(GENE_GO_INFO_DF$GeneID == GeneID), 3]), pattern = ';', simplify = TRUE
-  ) %in% UniqueGOs)])
-
-}
-
-#' @title Find_Genes_With_X_GO_Term_fn
-#' @description
-#' \strong{`Find_Genes_With_X_GO_Term_fn`} is a function that finds all the gene
-#' symbols associated with a provided GO Term
-#'
-#' @param GO_Term a character string of a GO Term
-#' @param GENE_GO_INFO_DF a dataframe returned by the \strong{`GO_INFO_fn`} as \strong{`GENE_GO_INFO_df`}
-#'
-#' @returns
-#' prints the gene symbols associated with the provided GO Term to the console
-#'
-#' @details
-#' This function requires having executed the \strong{`GO_INFO_fn`} and the input string
-#' must exactly match a string in the \strong{`GENE_GO_INFO_df$GO_Term`}.
-#' An alternative to this function is:
-#'
-#'    + \code{`GO_INFO_list`$`GENE_GO_INFO_df` |>
-#'              dplyr::filter(GO_Term == 'my term') |>
-#'              dplyr::distinct(GeneID) |>
-#'              unlist() |>
-#'              as.character()}
-#'
-#' @examples
-#' \dontrun{
-#' Find_Genes_With_X_GO_Term_fn(
-#'     GO_Term = 'neuronal dense core vesicle',
-#'     GENE_GO_INFO_DF = GENE_GO_INFO_df
-#'     )}
-#'
-#' @export
-Find_Genes_With_X_GO_Term_fn <- function(GO_Term, GENE_GO_INFO_DF) {
-
-  ## Requires calling the GO_INFO_fn
-
-  ## Find the genes/proteins associated with a GO Term in the GENE_GO_INFO_df
-  return(GENE_GO_INFO_DF$GeneID[which(
-    apply(GENE_GO_INFO_DF, 1, function(x) any(grepl(GO_Term, x)))
-  )])
-
-}
-
-#' @title Find_Enriched_GOs_from_GO_INFO_df_fn
-#' @description
-#' \strong{`Find_Enriched_GOs_from_GO_INFO_df_fn`} is a function that finds how many
-#' times each GO Term is identified as being associated with any/all genes from
-#' the character vector of gene symbols passed into \strong{`GO_INFO_fn`}
-#'
-#' @param Gene_Indeces an integer vector ranging, whose length can be, at most,
-#' the length of the character vector passed to \strong{`GO_INFO_fn`}
-#' @param GENE_GO_INFO_DF a dataframe returned by the \strong{`GO_INFO_fn`} as \strong{`GENE_GO_INFO_df`} inside \strong{`GO_INFO_list`}
-#' @param UniqueGOs a character vector returned by the \strong{`GO_INFO_fn`} as \strong{`Unique_GOs`} inside \strong{`GO_INFO_list`}
-#'
-#' @details
-#' This function requires having executed the \strong{`GO_INFO_fn`}.
-#' This helps determine how frequently a GO Term is identified as being associated with
-#' all gene symbols from the character vector passed to \strong{`GO_INFO_fn`}
-#'
-#' @examples
-#' \dontrun{
-#' Find_Enriched_GOs_from_GO_INFO_df_fn(
-#'     Gene_Indeces = c(1:length(my_character_vec)),
-#'     GENE_GO_INFO_DF = GENE_GO_INFO_df,
-#'     UniqueGOs = Unique_GOs)
-#' }
-#'
-#' @import stringr
-#' @import dplyr
-#' @importFrom rlang .data
-#'
-#' @export
-Find_Enriched_GOs_from_GO_INFO_df_fn <- function(Gene_Indeces, GENE_GO_INFO_DF, UniqueGOs) {
-
-  ## Requires calling the GO_INFO_fn
-
-  ## Find the indeces of the GO Terms in the GENE_GO_INFO_df that match to multiple genes in a provided list
-  Term_Idx <- which(duplicated(c(str_split(
-    as.vector(GENE_GO_INFO_DF[ Gene_Indeces, 4]), pattern = ';', simplify = TRUE
-  )[which(str_split(
-    as.vector(GENE_GO_INFO_DF[ Gene_Indeces, 4]), pattern = ';', simplify = TRUE
-  ) %in% UniqueGOs)][which(str_split(
-    as.vector(GENE_GO_INFO_DF[ Gene_Indeces, 4]), pattern = ';', simplify = TRUE
-  )[which(str_split(
-    as.vector(GENE_GO_INFO_DF[ Gene_Indeces, 4]), pattern = ';', simplify = TRUE
-  ) %in% UniqueGOs)] != '')])) == TRUE )
-
-  ## Use that index to find those GO Terms
-  Enriched_GOs = unique(str_split(
-    as.vector(GENE_GO_INFO_DF[ Gene_Indeces, 4]), pattern = ';', simplify = TRUE
-  )[which(str_split(
-    as.vector(GENE_GO_INFO_DF[ Gene_Indeces, 4]), pattern = ';', simplify = TRUE
-  ) %in% UniqueGOs)][which(str_split(
-    as.vector(GENE_GO_INFO_DF[ Gene_Indeces, 4]), pattern = ';', simplify = TRUE
-  )[which(str_split(
-    as.vector(GENE_GO_INFO_DF[ Gene_Indeces, 4]), pattern = ';', simplify = TRUE
-  ) %in% UniqueGOs)] != '')][Term_Idx])
-
-  ## Find how many times each GO Term is annotated from the list; put in a table
-  Enriched_GO_counts = table(
-    str_split(
-      as.vector(GENE_GO_INFO_DF[ Gene_Indeces, 4]), pattern = ';', simplify = TRUE
-    )[which(str_split(
-      as.vector(GENE_GO_INFO_DF[ Gene_Indeces, 4]), pattern = ';', simplify = TRUE
-    ) %in% UniqueGOs)][which(str_split(
-      as.vector(GENE_GO_INFO_DF[ Gene_Indeces, 4]), pattern = ';', simplify = TRUE
-    )[which(str_split(
-      as.vector(GENE_GO_INFO_DF[ Gene_Indeces, 4]), pattern = ';', simplify = TRUE
-    ) %in% UniqueGOs)] != '')][Term_Idx]
-  )
-
-  ## convert to df
-  Enriched_GO_counts_df <- Enriched_GO_counts |>
-    as.data.frame() |>
-    dplyr::arrange(factor(.data$Var1, levels = .data$Enriched_GOs)) |>
-    dplyr::mutate(GO_Term = .data$Var1,
-                  Num_Genes_in_List = .data$Freq) |>
-    dplyr::select(-.data$Var1, -.data$Freq)
-
-  # Enriched_GO_counts_df <<- Enriched_GO_counts_df
-
-  return(Enriched_GO_counts_df)
-
-}
-
 #' @title Find_Row_Z
 #' @description
 #' \strong{`Find_Row_Z`} is a function that determines Z-scores of an expression matrix
@@ -977,14 +679,16 @@ Find_Enriched_GOs_from_GO_INFO_df_fn <- function(Gene_Indeces, GENE_GO_INFO_DF, 
 #' Z-scores are \strong{`row-wise`} across all columns containing samples (column 2 through the end of the dataframe)
 #'
 #'
-#' @examples \dontrun{
-#' Find_Row_Z(Expression_Profile = matrix)
+#' @examples
+#' \donttest{
+#' data(aDRG_TPM)
+#' Find_Row_Z(Expression_Profile = aDRG_TPM)
 #' }
+#'
 #' @import stats
 #'
 #' @export
 Find_Row_Z <- function(Expression_Profile){
-  Z <- NULL
   ## Create dataframes to calculate Z-scores across replicates of each gene.
   ## These will hold the original data frame values until filled in later commands
   ## "MeansAndSDs" will store the means and sds of each gene

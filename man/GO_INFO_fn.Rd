@@ -58,7 +58,9 @@ provided character vector.
 \strong{`species`} can be one of 'human', 'HS', 'homo sapiens', 'mouse', 'Mm', 'mus musculus', 'drosophila', 'fly', 'fruit fly', 'DM' (all case insensitive)
 }
 \examples{
-\dontrun{
-GO_INFO_fn(list_of_interest = my_character_vec, species = 'human') }
+data(aDRG_DEG_list)
+\donttest{
+GO_INFO_fn(list_of_interest = aDRG_DEG_list, species = 'mouse')
+}
 
 }

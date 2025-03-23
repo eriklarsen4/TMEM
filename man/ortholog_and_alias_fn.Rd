@@ -33,10 +33,10 @@ the 5 main biological model species, and corrals into a practical and intuitive 
 \strong{`ref_species`} can be one of 'human', 'mouse', or 'fly'
 }
 \examples{
-\dontrun{
-ortholog_and_alias_fn(ref_species = 'human',
-                     list_of_interest = my_character_vec)
-                     }
+\donttest{data("aDRG_DEG_list")
+ortholog_and_alias_fn(ref_species = 'mouse',
+                     list_of_interest = aDRG_DEG_list)
+}
 
 }
 \references{

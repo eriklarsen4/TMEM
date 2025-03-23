@@ -36,12 +36,13 @@ Designed for exploration of gene symbols' associations with multiple GO Terms.
 For example, parsing which genes are associated with multiple MTOR terms (complexes, etc.)
 }
 \examples{
-\dontrun{
+\donttest{
 Query_GO_fn(
            model_org = 'human',
            GO_db = GO.db,
            string_terms = 'dense core vesicle'
            )
-           }
+}
+
 
 }

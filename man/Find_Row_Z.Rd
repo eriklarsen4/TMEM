@@ -20,7 +20,9 @@ remaining columns comprising samples (iterations) of expression values}
 Z-scores are \strong{`row-wise`} across all columns containing samples (column 2 through the end of the dataframe)
 }
 \examples{
-\dontrun{
-Find_Row_Z(Expression_Profile = matrix)
+\donttest{
+data(aDRG_TPM)
+Find_Row_Z(Expression_Profile = aDRG_TPM)
 }
+
 }
