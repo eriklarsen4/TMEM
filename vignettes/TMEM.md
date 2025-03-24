@@ -1,17 +1,4 @@
----
-title: "TMEM"
-input: TMEM.Rmd
-output: 
-  github_document:
-  code_folding: hide
-  toc: TRUE
-vignette: >
-  %\VignetteIndexEntry{TMEM}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-## Package Install Options {.tabset .tabset-pills .tabset-fade}
+## Package Install Options
 
 ### **Install TMEM Package from GitHub**
 
@@ -40,7 +27,7 @@ library(TMEM)
 We'll use the datasets included in the `TMEM` package to demonstrate its
 functions
 
-## Functions {.tabset .tabset-pills .tabset-fade}
+## Functions
 
 ### **GO_INFO_fn**
 
@@ -48,7 +35,7 @@ After installing and attaching the `TMEM` package, one of its crucial functions
 is the `GO_INFO_fn` that gathers all the gene ontology information of a list of
 gene or protein identifiers
 
-This is what is called **gene set enrichment analysis (GSEA)**
+This is called **gene set enrichment analysis (GSEA)**
 
 The `GSEA` conducted on this dataset is included in full in
 [a markdown of another repository](https://github.com/eriklarsen4/Itch/blob/main/Code/GSEA/ItchGSEA.md),
@@ -247,7 +234,7 @@ head(TMEM::Find_Row_Z(Expression_Profile = aDRG_TPM))
 6 2.2909830  0.4158662 -0.5991097
 ```
 
-## Example Uses {.tabset .tabset-pills .tabset-fade}
+## Example Uses
 
 ### **Finding Genes Related by a Generic GO Term relevant to a list of interest**
 
