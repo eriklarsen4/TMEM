@@ -9,10 +9,10 @@
 #' }
 #' @source [TMEM184B is necessary for IL-31-induced itch](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/#SD5)
 #'
-#' @title GO_INFO_fn
+#' @title get_GO_info
 #'
 #' @description
-#' \strong{`GO_INFO_fn`} is a function that extracts gene ontology (GO)
+#' \strong{`get_GO_info`} is a function that extracts gene ontology (GO)
 #' information about a list (character vector) of human/mouse/drosophila gene
 #' symbols
 #'
@@ -21,17 +21,17 @@
 #' @param species string of the species of the provided character vector
 #'
 #' @returns
-#' \strong{`GO_INFO_list`}: a list containing all the objects described below
+#' \strong{`GO_info_list`}: a list containing all the objects described below
 #'
-#' \strong{`GENE_GO_INFO_df`}: a dataframe containing all the genes from the
+#' \strong{`gene_GO_info_df`}: a dataframe containing all the genes from the
 #' provided list and all the gene ontology terms with which each gene/protein
 #' has been associated with, imperically and/or theoretically
-#' \strong{`GO_INFO_by_TERM_df`}: a dataframe containing all the GO information for
+#' \strong{`GO_info_by_term_df`}: a dataframe containing all the GO information for
 #' each GO term (i.e. how many and which genes are in each term) that is associated
 #' with at least one gene symbol from the provided character vector
-#' \strong{`Unique_GOs`}: a character vector containing all the unique GO terms
+#' \strong{`unique_GOs`}: a character vector containing all the unique GO terms
 #' associated with at least one gene symbol from the provided character vector
-#' \strong{`Unique_GO_IDs`}: a character vector containing all the unique GO terms'
+#' \strong{`unique_GO_IDs`}: a character vector containing all the unique GO terms'
 #' IDs for the terms associated with at least one gene symbol from the provided
 #' character vector
 #' \strong{`list_of_interest_aliases`}: a character vector of the same-species
@@ -49,7 +49,7 @@
 #' @examples
 #' data(aDRG_DEG_list)
 #' \donttest{
-#' GO_INFO_fn(list_of_interest = aDRG_DEG_list, species = 'mouse')
+#' get_GO_info(list_of_interest = aDRG_DEG_list, species = 'mouse')
 #' }
 #'
 #' @import AnnotationDbi
@@ -58,9 +58,9 @@
 #' @import GO.db
 #' @importFrom rlang .data
 #'
-#' @rdname GO_INFO_fn
+#' @rdname get_go_info
 #' @export
-GO_INFO_fn <- function(list_of_interest, species) {
+get_GO_info <- function(list_of_interest, species) {
   # First, define the species of interest ----
   if ( grepl(species, pattern = 'human|HS|homo sapiens', ignore.case = T) ) {
     abbrev_species_name <- org.Hs.eg.db
@@ -253,12 +253,12 @@ GO_INFO_fn <- function(list_of_interest, species) {
 
 
   # Export ----
-  GO_INFO_list <- list("GENE_GO_INFO_df" = GENE_GO_INFO_df,
+  GO_info_list <- list("gene_GO_info_df" = GENE_GO_INFO_df,
                        "aliases" = aliases,
                        "list_of_interest_aliases" = list_of_interest_and_aliases,
-                       "Unique_GOs" = Unique_GOs,
-                       "Unique_GO_IDs" = Unique_GO_IDs,
-                       "GO_INFO_by_TERM_df" = GO_INFO)
+                       "unique_GOs" = Unique_GOs,
+                       "unique_GO_IDs" = Unique_GO_IDs,
+                       "GO_info_by_term_df" = GO_INFO)
   # GENE_GO_INFO_df <<- GENE_GO_INFO_df
   # GO_INFO_by_TERM_df <<- GO_INFO
   # Unique_GOs <<- Unique_GOs
@@ -266,13 +266,13 @@ GO_INFO_fn <- function(list_of_interest, species) {
   # list_of_interest_aliases <<- list_of_interest_and_aliases
   # # all_unique_genes <<- all_unique_genes
   # aliases <<- aliases
-  return(GO_INFO_list)
+  return(GO_info_list)
 }
 
-#' @title ortholog_and_alias_fn
+#' @title get_orthologs_and_aliases
 #'
 #' @description
-#' \strong{`ortholog_and_alias_fn`} is a function that finds all the aliases and
+#' \strong{`get_orthologs_and_aliases`} is a function that finds all the aliases and
 #' orthologs of the other four main model organsims from a character vector of
 #' gene symbols of another
 #'
@@ -297,8 +297,8 @@ GO_INFO_fn <- function(list_of_interest, species) {
 #'
 #' @examples
 #' \donttest{data("aDRG_DEG_list")
-#' ortholog_and_alias_fn(ref_species = 'mouse',
-#'                      list_of_interest = aDRG_DEG_list)
+#' get_orthologs_and_aliases(ref_species = 'mouse',
+#'                          list_of_interest = aDRG_DEG_list)
 #' }
 #'
 #' @import org.Hs.eg.db
@@ -314,7 +314,7 @@ GO_INFO_fn <- function(list_of_interest, species) {
 #' @references [orthogene](https://github.com/neurogenomics/orthogene)
 #'
 #' @export
-ortholog_and_alias_fn <- function(ref_species, list_of_interest) {
+get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
   # initialize variables ----
   ## list for aliases in the reference species
   listy <- list()
@@ -428,9 +428,9 @@ ortholog_and_alias_fn <- function(ref_species, list_of_interest) {
   return(result)
 }
 
-#' @title Query_GO_fn
+#' @title query_GO
 #' @description
-#' \strong{`Query_GO_fn`} is a function that queries the GO.db with a string
+#' \strong{`query_GO`} is a function that queries the GO.db with a string
 #' term of interest for a given model organism
 #'
 #' @param model_org a string comprising one of: (for human)
@@ -441,7 +441,7 @@ ortholog_and_alias_fn <- function(ref_species, list_of_interest) {
 #' @param GO_db GO.db
 #'
 #' @returns
-#' \strong{`Query_GO_list`}: a list containing the following objects:
+#' \strong{`query_GO_list`}: a list containing the following objects:
 #' \strong{`GO.Terms`}: a character vector of all the GO Terms associated with the organism and string of interest
 #' \strong{`GO.IDs`}: a character vector of all the GO IDs of the GO Terms associated with the organism and string of interest
 #' \strong{`all_unique_genes`}: a character vector of all the gene symbols associated with provided string
@@ -458,11 +458,11 @@ ortholog_and_alias_fn <- function(ref_species, list_of_interest) {
 #'
 #' @examples
 #' \donttest{
-#' Query_GO_fn(
-#'            model_org = 'human',
-#'            GO_db = GO.db,
-#'            string_terms = 'dense core vesicle'
-#'            )
+#' query_GO(
+#'          model_org = 'human',
+#'          GO_db = GO.db,
+#'          string_terms = 'dense core vesicle'
+#'          )
 #' }
 #'
 #'
@@ -471,7 +471,7 @@ ortholog_and_alias_fn <- function(ref_species, list_of_interest) {
 #' @import stringr
 #'
 #' @export
-Query_GO_fn <- function(model_org, GO_db, string_terms) {
+query_GO <- function(model_org, GO_db, string_terms) {
 
   # GO_db<- eval(parse(text = GO.db::GO.db))
   abbrev_species_name <- vector()
@@ -648,7 +648,7 @@ Query_GO_fn <- function(model_org, GO_db, string_terms) {
     #         "Dataframe housing all info = 'GO_df' in Global Env.",
     #         "List of list housing raw search results = 'GO.list' in Global Env.",
     #         "aliases = 'aliases' in Global Env."))
-    Query_GO_list <- list("GO.Terms" = GO.Terms,
+    query_GO_list <- list("GO.Terms" = GO.Terms,
                           "GO.IDs" = GO.IDs,
                           "all_unique_genes" = all_unique_genes,
                           "GO.list" = GO.list,
@@ -665,9 +665,9 @@ Query_GO_fn <- function(model_org, GO_db, string_terms) {
 
 }
 
-#' @title Find_Row_Z
+#' @title find_row_Z
 #' @description
-#' \strong{`Find_Row_Z`} is a function that determines Z-scores of an expression matrix
+#' \strong{`find_row_Z`} is a function that determines Z-scores of an expression matrix
 #'
 #' @param Expression_Profile a dataframe containing a list of gene symbols (first column);
 #' remaining columns comprising samples (iterations) of expression values
@@ -682,13 +682,13 @@ Query_GO_fn <- function(model_org, GO_db, string_terms) {
 #' @examples
 #' \donttest{
 #' data(aDRG_TPM)
-#' Find_Row_Z(Expression_Profile = aDRG_TPM)
+#' find_row_Z(Expression_Profile = aDRG_TPM)
 #' }
 #'
 #' @import stats
 #'
 #' @export
-Find_Row_Z <- function(Expression_Profile){
+find_row_Z <- function(Expression_Profile){
   ## Create dataframes to calculate Z-scores across replicates of each gene.
   ## These will hold the original data frame values until filled in later commands
   ## "MeansAndSDs" will store the means and sds of each gene

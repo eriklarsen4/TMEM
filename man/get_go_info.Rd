@@ -4,8 +4,8 @@
 \name{TMEM}
 \alias{-package}
 \alias{TMEM}
-\alias{GO_INFO_fn}
-\title{GO_INFO_fn}
+\alias{get_GO_info}
+\title{get_GO_info}
 \format{
 This package includes three datasets to ensure function examples are testable:
 \describe{
@@ -18,7 +18,7 @@ This package includes three datasets to ensure function examples are testable:
 [TMEM184B is necessary for IL-31-induced itch](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/#SD5)
 }
 \usage{
-GO_INFO_fn(list_of_interest, species)
+get_GO_info(list_of_interest, species)
 }
 \arguments{
 \item{list_of_interest}{a character vector of the gene symbols of a
@@ -27,17 +27,17 @@ list of genes or proteins}
 \item{species}{string of the species of the provided character vector}
 }
 \value{
-\strong{`GO_INFO_list`}: a list containing all the objects described below
+\strong{`GO_info_list`}: a list containing all the objects described below
 
-\strong{`GENE_GO_INFO_df`}: a dataframe containing all the genes from the
+\strong{`gene_GO_info_df`}: a dataframe containing all the genes from the
 provided list and all the gene ontology terms with which each gene/protein
 has been associated with, imperically and/or theoretically
-\strong{`GO_INFO_by_TERM_df`}: a dataframe containing all the GO information for
+\strong{`GO_info_by_term_df`}: a dataframe containing all the GO information for
 each GO term (i.e. how many and which genes are in each term) that is associated
 with at least one gene symbol from the provided character vector
-\strong{`Unique_GOs`}: a character vector containing all the unique GO terms
+\strong{`unique_GOs`}: a character vector containing all the unique GO terms
 associated with at least one gene symbol from the provided character vector
-\strong{`Unique_GO_IDs`}: a character vector containing all the unique GO terms'
+\strong{`unique_GO_IDs`}: a character vector containing all the unique GO terms'
 IDs for the terms associated with at least one gene symbol from the provided
 character vector
 \strong{`list_of_interest_aliases`}: a character vector of the same-species
@@ -47,7 +47,7 @@ the provided gene symbol character vector
 with any gene symbol from the provided character vector
 }
 \description{
-\strong{`GO_INFO_fn`} is a function that extracts gene ontology (GO)
+\strong{`get_GO_info`} is a function that extracts gene ontology (GO)
 information about a list (character vector) of human/mouse/drosophila gene
 symbols
 }
@@ -60,7 +60,7 @@ provided character vector.
 \examples{
 data(aDRG_DEG_list)
 \donttest{
-GO_INFO_fn(list_of_interest = aDRG_DEG_list, species = 'mouse')
+get_GO_info(list_of_interest = aDRG_DEG_list, species = 'mouse')
 }
 
 }
