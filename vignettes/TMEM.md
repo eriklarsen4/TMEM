@@ -236,7 +236,7 @@ head(TMEM::find_row_Z(Expression_Profile = aDRG_TPM))
 
 ## Example Uses
 
-### **Finding Genes Related by a Generic GO Term relevant to a list of interest**
+### **Finding genes related by a generic GO Term relevant to a list of interest**
 
 Interested in finding out what has been documented to be related to a certain
 cellular phenomenon?
@@ -334,7 +334,7 @@ c(GO_info_by_term_df |>
 [37] "Syt10"    "Rims1"    "Unc13a"
 ```
 
-### **Finding Genes Related by Multiple Precise GO Terms**
+### **Finding genes related by multiple precise GO Terms**
 
 Interested in which genes from your list of interest overlap across multiple
 `GO Term`s elicited by your query/list of interest?
@@ -363,7 +363,7 @@ c(GO_info_by_term_df |>
 [1] "Syt4"
 ```
 
-### **Finding GO Terms of Any Number of Genes**
+### **Finding GO terms of any number of genes**
 
 When a user is interested in all of the `GO Terms` that are shared by multiple
 gene/protein IDs from the user's list of gene/protein IDs:
@@ -410,7 +410,7 @@ head(gene_GO_info_df |>
 [6] "cytokine production involved in immune response"
 ```
 
-### **Finding Genes of a Specific GO Term**
+### **Finding genes of a specific GO Term**
 
 ```r
 head(GO_info_by_term_df |> 
@@ -426,7 +426,7 @@ head(GO_info_by_term_df |>
 [1] "Adrb1"    "Adrb2"    "App"      "Avp"      "Bdnf"     "Cacna2d1"
 ```
 
-### **Finding Enriched GOs from get_GO_info**
+### **Finding enriched GOs from get_GO_info**
 
 Determining which `GO`s (themes) are worth looking into further is the entire
 point of `GSEA`
