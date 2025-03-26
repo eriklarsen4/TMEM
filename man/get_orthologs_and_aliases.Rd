@@ -35,7 +35,7 @@ the 5 main biological model species, and corrals into a practical and intuitive 
 \examples{
 \donttest{data("aDRG_DEG_list")
 get_orthologs_and_aliases(ref_species = 'mouse',
-                     list_of_interest = aDRG_DEG_list)
+                         list_of_interest = aDRG_DEG_list)
 }
 
 }
