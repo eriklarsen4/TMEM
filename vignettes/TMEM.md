@@ -5,7 +5,7 @@
 Install the package from `github`:
 
 ``` r 
-remotes::install_github('https://github.com/eriklarsen4/TMEM/R/TMEM.R') 
+remotes::install_github('https://github.com/eriklarsen4/TMEM') 
 ```
 
 ### **Install the TMEM Package from CRAN**
