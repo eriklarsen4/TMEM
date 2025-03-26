@@ -141,7 +141,7 @@ head(ortholog_df)
 ```
 
 It may be very useful to pass the list of genes with their aliases 
-(c(`list_of_interest_aliases`, `aDRG_DEG_list`)) to the `GO_INFO_fn`
+(c(`list_of_interest_aliases`, `aDRG_DEG_list`)) to the `get_GO_info` function
 
 ### **query_GO**
 
@@ -261,7 +261,7 @@ GO_info_by_term_df |>
 [1] "Sst"    "Syt4"   "Scg2"   "Syt5"   "Unc13c" "Syt6"
 ```
 
-Similarly, the results returned by the `GO_INFO_fn` include all the information
+Similarly, the results returned by the `get_GO_info` function include all the information
 on all the `GO Term`s-- not just including the genes/proteins from the list of
 interest that are associated with a `GO Term` (these IDs are called
 "`Overlap`"); it provides *all* the IDs associated with the `GO Term`
@@ -363,9 +363,9 @@ c(GO_info_by_term_df |>
 [1] "Syt4"
 ```
 
-### **Finding GO of Any Number of Genes**
+### **Finding GO Terms of Any Number of Genes**
 
-When a user is interested in all of the `Go Terms` that are shared by multiple
+When a user is interested in all of the `GO Terms` that are shared by multiple
 gene/protein IDs from the user's list of gene/protein IDs:
 
 ```r
