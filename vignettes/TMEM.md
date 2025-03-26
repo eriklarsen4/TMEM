@@ -29,10 +29,10 @@ functions
 
 ## Functions
 
-### **GO_INFO_fn**
+### **get_GO_info**
 
 After installing and attaching the `TMEM` package, one of its crucial functions
-is the `GO_INFO_fn` that gathers all the gene ontology information of a list of
+is the `get_GO_info` that gathers all the gene ontology information of a list of
 gene or protein identifiers
 
 This is called **gene set enrichment analysis (GSEA)**
@@ -67,8 +67,8 @@ data("aDRG_DEG_list")
 Next, pass the variable into the function (data was derived from mouse)
 
 ``` r
-results <- TMEM::GO_INFO_fn(list_of_interest = aDRG_DEG_list,
-                            species = 'mouse')
+results <- TMEM::get_GO_info(list_of_interest = aDRG_DEG_list,
+                             species = 'mouse')
 ```
 
 Inspect results by unpacking everything from the returned list
@@ -111,15 +111,15 @@ Unique_GO_IDs <- results |>
   purrr::keep_at("Unique_GO_IDs")
 ```
 
-### **ortholog_and_alias_fn**
+### **get_orthologs_and_aliases**
 
-Pass the gene list to the `ortholog_and_alias_fn`
+Pass the gene list to the `get_orthologs_and_aliases`
 
 Since the data is derived from `mouse`, `mouse` will serve as the `ref_species`
 
 ```r
-ortholog_df <- TMEM::ortholog_and_alias_fn(ref_species = 'mouse', 
-                                          list_of_interest = aDRG_DEG_list)
+ortholog_df <- TMEM::get_orthologs_and_aliases(ref_species = 'mouse', 
+                                               list_of_interest = aDRG_DEG_list)
 ```
 
 Print the `ortholog_and_alias_fn` output to console
@@ -143,7 +143,7 @@ head(ortholog_df)
 It may be very useful to pass the list of genes with their aliases 
 (c(`list_of_interest_aliases`, `aDRG_DEG_list`)) to the `GO_INFO_fn`
 
-### **Query_GO_fn**
+### **query_GO**
 
 Another useful function with multiple uses is finding genes/proteins annotated 
 to certain `GO Terms`
@@ -154,9 +154,9 @@ This can be useful for:
   + finding multiple `GO Terms` that contain a regular expression string
 
 ```r
-TMEM::Query_GO_fn(model_org = 'human', 
-                  GO_db = GO.db::GO.db,
-                  string_terms = 'dense core vesicle|lysosome')
+TMEM::query_GO(model_org = 'human',
+               GO_db = GO.db::GO.db,
+               string_terms = 'dense core vesicle|lysosome')
 ```
 ```r
 [1] "CTSB" "CTSK" "CTSL" "CTSS" "LGMN"
@@ -170,9 +170,9 @@ using `dplyr` without storing all the function's results to an object in the
 global environment: 
 
 ```r
-TMEM::Query_GO_fn(model_org = 'human',
-                  GO_db = GO.db::GO.db,
-                  string_terms = 'dense core vesicle|lysosome') |> 
+TMEM::query_GO(model_org = 'human',
+               GO_db = GO.db::GO.db,
+               string_terms = 'dense core vesicle|lysosome') |> 
   purrr::keep_at("GO_df") |> 
   as.data.frame() %>%
   dplyr::rename_with(., ~gsub(.x, pattern = 'GO_df.', replacement = '')) %>%
@@ -191,9 +191,9 @@ Alternatively, all of the results can be stored to an object in the global
 environment from which (in this example) the gene/protein IDs can be extracted:
 
 ```r
-query_GO_results <- TMEM::Query_GO_fn(model_org = 'human',
-                                      GO_db = GO.db::GO.db,
-                                      string_terms = 'dense core vesicle|lysosome')
+query_GO_results <- TMEM::query_GO(model_org = 'human',
+                                   GO_db = GO.db::GO.db,
+                                   string_terms = 'dense core vesicle|lysosome')
 
 query_GO_results$GO_df |> 
   dplyr::filter(`GO Term` == 'endolysosome membrane') |> 
@@ -206,7 +206,7 @@ query_GO_results$GO_df |>
 [1] "CTSB" "CTSK" "CTSL" "CTSS" "LGMN"
 ```
 
-### **Find_Row_Z**
+### **find_row_Z**
 
 This function computes a Z-score for a provided matrix, currently agnostic to 
 grouping
@@ -215,7 +215,7 @@ This is highly useful for generating transcriptional heatmaps
 
 ```r
 data("aDRG_TPM")
-head(TMEM::Find_Row_Z(Expression_Profile = aDRG_TPM))
+head(TMEM::find_row_Z(Expression_Profile = aDRG_TPM))
 ```
 ```r
           GeneID          WT1         WT2        WT3        WT4       Mut1
@@ -426,12 +426,12 @@ head(GO_INFO_by_TERM_df |>
 [1] "Adrb1"    "Adrb2"    "App"      "Avp"      "Bdnf"     "Cacna2d1"
 ```
 
-### **Finding Enriched GOs from the GO_INFO_fn**
+### **Finding Enriched GOs from get_GO_info**
 
 Determining which `GO`s (themes) are worth looking into further is the entire
 point of `GSEA`
 
-The `GO_INFO_fn` returns all the `GO Terms` relevant to a user's provided list,
+The `get_GO_info` function returns all the `GO Terms` relevant to a user's provided list,
 and does not include all annotated `GO Terms`
 
 The function also relies on `Bioconductor`'s species-specific databases, as well
