@@ -4,14 +4,12 @@
 \alias{query_GO}
 \title{query_GO}
 \usage{
-query_GO(model_org, GO_db, string_terms)
+query_GO(model_org, string_terms)
 }
 \arguments{
 \item{model_org}{a string comprising one of: (for human)
 'human', 'HS', 'homo sapiens', (for mouse) 'mouse', 'MM', 'mus musculus',
 (for fly) drosophila', DM', 'fly'}
-
-\item{GO_db}{GO.db}
 
 \item{string_terms}{any GO Term string}
 }
@@ -39,7 +37,6 @@ For example, parsing which genes are associated with multiple MTOR terms (comple
 \donttest{
 query_GO(
          model_org = 'human',
-         GO_db = GO.db,
          string_terms = 'dense core vesicle'
          )
 }

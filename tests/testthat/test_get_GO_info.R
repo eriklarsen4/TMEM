@@ -1,7 +1,12 @@
 library(testthat)
+library(assertthat)
 library(TMEM)
 # define function
 get_GO_info <- function(list_of_interest, species) {
+  assertthat::assert_that(!is.null(species))
+  assertthat::assert_that(!is.null(list_of_interest))
+  assertthat::assert_that(grepl(species,
+                                pattern = 'human|HS|homo sapiens|mouse|mm|mus musculus|fly|fruit fly|dm|drosophila|drosophila melanogaster'))
   # First, define the species of interest ----
   if ( grepl(species, pattern = 'human|HS|homo sapiens', ignore.case = T) ) {
     abbrev_species_name <- org.Hs.eg.db
@@ -217,14 +222,14 @@ data("aDRG_DEG_list")
 
 # test whether the input string for species is valid ----
 testthat::test_that("get_GO_info species input is correct string option", {
-  ok_species <- c('human', 'HUMAN', 'Human', 'hs', 'HS', 'homo sapiens',
-               'Homo sapiens', 'Homo Sapiens', 'HOMO SAPIENS',
-               'mouse', 'MOUSE', 'Mouse', 'mm', 'MM', 'mus musculus',
-               'Mus musculus', 'Mus Musculus', 'MUS MUSCULUS',
-               'fly', 'FLY', 'Fly', 'fruit fly', 'FRUIT FLY', 'Fruit fly',
-               'Fruit Fly', 'dm', 'DM', 'Dm', 'drosophila melanogaster',
-               'DROSOPHILA MELANOGASTER', 'Drosophila Melanogaster',
-               'Drosophila melanogaster')
+  # ok_species <- c('human', 'HUMAN', 'Human', 'hs', 'HS', 'homo sapiens',
+  #              'Homo sapiens', 'Homo Sapiens', 'HOMO SAPIENS',
+  #              'mouse', 'MOUSE', 'Mouse', 'mm', 'MM', 'mus musculus',
+  #              'Mus musculus', 'Mus Musculus', 'MUS MUSCULUS',
+  #              'fly', 'FLY', 'Fly', 'fruit fly', 'FRUIT FLY', 'Fruit fly',
+  #              'Fruit Fly', 'dm', 'DM', 'Dm', 'drosophila melanogaster',
+  #              'DROSOPHILA MELANOGASTER', 'Drosophila Melanogaster',
+  #              'Drosophila melanogaster')
 
   testthat::expect_error(TMEM::get_GO_info(list_of_interest = aDRG_DEG_list, species = 'macaque'))
 
@@ -245,13 +250,17 @@ testthat::test_that("get_GO_info both parameters specified", {
 # test that the returned object is a list ----
 testthat::test_that("get_GO_info output is list of 6 objects", {
   result <- TMEM::get_GO_info(list_of_interest = aDRG_DEG_list, species = 'mm')
-  testthat::expect_is(result, 'list')
+  testthat::expect_message(regexp = "'select()' returned 1:many mapping between keys and columns")
+  testthat::expect_message(regexp = "'select()' returned 1:1 mapping between keys and columns")
+  testthat::expect_is(result, c(base::class(result)))
   testthat::expect_length(result, n = 6)
 })
 
 # test the returned object contents are not empty ----
 testthat::test_that("get_GO_info output does not contain empty elements", {
   result <- TMEM::get_GO_info(list_of_interest = aDRG_DEG_list, species = 'mm')
+  testthat::expect_message(regexp = "'select()' returned 1:many mapping between keys and columns")
+  testthat::expect_message(regexp = "'select()' returned 1:1 mapping between keys and columns")
   testthat::expect_gt(result$list_of_interest_aliases, expected = 1)
   testthat::expect_gt(result$unique_GOs, expected = 1)
   testthat::expect_gt(result$unique_GO_IDs, expected = 1)

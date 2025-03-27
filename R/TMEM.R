@@ -114,45 +114,6 @@ get_GO_info <- function(list_of_interest, species) {
                           column = 'GOALL',
                           multiVals = 'list')
   )
-  # Find the genes/proteins in the input list that don't have Ensembl/Entrez IDs ----
-  # indeces_without_Ensembl_IDs <- c(
-  #   which(is.na(Ensembl_IDs[]) == TRUE )
-  # )
-
-  # Find the genes/proteins that don't have GO IDs ----
-  # indeces_without_GO_IDs <- as.integer(c(
-  #   which(is.na(GO_IDs) |> unlist() |> as.character() == 'TRUE')
-  # ))
-
-  # Remove genes/proteins that don't have IDs ----
-  # if ( length(indeces_without_Ensembl_IDs) >= 1 &
-  #      length(indeces_without_GO_IDs) == 0 ) {
-  #
-  #   list_of_interest <- list_of_interest[-indeces_without_Ensembl_IDs]
-  #
-  # } else if (
-  #
-  #   length(indeces_without_Ensembl_IDs) == 0 &
-  #   length(indeces_without_GO_IDs) >= 1
-  #
-  # ) {
-  #
-  #   list_of_interest <- list_of_interest[-indeces_without_GO_IDs]
-  #
-  # } else if (
-  #
-  #   length(indeces_without_Ensembl_IDs) >= 1 &
-  #   length(indeces_without_GO_IDs) >= 1
-  #
-  # ) {
-  #
-  #   list_of_interest <- list_of_interest[-c(unique(indeces_without_GO_IDs, indeces_without_Ensembl_IDs))]
-  #
-  # } else {
-  #
-  #   list_of_interest <- list_of_interest
-  #
-  # }
 
   # Re-query the GO IDs having filtered the list ----
   GO_IDs <- c(
@@ -458,7 +419,6 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
 #'  (for fly) drosophila', DM', 'fly'
 #'
 #' @param string_terms any GO Term string
-#' @param GO_db GO.db
 #'
 #' @returns
 #' \strong{`query_GO_list`}: a list containing the following objects:
@@ -480,7 +440,6 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
 #' \donttest{
 #' query_GO(
 #'          model_org = 'human',
-#'          GO_db = GO.db,
 #'          string_terms = 'dense core vesicle'
 #'          )
 #' }
@@ -491,7 +450,7 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
 #' @import stringr
 #'
 #' @export
-query_GO <- function(model_org, GO_db, string_terms) {
+query_GO <- function(model_org, string_terms) {
 
   # GO_db<- eval(parse(text = GO.db::GO.db))
   abbrev_species_name <- vector()
