@@ -141,7 +141,7 @@ head(ortholog_df)
 ```
 
 It may be very useful to pass the list of genes with their aliases 
-(c(`list_of_interest_aliases`, `aDRG_DEG_list`)) to the `GO_INFO_fn`
+(c(`list_of_interest_aliases`, `aDRG_DEG_list`)) to the `get_GO_info` function
 
 ### **query_GO**
 
@@ -236,7 +236,7 @@ head(TMEM::find_row_Z(Expression_Profile = aDRG_TPM))
 
 ## Example Uses
 
-### **Finding Genes Related by a Generic GO Term relevant to a list of interest**
+### **Finding genes related by a generic GO Term relevant to a list of interest**
 
 Interested in finding out what has been documented to be related to a certain
 cellular phenomenon?
@@ -261,7 +261,7 @@ GO_info_by_term_df |>
 [1] "Sst"    "Syt4"   "Scg2"   "Syt5"   "Unc13c" "Syt6"
 ```
 
-Similarly, the results returned by the `GO_INFO_fn` include all the information
+Similarly, the results returned by the `get_GO_info` function include all the information
 on all the `GO Term`s-- not just including the genes/proteins from the list of
 interest that are associated with a `GO Term` (these IDs are called
 "`Overlap`"); it provides *all* the IDs associated with the `GO Term`
@@ -334,7 +334,7 @@ c(GO_info_by_term_df |>
 [37] "Syt10"    "Rims1"    "Unc13a"
 ```
 
-### **Finding Genes Related by Multiple Precise GO Terms**
+### **Finding genes related by multiple precise GO Terms**
 
 Interested in which genes from your list of interest overlap across multiple
 `GO Term`s elicited by your query/list of interest?
@@ -363,9 +363,9 @@ c(GO_info_by_term_df |>
 [1] "Syt4"
 ```
 
-### **Finding GO of Any Number of Genes**
+### **Finding GO terms of any number of genes**
 
-When a user is interested in all of the `Go Terms` that are shared by multiple
+When a user is interested in all of the `GO Terms` that are shared by multiple
 gene/protein IDs from the user's list of gene/protein IDs:
 
 ```r
@@ -410,7 +410,7 @@ head(gene_GO_info_df |>
 [6] "cytokine production involved in immune response"
 ```
 
-### **Finding Genes of a Specific GO Term**
+### **Finding genes of a specific GO Term**
 
 ```r
 head(GO_info_by_term_df |> 
@@ -426,7 +426,7 @@ head(GO_info_by_term_df |>
 [1] "Adrb1"    "Adrb2"    "App"      "Avp"      "Bdnf"     "Cacna2d1"
 ```
 
-### **Finding Enriched GOs from get_GO_info**
+### **Finding enriched GOs from get_GO_info**
 
 Determining which `GO`s (themes) are worth looking into further is the entire
 point of `GSEA`
