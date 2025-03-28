@@ -53,7 +53,7 @@ statistics (test statistics and p-value), even when computed exactly as describe
 Relatedly, `Bioconductor`'s gene ontologies do not employ `geneontology.org`'s gene ontology (nesting)
 structure, which effects any statistics a user might try to extract
 
-![]("C:\Users\Erik\Pictures\Screenshots\GOorgNesting.jpg")<!-- -->
+![](https://github.com/eriklarsen4/TMEM/blob/main/vignettes/GOorgNesting.jpg)<!-- -->
 
 I suggest using this function for exploratory work and plotting, while relying
 on `geneontology.org`'s [web browser](https://geneontology.org/) directly for
