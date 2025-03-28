@@ -140,15 +140,14 @@ head(ortholog_df)
 ```
 ```r
 # A tibble: 6 × 7
-  ref_species target_species input_gene ortholog_gene input_ensg   ortholog_ensg
-  <chr>       <chr>          <chr>      <chr>         <chr>        <chr>        
-1 mouse       human          Il31ra     IL31RA        ENSMUSG0000… ENSG00000164…
-2 mouse       NA             Il31ra     NA            ENSMUSG0000… NA           
-3 mouse       macaque        Il31ra     IL31RA        ENSMUSG0000… ENSMMUG00000…
-4 mouse       human          Shtn1      SHTN1         ENSMUSG0000… ENSG00000187…
-5 mouse       fly            Shtn1      Frl           ENSMUSG0000… FBgn0267795  
-6 mouse       macaque        Shtn1      SHTN1         ENSMUSG0000… ENSMMUG00000…
-# ℹ 1 more variable: description <chr>
+  ref_species target_species input_gene ortholog_gene input_ensg         ortholog_ensg      description                                                  
+  <chr>       <chr>          <chr>      <chr>         <chr>              <chr>              <chr>                                                        
+1 mouse       human          Il31ra     IL31RA        ENSMUSG00000050377 ENSG00000164509    interleukin 31 receptor A [Source:HGNC Symbol;Acc:HGNC:18969]
+2 mouse       NA             Il31ra     NA            ENSMUSG00000050377 NA                 NA                                                           
+3 mouse       macaque        Il31ra     IL31RA        ENSMUSG00000050377 ENSMMUG00000017394 interleukin 31 receptor A [Source:VGNC Symbol;Acc:VGNC:73624]
+4 mouse       human          Shtn1      SHTN1         ENSMUSG00000041362 ENSG00000187164    shootin 1 [Source:HGNC Symbol;Acc:HGNC:29319]                
+5 mouse       fly            Shtn1      Frl           ENSMUSG00000041362 FBgn0267795        Formin-like                                                  
+6 mouse       macaque        Shtn1      SHTN1         ENSMUSG00000041362 ENSMMUG00000007578 shootin 1 [Source:VGNC Symbol;Acc:VGNC:77333]
 ```
 
 It may be very useful to pass the list of genes with their aliases 
