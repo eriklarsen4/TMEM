@@ -306,7 +306,7 @@ GO_info_by_term_df |>
 [43] "Rims1"    "Unc13c"   "Unc13a"
 ```
 
-Lastly, to find those IDs across generic GO Terms **NOT** also in the provided
+Lastly, to find those IDs across generic `GO Terms` **NOT** also in the provided
 list of IDs:
 
 ```r
