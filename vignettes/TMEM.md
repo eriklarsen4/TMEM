@@ -31,6 +31,8 @@ functions
 
 ### **get_GO_info**
 
+#### Background
+
 After installing and attaching the `TMEM` package, one of its crucial functions
 is the `get_GO_info` that gathers all the gene ontology information of a list of
 gene or protein identifiers
@@ -55,12 +57,15 @@ structure, which effects any statistics a user might try to extract
 
 ![](https://github.com/eriklarsen4/TMEM/blob/main/vignettes/GOorgNesting.jpg)<!-- -->
 
-I suggest using this function for exploratory work and plotting, while relying
+
+I recommend using this function for exploratory work and plotting, while relying
 on `geneontology.org`'s [web browser](https://geneontology.org/) directly for
 publications-- I've noticed differences between `GO.db R package` results and
-those from the browser.
+those from the browser
 
 The statistical discrepancies are noted in the examples section of this vignette
+
+#### Example
 
 First, import the data in the package
 
@@ -117,6 +122,8 @@ unique_GO_IDs <- results |>
 
 ### **get_orthologs_and_aliases**
 
+#### Example
+
 Pass the gene list to the `get_orthologs_and_aliases`
 
 Since the data is derived from `mouse`, `mouse` will serve as the `ref_species`
@@ -149,6 +156,8 @@ It may be very useful to pass the list of genes with their aliases
 
 ### **query_GO**
 
+#### Background
+
 Another useful function with multiple uses is finding genes/proteins annotated 
 to certain `GO Terms`
 
@@ -156,6 +165,8 @@ This can be useful for:
   + investigating molecular pathways
   + investigating complexes (for cross-checking or discovery)
   + finding multiple `GO Terms` that contain a regular expression string
+
+#### Example
 
 ```r
 TMEM::query_GO(model_org = 'human',
@@ -212,10 +223,14 @@ query_GO_results$GO_df |>
 
 ### **find_row_Z**
 
+#### Background
+
 This function computes a Z-score for a provided matrix, currently agnostic to 
 grouping
 
 This is highly useful for generating transcriptional heatmaps
+
+#### Example 
 
 ```r
 data("aDRG_TPM")
@@ -238,7 +253,7 @@ head(TMEM::find_row_Z(Expression_Profile = aDRG_TPM))
 6 2.2909830  0.4158662 -0.5991097
 ```
 
-## Example Uses
+## Other Example Uses
 
 ### **Finding genes related by a generic GO Term relevant to a list of interest**
 
