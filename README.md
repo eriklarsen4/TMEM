@@ -6,7 +6,7 @@ Adapted from source code used to analyze data in Dr. Martha Bhattacharya's lab a
 
   + The lab studies transmembrane protein 184b (TMEM184B), a protein involved in axon degeneration, across multiple neuroscience model systems
 
-This package functions for:
+This package contains functions for:
 
   + gathering `gene ontology` information for streamlined downstream bioinformatics plotting
   + gathering orthologous gene and alias information
