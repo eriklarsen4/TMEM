@@ -58,7 +58,7 @@ structure, which effects any statistics a user might try to extract
 ![](https://github.com/eriklarsen4/TMEM/blob/main/vignettes/GOorgNesting.jpg)<!-- -->
 
 
-I recommend using this function for exploratory work and plotting, while relying
+For now, I recommend using the `get_GO_info` function for exploratory work and plotting, while relying
 on `geneontology.org`'s [web browser](https://geneontology.org/) directly for
 publications-- I've noticed differences between `GO.db R package` results and
 those from the browser
