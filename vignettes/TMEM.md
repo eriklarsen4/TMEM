@@ -536,7 +536,10 @@ for (i in 1:nrow(GO_info_by_term_df2)) {
 Add Adjusted P-values using BHM
 
 Note these, and all p-values do not match those from all the same results from
-the `geneontology.org` website
+the `geneontology.org` website (the image in the `get_GO_info` function 
+**Background** section)
+
+This will be addressed or corrected in later versions
 
 ```r
 
@@ -560,10 +563,15 @@ GO_info_by_term_df2 <- GO_info_by_term_df2 |>
 GO_info_by_term_df2$binom_adjp = p.adjust(p = GO_info_by_term_df2$binom_pval,
                                           method = 'BH')
 ```
-
-Compare these results with those from the image with annotations (red box) in the
-`get_GO_info` function **Background** section:
-
 ```r
-
+head(GO_info_by_term_df2 |> dplyr::select(-contains("Gene_IDs")))
+```
+```r
+  GO_Term_ID                    GO_Term GO_Term_Size Overlap Term_Freq  Expected       FE          pval          adjp    binom_pval    binom_adjp
+1 GO:0003674         molecular_function        28407     354 0.5176297 194.11114 1.823698 6.615575e-107 4.686767e-105 4.940656e-324 1.086944e-321
+2 GO:0005575         cellular_component        28573     353 0.5206545 195.24545 1.807981 5.449570e-106 3.736179e-104 4.940656e-324 1.086944e-321
+3 GO:0008150         biological_process        28891     351 0.5264491 197.41841 1.777950 2.982992e-104 1.940771e-102 4.940656e-324 1.086944e-321
+4 GO:0110165 cellular anatomical entity        19202     346 0.3498970 131.21139 2.636966 1.304309e-163 5.940196e-161 4.940656e-324 1.086944e-321
+5 GO:0009987           cellular process        17541     322 0.3196305 119.86142 2.686436 8.086055e-169 6.444586e-166 4.940656e-324 1.086944e-321
+6 GO:0005488                    binding        14278     285 0.2601724  97.56464 2.921140 5.746307e-179 7.327690e-176 4.940656e-324 1.086944e-321
 ```
