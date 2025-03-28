@@ -560,3 +560,10 @@ GO_info_by_term_df2 <- GO_info_by_term_df2 |>
 GO_info_by_term_df2$binom_adjp = p.adjust(p = GO_info_by_term_df2$binom_pval,
                                           method = 'BH')
 ```
+
+Compare these results with those from the image with annotations (red box) in the
+`get_GO_info` function **Background** section:
+
+```r
+
+```
