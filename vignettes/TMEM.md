@@ -46,10 +46,14 @@ one place without needing to generate multiple files and analyses in a browser--
 it's all in-house
 
 However, this `GSEA` utilizes `Bioconductor`'s **AnnotationDbi** package, thus,
-there are discrepancies with, for example, `geneontology.org`'s annotations
+there are discrepancies with, for example, `geneontology.org`'s annotations and its
+statistics (test statistics and p-value), even when computed exactly as described in
+`geneontology.org/PANTHER`'s [documentation](https://pantherdb.org/tips/tips_overrep.jsp)
 
-`Bioconductor` also does not employ `geneontology.org`'s gene ontology (nesting)
+Relatedly, `Bioconductor`'s gene ontologies do not employ `geneontology.org`'s gene ontology (nesting)
 structure, which effects any statistics a user might try to extract
+
+![]("C:\Users\Erik\Pictures\Screenshots\GOorgNesting.jpg")<!-- -->
 
 I suggest using this function for exploratory work and plotting, while relying
 on `geneontology.org`'s [web browser](https://geneontology.org/) directly for
