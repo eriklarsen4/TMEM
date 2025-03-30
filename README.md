@@ -1,3 +1,7 @@
+ <!-- badges: start -->
+  [![R-CMD-check](https://github.com/eriklarsen4/TMEM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/eriklarsen4/TMEM/actions/workflows/R-CMD-check.yaml)
+  <!-- badges: end -->
+
 **TMEM**
 
 Repository and package for bioinformatics- and molecular biology-related functions, facilitating biological data exploration and easier plotting of downstream NGS analyses (heatmaps, bargraphs, volcano plots, MA plots, scatter plots)
