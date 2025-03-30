@@ -76,11 +76,12 @@ get_GO_info <- function(list_of_interest, species) {
 
     if (list_of_interest[i] %in% AnnotationDbi::keys(abbrev_species_name, keytype = 'SYMBOL')) {
 
-      aliases[[i]] <- AnnotationDbi::mapIds(abbrev_species_name,
-                                            keys = c(list_of_interest[i]),
-                                            keytype = 'SYMBOL',
-                                            column = 'ALIAS',
-                                            multiVals = 'list')
+      aliases[[i]] <- suppressMessages(AnnotationDbi::mapIds(abbrev_species_name,
+                                                             keys = c(list_of_interest[i]),
+                                                             keytype = 'SYMBOL',
+                                                             column = 'ALIAS',
+                                                             multiVals = 'list')
+                                       )
 
     } else {
 
@@ -95,35 +96,38 @@ get_GO_info <- function(list_of_interest, species) {
   # Find Entrez (Ensembl) IDs from the input list ----
   Ensemble_IDs <- NULL
   Ensembl_IDs <- as.integer(
-    AnnotationDbi::mapIds(abbrev_species_name,
-                          keys = as.character(
-                            c(list_of_interest[])
-                          ),
-                          keytype = 'SYMBOL',
-                          column = 'ENTREZID')
+    suppressMessages(AnnotationDbi::mapIds(abbrev_species_name,
+                                           keys = as.character(
+                                             c(list_of_interest[])
+                                             ),
+                                           keytype = 'SYMBOL',
+                                           column = 'ENTREZID')
+    )
   )
 
   # Extract GO Terms for all genes/proteins in the input list ----
   GO_IDs <- NULL
   GO_IDs <- c(
-    AnnotationDbi::mapIds(abbrev_species_name,
-                          keys = as.character(
-                            c(list_of_interest[])
-                          ),
-                          keytype = 'SYMBOL',
-                          column = 'GOALL',
-                          multiVals = 'list')
+    suppressMessages(AnnotationDbi::mapIds(abbrev_species_name,
+                                           keys = as.character(
+                                             c(list_of_interest[])
+                                             ),
+                                           keytype = 'SYMBOL',
+                                           column = 'GOALL',
+                                           multiVals = 'list')
+    )
   )
 
   # Re-query the GO IDs having filtered the list ----
   GO_IDs <- c(
-      AnnotationDbi::mapIds(abbrev_species_name,
-                            keys = as.character(
-                              c(list_of_interest[])
-                            ),
-                            keytype = 'SYMBOL',
-                            column = 'GOALL',
-                            multiVals = 'list')
+      suppressMessages(AnnotationDbi::mapIds(abbrev_species_name,
+                                             keys = as.character(
+                                               c(list_of_interest[])
+                                               ),
+                                             keytype = 'SYMBOL',
+                                             column = 'GOALL',
+                                             multiVals = 'list')
+      )
   )
 
   # GO Term dataframe storage for the genes in the list ----
@@ -137,7 +141,7 @@ get_GO_info <- function(list_of_interest, species) {
   for (i in 1:length(GO_IDs)) {
     if ( !is.na(GO_IDs[[i]]) |> any() ) {
 
-      GENE_GO_INFO[i,3] <- paste0(names(AnnotationDbi::mapIds(GO.db, GO_IDs[[i]][], 'TERM', 'GOID')), collapse = ';')
+      GENE_GO_INFO[i,3] <- paste0(names(suppressMessages(AnnotationDbi::mapIds(GO.db::GO.db, GO_IDs[[i]][], 'TERM', 'GOID'))), collapse = ';')
 
     } else {
 
@@ -179,7 +183,7 @@ get_GO_info <- function(list_of_interest, species) {
     if ( !is.na(GO_IDs[[i]]) |> any() ) {
 
       x <- str_split(as.vector(GENE_GO_INFO[i,3]), pattern = ';', simplify = TRUE)
-      GENE_GO_INFO[i,4] <- paste0(as.character(AnnotationDbi::mapIds(GO.db, keys = x, keytype = 'GOID', 'TERM')), collapse = ';')
+      GENE_GO_INFO[i,4] <- paste0(as.character(suppressMessages(AnnotationDbi::mapIds(GO.db::GO.db, keys = x, keytype = 'GOID', 'TERM'))), collapse = ';')
     } else {
       GENE_GO_INFO[i,4] <- 'None'
     }
@@ -199,11 +203,12 @@ get_GO_info <- function(list_of_interest, species) {
   # GO storage for all GOs ----
   # Find all the genes/proteins within the list of terms
   GO.list <- list()
-  GO.list <- AnnotationDbi::mapIds(abbrev_species_name,
-                                  keys = Unique_GO_IDs[],
-                                  keytype = 'GOALL',
-                                  column = 'SYMBOL',
-                                  multiVals = 'list')
+  GO.list <- suppressMessages(AnnotationDbi::mapIds(abbrev_species_name,
+                                                    keys = Unique_GO_IDs[],
+                                                    keytype = 'GOALL',
+                                                    column = 'SYMBOL',
+                                                    multiVals = 'list')
+                              )
 
   GO_INFO <- matrix(nrow = length(Unique_GOs), ncol = 6)
   colnames(GO_INFO) <- c("GO_Term_ID", "GO_Term", "GO_Term_Size", "Gene_IDs", "Overlap", "Gene_IDs_from_List")
@@ -323,11 +328,12 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
   for (i in 1:length(list_of_interest)) {
     if ( list_of_interest[i] %in% AnnotationDbi::keys(species_nickname_db_object, keytype = 'SYMBOL') ) {
 
-      listy[[i]] <- AnnotationDbi::mapIds(species_nickname_db_object,
-                                          keys = c(list_of_interest[i]),
-                                          keytype = 'SYMBOL',
-                                          column = 'ALIAS',
-                                          multiVals = 'list')
+      listy[[i]] <- suppressMessages(AnnotationDbi::mapIds(species_nickname_db_object,
+                                                           keys = c(list_of_interest[i]),
+                                                           keytype = 'SYMBOL',
+                                                           column = 'ALIAS',
+                                                           multiVals = 'list')
+      )
 
     } else {
 
@@ -360,18 +366,18 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
   # extract ortholog information on all genes (genes in the input list and aliases) ----
   for (i in 1:length(species) ) {
 
-    result[[i]] <- orthogene::map_orthologs(genes = c(ALIAS |>
-                                                        unlist() |>
-                                                        as.character() |>
-                                                        unique())[which(
-                                                          !is.na(c(ALIAS |>
-                                                                     unlist() |>
-                                                                     as.character() |>
-                                                                     unique())) == T)],
-                                            input_species = ref_species,
-                                            output_species = species[i]) |>
-      dplyr::mutate(ref_species = as.character(ref_species), .before = 1)
-
+    result[[i]] <- suppressMessages(orthogene::map_orthologs(genes = c(ALIAS |>
+                                                                         unlist() |>
+                                                                         as.character() |>
+                                                                         unique())[which(
+                                                                           !is.na(c(ALIAS |>
+                                                                                      unlist() |>
+                                                                                      as.character() |>
+                                                                                      unique())) == T)],
+                                                             input_species = ref_species,
+                                                             output_species = species[i]) |>
+                                      dplyr::mutate(ref_species = as.character(ref_species), .before = 1)
+                                    )
   }
 
   result <- purrr::list_merge(result) %>%
@@ -383,7 +389,7 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
                                  .data$ortholog_ensg,
                                  .data$description)) %>%
     dplyr::mutate(across(c(1:5), ~case_when(.x == 'N/A' ~ NA, TRUE ~ .x))) |>
-    tidyr::pivot_wider(id_cols = c(.data$ref_species,
+    tidyr::pivot_wider(id_cols = c(ref_species,
                                    .data$input_gene),
                        names_from = .data$name,
                        values_from = .data$value,
@@ -490,9 +496,9 @@ query_GO <- function(model_org, string_terms) {
       )
     ])
 
-    GO.list = c(AnnotationDbi::mapIds(abbrev_species_name,
+    GO.list = c(suppressMessages(AnnotationDbi::mapIds(abbrev_species_name,
                        keys = c(as.character(
-                         AnnotationDbi::mapIds(GO.db::GO.db,
+                         suppressMessages(AnnotationDbi::mapIds(GO.db::GO.db,
                                 keys = c(
                                   AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM')[
                                     which(
@@ -503,10 +509,13 @@ query_GO <- function(model_org, string_terms) {
                                 keytype = 'TERM',
                                 column = 'GOID',
                                 multiVals = 'list')
+                         )
                        )),
                        keytype = 'GOALL',
                        column = 'SYMBOL',
-                       multiVals = 'list'))
+                       multiVals = 'list')
+                )
+    )
 
     rm_idx = c(which(as.character(is.na(GO.list[][])) == "TRUE"))
 
@@ -539,7 +548,7 @@ query_GO <- function(model_org, string_terms) {
       unique(
         as.character(
           unlist(
-            AnnotationDbi::mapIds(abbrev_species_name,
+            suppressMessages(AnnotationDbi::mapIds(abbrev_species_name,
                    keys = c(as.character(
                      AnnotationDbi::mapIds(GO.db::GO.db,
                             keys = c(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM'))[
@@ -551,17 +560,19 @@ query_GO <- function(model_org, string_terms) {
                      keytype = 'GOALL',
                      column = 'SYMBOL',
                      multiVals = 'list')
+          )
             )
           )
         )
     aliases = unique(
       as.character(
         unlist(
-          AnnotationDbi::mapIds(abbrev_species_name,
+          suppressMessages(AnnotationDbi::mapIds(abbrev_species_name,
                  keys = c(all_unique_genes),
                  keytype = 'SYMBOL',
                  column = 'ALIAS',
                  multiVals = 'list')
+          )
         )
       )
     )
