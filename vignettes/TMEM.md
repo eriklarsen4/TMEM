@@ -2,10 +2,12 @@
 
 ### **Install the TMEM Package dev version from GitHub**
 
-Install the package from `github`:
+Install the package on `github` (not yet published):
 
 ``` r 
-remotes::install_github('https://github.com/eriklarsen4/TMEM') 
+# for when published
+# remotes::install_github('https://github.com/eriklarsen4/TMEM') 
+devtools::install_github("eriklarsen4/TMEM")
 ```
 
 ### **Install the TMEM Package from CRAN**
