@@ -6,7 +6,7 @@
 
 Repository and package for bioinformatics- and molecular biology-related functions, facilitating biological data exploration and easier plotting of downstream NGS analyses (heatmaps, bargraphs, volcano plots, MA plots, scatter plots)
 
-Adapted from source code used to analyze data in Dr. Martha Bhattacharya's lab at the University of Arizona
+Adapted from source code used to analyze data in **Dr. Martha Bhattacharya's lab** at the **University of Arizona**
 
   + The lab studies transmembrane protein 184b (TMEM184B), a protein involved in axon degeneration, across multiple neuroscience model systems
 
