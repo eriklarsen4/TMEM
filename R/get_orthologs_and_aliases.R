@@ -53,6 +53,7 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
   assertthat::not_empty(list_of_interest)
   assertthat::assert_that(grepl(ref_species, pattern = '(human)|(mouse)|(fly)'),
                           msg = "ref_species must be exactly one of 'human', 'mouse', or 'fly'!")
+  ref_species <- match.arg(ref_species, c("human", "mouse", "fly"))
   # initialize variables ----
   ## list for aliases in the reference species
   listy <- list()

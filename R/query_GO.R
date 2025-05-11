@@ -5,7 +5,7 @@
 #'
 #' @param model_org a string comprising one of: (for human)
 #'  'human', 'HS', 'homo sapiens', (for mouse) 'mouse', 'MM', 'mus musculus',
-#'  (for fly) drosophila', DM', 'fly'
+#'  (for fly) 'drosophila', 'DM', 'fly'
 #'
 #' @param string_terms any GO Term string
 #'
@@ -50,6 +50,10 @@ query_GO <- function(model_org, string_terms) {
   assertthat::is.string(string_terms)
   assertthat::not_empty(model_org)
   assertthat::not_empty(string_terms)
+
+  model_org <- match.arg(model_org, c("human", "Hs", "HS", "homo sapiens",
+                                      "mouse", "Mm", "MM", "mus musculus",
+                                      "fly", "fruit fly", "Dm", "DM", "drosophila melanogaster"))
 
   # GO_db<- eval(parse(text = GO.db::GO.db))
   abbrev_species_name <- vector()

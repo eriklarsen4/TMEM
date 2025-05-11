@@ -60,6 +60,9 @@ get_GO_info <- function(list_of_interest, species) {
   assertthat::is.string(list_of_interest)
   assertthat::not_empty(species)
   assertthat::not_empty(list_of_interest)
+  species <- match.arg(species, c("human", "Hs", "HS", "homo sapiens",
+                                  "mouse", "Mm", "MM", "Mus musculus",
+                                  "fly", "fruit fly", "Dm", "DM", "drosophila", "drosophila melanogaster"))
   # First, define the species of interest ----
   if ( grepl(species, pattern = 'human|HS|homo sapiens', ignore.case = T) ) {
     abbrev_species_name <- org.Hs.eg.db
