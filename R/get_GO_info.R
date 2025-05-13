@@ -42,7 +42,8 @@
 #' }
 #'
 #' @import assertthat
-#' @import AnnotationDbi
+#' @importFrom AnnotationDbi, keys
+#' @importFrom AnnotationDbi, mapIds
 #' @import org.Hs.eg.db
 #' @import org.Mm.eg.db
 #' @import org.Dm.eg.db
