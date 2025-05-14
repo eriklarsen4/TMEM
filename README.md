@@ -1,6 +1,5 @@
  <!-- badges: start -->
   [![R-CMD-check](https://github.com/eriklarsen4/TMEM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/eriklarsen4/TMEM/actions/workflows/R-CMD-check.yaml)
-  [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/TMEM)](https://cran.r-project.org/package=TMEM)
   <!-- badges: end -->
 
 **TMEM**
