@@ -17,11 +17,11 @@ This package contains functions for:
   + gathering the genes and specific `gene ontology` terms associated with a generic `gene ontology`
   + extracting a Z-score matrix from a transcriptional profile dataframe for plotting heatmaps
 
-Included data is derived from the publicly available dataset from the "[itch paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/)",
-also contained within the [Itch](https://github.com/eriklarsen4/Itch) repository
+Included data is derived from the publicly available dataset from the "[itch paper](<https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/>)",
+also contained within the [Itch](<https://github.com/eriklarsen4/Itch>) repository
 
-Three separate publications involved the use of these functions (see [here](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/), [here](https://pubmed.ncbi.nlm.nih.gov/37730546/), and [here](https://pubmed.ncbi.nlm.nih.gov/39975166/)); these publications
-have their own repositories and packages (again, see [here](https://github.com/eriklarsen4/Itch)).
+Three separate publications involved the use of these functions (see [here](<https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/>), [here](<https://pubmed.ncbi.nlm.nih.gov/37730546/>), and [here](<https://pubmed.ncbi.nlm.nih.gov/39975166/>)); these publications
+have their own repositories and packages (again, see [here](<https://github.com/eriklarsen4/Itch>)).
 These functions were developed, in-house, years before any Bioconductor updates (APIs) to enable R/Python users of GSEA tools to access the same data from the command line instead of downloading and parsing from websites.
 
-A vignette has been made available [here](https://github.com/eriklarsen4/TMEM/blob/main/vignettes/TMEM.md)
+A vignette has been made available [here](<https://github.com/eriklarsen4/TMEM/blob/main/vignettes/TMEM.md>)
