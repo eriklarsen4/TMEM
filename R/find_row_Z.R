@@ -18,7 +18,6 @@
 #' find_row_Z(Expression_Profile = aDRG_TPM)
 #' }
 #'
-#' @importFrom stats sd
 #' @import assertthat
 #' @import purrr
 #'
@@ -48,11 +47,20 @@ find_row_Z <- function(Expression_Profile){
 
   ## Loop through the dataframe and fill the "mean" and "sd" columns with their appropriate values
   for (i in 1:nrow(MeansAndSDs)){
-    MeansAndSDs$mean[i] <- (sum(Expression_Profile[i,c(2:ncol(Expression_Profile))])/ncol(Expression_Profile[,c(2:ncol(Expression_Profile))]))
+    MeansAndSDs$mean[i] <- (sum(Expression_Profile[i,c(2:ncol(Expression_Profile))])/ncol(Expression_Profile[,c(2:ncol(Expression_Profile))])) # row mean
   }
-  for (j in 1:nrow(MeansAndSDs)){
-    MeansAndSDs$sd[j] <- sd(Expression_Profile[j,c(2:ncol(Expression_Profile))], na.rm = TRUE)
+  # for (j in 1:nrow(MeansAndSDs)){
+  #   MeansAndSDs$sd[j] <- sd(Expression_Profile[j,c(2:ncol(Expression_Profile))], na.rm = TRUE) # row sd
+  # }
+
+  for (i in 1:nrow(MeansAndSDs)){
+    for (j in 2:ncol(MeansAndSDs)){
+      MeansAndSDs$sd[i] <- sum(
+        (Expression_Profile[i,j] - (sum(Expression_Profile[i,c(2:ncol(Expression_Profile))])/ncol(Expression_Profile[,c(2:ncol(Expression_Profile))]))
+        )^2)/ncol(Expression_Profile[,c(2:ncol(Expression_Profile))])
+    }
   }
+
   ## Create a dataframe storing the gene-specific mean normalized TPM in all columns/replicates for Z-score calculating
   GeneMeans[,c(2:ncol(Expression_Profile))] <- MeansAndSDs$mean
   ## Create a dataframe storing the gene-specific normalized TPM standard deviationsin all columns/replicates for Z-score calculating

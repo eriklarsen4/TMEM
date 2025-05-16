@@ -24,7 +24,7 @@ Imports:
     org.Hs.eg.db,
     org.Mm.eg.db,
     org.Dm.eg.db,
-    stats,
+    AnnotationDbi,
     rlang,
     assertthat
 RoxygenNote: 7.3.1
@@ -35,7 +35,6 @@ Suggests:
     rmarkdown,
     devtools,
     rstatix,
-    AnnotationDbi,
     testthat (>= 3.0.0),
     spelling
 VignetteBuilder: knitr

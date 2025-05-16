@@ -41,6 +41,8 @@
 #' get_GO_info(list_of_interest = aDRG_DEG_list, species = 'mouse')
 #' }
 #'
+#' @importFrom AnnotationDbi keys
+#' @importFrom AnnotationDbi mapIds
 #' @import assertthat
 #' @import dplyr
 #' @import org.Hs.eg.db
@@ -48,8 +50,6 @@
 #' @import org.Dm.eg.db
 #' @import stringr
 #' @import GO.db
-#' @importFrom AnnotationDbi keys
-#' @importFrom AnnotationDbi mapIds
 #' @importFrom rlang .data
 #'
 #' @export
