@@ -42,17 +42,16 @@
 #' }
 #'
 #' @import assertthat
-#' @importFrom AnnotationDbi, keys
-#' @importFrom AnnotationDbi, mapIds
+#' @import dplyr
 #' @import org.Hs.eg.db
 #' @import org.Mm.eg.db
 #' @import org.Dm.eg.db
 #' @import stringr
-#' @import dplyr
 #' @import GO.db
+#' @importFrom AnnotationDbi keys
+#' @importFrom AnnotationDbi mapIds
 #' @importFrom rlang .data
 #'
-#' @rdname get_GO_info
 #' @export
 get_GO_info <- function(list_of_interest, species) {
   assertthat::assert_that(!is.null(list_of_interest))

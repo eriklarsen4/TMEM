@@ -30,12 +30,12 @@
 #'                          list_of_interest = aDRG_DEG_list)
 #' }
 #'
+#' @import dplyr
 #' @import org.Hs.eg.db
 #' @import org.Mm.eg.db
 #' @import org.Dm.eg.db
-#' @importFrom AnnotationDbi, keys
-#' @importFrom AnnotationDbi, mapIds
-#' @import dplyr
+#' @importFrom AnnotationDbi keys
+#' @importFrom AnnotationDbi mapIds
 #' @import purrr
 #' @import orthogene
 #' @import tidyr

@@ -18,7 +18,7 @@
 #' find_row_Z(Expression_Profile = aDRG_TPM)
 #' }
 #'
-#' @import stats
+#' @importFrom stats sd
 #' @import assertthat
 #' @import purrr
 #'

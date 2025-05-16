@@ -24,7 +24,6 @@ Imports:
     org.Hs.eg.db,
     org.Mm.eg.db,
     org.Dm.eg.db,
-    AnnotationDbi,
     stats,
     rlang,
     assertthat
@@ -36,7 +35,10 @@ Suggests:
     rmarkdown,
     devtools,
     rstatix,
-    testthat (>= 3.0.0)
+    AnnotationDbi,
+    testthat (>= 3.0.0),
+    spelling
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Source: <doi:10.1097/j.pain.0000000000002452>
+Language: en-US

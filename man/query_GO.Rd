@@ -9,7 +9,7 @@ query_GO(model_org, string_terms)
 \arguments{
 \item{model_org}{a string comprising one of: (for human)
 'human', 'HS', 'homo sapiens', (for mouse) 'mouse', 'MM', 'mus musculus',
-(for fly) drosophila', DM', 'fly'}
+(for fly) 'drosophila', 'DM', 'fly'}
 
 \item{string_terms}{any GO Term string}
 }
@@ -40,6 +40,5 @@ query_GO(
          string_terms = 'dense core vesicle'
          )
 }
-
 
 }
