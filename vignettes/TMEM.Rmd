@@ -53,7 +53,7 @@ or protein identifiers
 This is what is called **gene set enrichment analysis (GSEA)**
 
 The `GSEA` conducted on this dataset is included in full in [a markdown of another repository](https://github.com/eriklarsen4/Itch/blob/main/Code/GSEA/ItchGSEA.md),
-along with additional analyses for [that paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/#_ad93_)
+along with additional analyses for [that paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/)
 
 The real utility of the function is gathering all the relevant information in one
 place without needing to generate multiple files and analyses in a browser-- it's

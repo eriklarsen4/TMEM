@@ -39,5 +39,4 @@ Suggests:
     spelling
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-Source: <doi:10.1097/j.pain.0000000000002452>
 Language: en-US
