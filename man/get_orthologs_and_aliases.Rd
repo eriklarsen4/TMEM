@@ -12,25 +12,29 @@ get_orthologs_and_aliases(ref_species, list_of_interest)
 \item{list_of_interest}{a character vector containing gene symbols}
 }
 \value{
-\strong{`result`}: a dataframe housing:
- + the reference species
- + the reference gene symbols
- + the reference gene symbols' Ensembl IDs
- + remaining (target) species names
- + target species' orthologous gene symbols
- + target species' orthologous gene Ensembl IDs
+\strong{result}: a dataframe housing:
+\itemize{
+   \item the reference species
+   \item the reference gene symbols
+   \item the reference gene symbols' Ensembl IDs
+   \item remaining (target) species names
+   \item target species' orthologous gene symbols
+   \item target species' orthologous gene Ensembl IDs
+}
 }
 \description{
-\strong{`get_orthologs_and_aliases`} is a function that finds all the aliases and
-orthologs of the other four main model organisms from a character vector of
-gene symbols of another
+\strong{get_orthologs_and_aliases} is a function that finds all the aliases
+   and orthologs of the other four main model organisms from a character
+   vector of gene symbols of another
 }
 \details{
-Queries the Bioconductor db to extract the aliases of the provided gene symbols,
-then uses the `orthogene` package to extract orthologous gene information from
-the 5 main biological model species, and corrals into a practical and intuitive dataframe
+Queries the Bioconductor db to extract the aliases of the provided gene
+   symbols, then uses the \strong{orthogene} package to extract orthologous
+   gene information from the 5 main biological model species, and corrals
+   into a practical and intuitive dataframe
 
-\strong{`ref_species`} can be one of 'human', 'mouse', or 'fly'
+\strong{ref_species} can be one of \strong{"human"}, \strong{"mouse"}, or
+   \strong{"fly"}
 }
 \examples{
 \donttest{data("aDRG_DEG_list")

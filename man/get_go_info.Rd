@@ -13,35 +13,58 @@ list of genes or proteins}
 \item{species}{string of the species of the provided character vector}
 }
 \value{
-\strong{`GO_info_list`}: a list containing all the objects described below
-
-\strong{`gene_GO_info_df`}: a dataframe containing all the genes from the
-provided list and all the gene ontology terms with which each gene/protein
-has been associated with, imperically and/or theoretically
-\strong{`GO_info_by_term_df`}: a dataframe containing all the GO information for
-each GO term (i.e. how many and which genes are in each term) that is associated
-with at least one gene symbol from the provided character vector
-\strong{`unique_GOs`}: a character vector containing all the unique GO terms
-associated with at least one gene symbol from the provided character vector
-\strong{`unique_GO_IDs`}: a character vector containing all the unique GO terms'
-IDs for the terms associated with at least one gene symbol from the provided
-character vector
-\strong{`list_of_interest_aliases`}: a character vector of the same-species
-aliases associated with any gene symbol from the provided character vector AND
-the provided gene symbol character vector
-\strong{`aliases`}: a character vector of only the same-species aliases associated
-with any gene symbol from the provided character vector
+\strong{GO_info_list}: a list containing all the objects described below:
+\itemize{
+   \item \strong{gene_GO_info_df}: a dataframe containing all the genes from
+                                 the provided list and all the gene ontology
+                                 terms with which each gene/protein has been
+                                 associated with, empirically and/or
+                                 theoretically
+   \item \strong{GO_info_by_term_df}: a dataframe containing all the GO
+                                   information for each GO term (i.e. how
+                                   many and which genes are in each term)
+                                   that is associated with at least one gene
+                                   symbol from the provided character vector
+   \item \strong{unique_GOs}: a character vector containing all the unique GO
+                             terms associated with at least one gene symbol
+                             from the provided character vector
+   \item \strong{unique_GO_IDs}: a character vector containing all the unique
+                               GO terms' IDs for the terms associated with at
+                               least one gene symbol from the provided
+                               character vector
+   \item \strong{list_of_interest_aliases}: a character vector of the
+                                           same-species aliases associated
+                                           with any gene symbol from the
+                                           provided character vector AND the
+                                           provided gene symbol character
+                                           vector
+   \item \strong{aliases}: a character vector of only the same-species
+                         aliases associated with any gene symbol from the
+                         provided character vector
+}
 }
 \description{
-\strong{`get_GO_info`} is a function that extracts gene ontology (GO)
+\strong{get_GO_info} is a function that extracts gene ontology (GO)
 information about a list (character vector) of human/mouse/drosophila gene
 symbols
 }
 \details{
 Queries the Bioconductor db to extract the GO info for each gene/protein in a
-provided character vector.
+ provided character vector.
 
-\strong{`species`} can be one of 'human', 'HS', 'homo sapiens', 'mouse', 'Mm', 'mus musculus', 'drosophila', 'fly', 'fruit fly', 'DM' (all case insensitive)
+\strong{species} can be one of (all case sensitive):
+\itemize{
+   \item \strong{human}
+   \item \strong{HS}
+   \item \strong{homo sapiens}
+   \item \strong{mouse}
+   \item \strong{Mm}
+   \item \strong{mus musculus}
+   \item \strong{drosophila}
+   \item \strong{fly}
+   \item \strong{fruit fly}
+   \item \strong{DM}
+}
 }
 \examples{
 data(aDRG_DEG_list)

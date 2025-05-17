@@ -7,31 +7,42 @@
 query_GO(model_org, string_terms)
 }
 \arguments{
-\item{model_org}{a string comprising one of: (for human)
-'human', 'HS', 'homo sapiens', (for mouse) 'mouse', 'MM', 'mus musculus',
-(for fly) 'drosophila', 'DM', 'fly'}
+\item{model_org}{a string comprising one of:
+(for human) "human", "HS", or "homo sapiens"
+(for mouse) "mouse", "MM", or "mus musculus"
+(for fly) "drosophila", "DM", or "fly"}
 
 \item{string_terms}{any GO Term string}
 }
 \value{
-\strong{`query_GO_list`}: a list containing the following objects:
-\strong{`GO.Terms`}: a character vector of all the GO Terms associated with the organism and string of interest
-\strong{`GO.IDs`}: a character vector of all the GO IDs of the GO Terms associated with the organism and string of interest
-\strong{`all_unique_genes`}: a character vector of all the gene symbols associated with provided string
-\strong{`GO.list`}: a character vector of gene symbols associated with the GO string that is queried
-\strong{`GO_df`}: a dataframe housing the GO Term, ID, GO size, and its associated gene symbols
-\strong{`aliases`}: a character vector of the gene symbol aliases associated with the provided GO string
+\itemize{\strong{query_GO_list}: a list containing the following objects:
+   \item \strong{GO.Terms}: a character vector of all the GO Terms associated
+                           with the organism and string of interest
+   \item \strong{GO.IDs}: a character vector of all the GO IDs of the GO Terms
+                         associated with the organism and string of interest
+   \item \strong{all_unique_genes}: a character vector of all the gene
+                                   symbols associated with provided string
+   \item \strong{GO.list}: a character vector of gene symbols associated with
+                         the GO string that is queried
+   \item \strong{GO_df}: a dataframe housing the GO Term, ID, GO size, and
+                       its associated gene symbols
+   \item \strong{aliases}: a character vector of the gene symbol aliases
+                         associated with the provided GO string
+}
+\strong{query_GO_list}: a list containing the following objects:
 }
 \description{
-\strong{`query_GO`} is a function that queries the GO.db with a string
-term of interest for a given model organism
+\strong{query_GO} is a function that queries the GO.db with a string
+   term of interest for a given model organism
 }
 \details{
 Queries the GO.db within a species across (potentially) multiple GO Terms to
-aggregate all the terms and associated genes that overlap with a provided string.
-Designed for exploration of gene symbols' associations with multiple GO Terms.
+ aggregate all the terms and associated genes that overlap with a provided
+ string. Designed for exploration of gene symbols' associations with
+ multiple GO Terms.
 
-For example, parsing which genes are associated with multiple MTOR terms (complexes, etc.)
+For example, parsing which genes are associated with multiple MTOR terms
+ (complexes, etc.)
 }
 \examples{
 \donttest{

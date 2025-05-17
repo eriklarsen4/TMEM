@@ -1,36 +1,40 @@
 #' @title query_GO
 #' @description
 #' \strong{query_GO} is a function that queries the GO.db with a string
-#' term of interest for a given model organism
+#'    term of interest for a given model organism
 #'
 #' @param model_org a string comprising one of:
-#' \par{(for human) "human", "HS", or "homo sapiens"}
-#' \par{(for mouse) "mouse", "MM", or "mus musculus"}
-#' \par{(for fly) "drosophila", "DM", or "fly"}
+#'    (for human) "human", "HS", or "homo sapiens"
+#'    (for mouse) "mouse", "MM", or "mus musculus"
+#'    (for fly) "drosophila", "DM", or "fly"
 #'
 #' @param string_terms any GO Term string
 #'
 #' @returns
+#' \itemize{\strong{query_GO_list}: a list containing the following objects:
+#'    \item \strong{GO.Terms}: a character vector of all the GO Terms associated
+#'                            with the organism and string of interest
+#'    \item \strong{GO.IDs}: a character vector of all the GO IDs of the GO Terms
+#'                          associated with the organism and string of interest
+#'    \item \strong{all_unique_genes}: a character vector of all the gene
+#'                                    symbols associated with provided string
+#'    \item \strong{GO.list}: a character vector of gene symbols associated with
+#'                          the GO string that is queried
+#'    \item \strong{GO_df}: a dataframe housing the GO Term, ID, GO size, and
+#'                        its associated gene symbols
+#'    \item \strong{aliases}: a character vector of the gene symbol aliases
+#'                          associated with the provided GO string
+#' }
 #' \strong{query_GO_list}: a list containing the following objects:
-#' \par{\strong{GO.Terms}: a character vector of all the GO Terms associated
-#' \vspace with the organism and string of interest}
-#' \par{\strong{GO.IDs}: a character vector of all the GO IDs of the GO Terms
-#' \vspace associated with the organism and string of interest}
-#' \par{\strong{all_unique_genes}: a character vector of all the gene symbols
-#' \vspace associated with provided string}
-#' \par{\strong{GO.list}: a character vector of gene symbols associated with the
-#' \vspace GO string that is queried}
-#' \par{\strong{GO_df}: a dataframe housing the GO Term, ID, GO size, and its
-#' \vspace associated gene symbols}
-#' \par{\strong{aliases}: a character vector of the gene symbol aliases
-#' \vspace associated with the provided GO string}
 #'
 #' @details
 #' Queries the GO.db within a species across (potentially) multiple GO Terms to
-#' aggregate all the terms and associated genes that overlap with a provided string.
-#' Designed for exploration of gene symbols' associations with multiple GO Terms.
+#'  aggregate all the terms and associated genes that overlap with a provided
+#'  string. Designed for exploration of gene symbols' associations with
+#'  multiple GO Terms.
 #'
-#' For example, parsing which genes are associated with multiple MTOR terms (complexes, etc.)
+#' For example, parsing which genes are associated with multiple MTOR terms
+#'  (complexes, etc.)
 #'
 #' @examples
 #' \donttest{

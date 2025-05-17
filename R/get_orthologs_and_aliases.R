@@ -1,28 +1,32 @@
 #' @title get_orthologs_and_aliases
 #'
 #' @description
-#' \strong{get_orthologs_and_aliases} is a function that finds all the aliases and
-#' orthologs of the other four main model organisms from a character vector of
-#' gene symbols of another
+#' \strong{get_orthologs_and_aliases} is a function that finds all the aliases
+#'    and orthologs of the other four main model organisms from a character
+#'    vector of gene symbols of another
 #'
 #' @param ref_species a string containing the nickname of a model species
 #' @param list_of_interest a character vector containing gene symbols
 #'
 #' @returns
 #' \strong{result}: a dataframe housing:
-#' \par{the reference species}
-#' \par{the reference gene symbols}
-#' \par{the reference gene symbols' Ensembl IDs}
-#' \par{remaining (target) species names}
-#' \par{target species' orthologous gene symbols}
-#' \par{target species' orthologous gene Ensembl IDs}
+#' \itemize{
+#'    \item the reference species
+#'    \item the reference gene symbols
+#'    \item the reference gene symbols' Ensembl IDs
+#'    \item remaining (target) species names
+#'    \item target species' orthologous gene symbols
+#'    \item target species' orthologous gene Ensembl IDs
+#' }
 #'
 #' @details
-#' Queries the Bioconductor db to extract the aliases of the provided gene symbols,
-#' then uses the \strong{orthogene} package to extract orthologous gene information from
-#' the 5 main biological model species, and corrals into a practical and intuitive dataframe
+#' Queries the Bioconductor db to extract the aliases of the provided gene
+#'    symbols, then uses the \strong{orthogene} package to extract orthologous
+#'    gene information from the 5 main biological model species, and corrals
+#'    into a practical and intuitive dataframe
 #'
-#' \strong{ref_species} can be one of \strong{"human"}, \strong{"mouse"}, or \strong{"fly"}
+#' \strong{ref_species} can be one of \strong{"human"}, \strong{"mouse"}, or
+#'    \strong{"fly"}
 #'
 #' @examples
 #' \donttest{data("aDRG_DEG_list")

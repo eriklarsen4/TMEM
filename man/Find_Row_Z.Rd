@@ -7,17 +7,20 @@
 find_row_Z(Expression_Profile)
 }
 \arguments{
-\item{Expression_Profile}{a dataframe containing a list of gene symbols (first column);
+\item{Expression_Profile}{a dataframe containing a list of gene symbols
+(first column);
 remaining columns comprising samples (iterations) of expression values}
 }
 \value{
-\strong{`GeneZ`}: a dataframe with Z-scored expression values
+\strong{GeneZ}: a dataframe with Z-scored expression values
 }
 \description{
-\strong{`find_row_Z`} is a function that determines Z-scores of an expression matrix
+\strong{find_row_Z} is a function that determines Z-scores of an expression
+ matrix
 }
 \details{
-Z-scores are \strong{`row-wise`} across all columns containing samples (column 2 through the end of the dataframe)
+Z-scores are \strong{row-wise} across all columns containing samples
+(column 2 through the end of the dataframe)
 }
 \examples{
 \donttest{
