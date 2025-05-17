@@ -1,7 +1,7 @@
 #' @title get_orthologs_and_aliases
 #'
 #' @description
-#' \strong{`get_orthologs_and_aliases`} is a function that finds all the aliases and
+#' \strong{get_orthologs_and_aliases} is a function that finds all the aliases and
 #' orthologs of the other four main model organisms from a character vector of
 #' gene symbols of another
 #'
