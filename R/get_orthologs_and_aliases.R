@@ -9,20 +9,20 @@
 #' @param list_of_interest a character vector containing gene symbols
 #'
 #' @returns
-#' \strong{`result`}: a dataframe housing:
-#'  + the reference species
-#'  + the reference gene symbols
-#'  + the reference gene symbols' Ensembl IDs
-#'  + remaining (target) species names
-#'  + target species' orthologous gene symbols
-#'  + target species' orthologous gene Ensembl IDs
+#' \strong{result}: a dataframe housing:
+#' \par{the reference species}
+#' \par{the reference gene symbols}
+#' \par{the reference gene symbols' Ensembl IDs}
+#' \par{remaining (target) species names}
+#' \par{target species' orthologous gene symbols}
+#' \par{target species' orthologous gene Ensembl IDs}
 #'
 #' @details
 #' Queries the Bioconductor db to extract the aliases of the provided gene symbols,
-#' then uses the `orthogene` package to extract orthologous gene information from
+#' then uses the \strong{orthogene} package to extract orthologous gene information from
 #' the 5 main biological model species, and corrals into a practical and intuitive dataframe
 #'
-#' \strong{`ref_species`} can be one of 'human', 'mouse', or 'fly'
+#' \strong{ref_species} can be one of \strong{"human"}, \strong{"mouse"}, or \strong{"fly"}
 #'
 #' @examples
 #' \donttest{data("aDRG_DEG_list")

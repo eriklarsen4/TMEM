@@ -1,15 +1,17 @@
 #' @title find_row_Z
 #' @description
-#' \strong{`find_row_Z`} is a function that determines Z-scores of an expression matrix
+#' \strong{find_row_Z} is a function that determines Z-scores of an expression matrix
 #'
-#' @param Expression_Profile a dataframe containing a list of gene symbols (first column);
+#' @param Expression_Profile a dataframe containing a list of gene symbols
+#' (first column);
 #' remaining columns comprising samples (iterations) of expression values
 #'
 #' @returns
-#' \strong{`GeneZ`}: a dataframe with Z-scored expression values
+#' \strong{GeneZ}: a dataframe with Z-scored expression values
 #'
 #' @details
-#' Z-scores are \strong{`row-wise`} across all columns containing samples (column 2 through the end of the dataframe)
+#' Z-scores are \strong{row-wise} across all columns containing samples
+#' (column 2 through the end of the dataframe)
 #'
 #'
 #' @examples

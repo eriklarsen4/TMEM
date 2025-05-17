@@ -1,7 +1,7 @@
 #' @title get_GO_info
 #'
 #' @description
-#' \strong{`get_GO_info`} is a function that extracts gene ontology (GO)
+#' \strong{get_GO_info} is a function that extracts gene ontology (GO)
 #' information about a list (character vector) of human/mouse/drosophila gene
 #' symbols
 #'
@@ -10,30 +10,32 @@
 #' @param species string of the species of the provided character vector
 #'
 #' @returns
-#' \strong{`GO_info_list`}: a list containing all the objects described below
-#'
-#' \strong{`gene_GO_info_df`}: a dataframe containing all the genes from the
+#' \strong{GO_info_list}: a list containing all the objects described below
+#' \par{\strong{gene_GO_info_df}: a dataframe containing all the genes from the
 #' provided list and all the gene ontology terms with which each gene/protein
-#' has been associated with, imperically and/or theoretically
-#' \strong{`GO_info_by_term_df`}: a dataframe containing all the GO information for
+#' has been associated with, imperically and/or theoretically}
+#' \par{\strong{GO_info_by_term_df}: a dataframe containing all the GO information for
 #' each GO term (i.e. how many and which genes are in each term) that is associated
-#' with at least one gene symbol from the provided character vector
-#' \strong{`unique_GOs`}: a character vector containing all the unique GO terms
-#' associated with at least one gene symbol from the provided character vector
-#' \strong{`unique_GO_IDs`}: a character vector containing all the unique GO terms'
+#' with at least one gene symbol from the provided character vector}
+#' \par{\strong{unique_GOs}: a character vector containing all the unique GO terms
+#' associated with at least one gene symbol from the provided character vector}
+#' \par{\strong{unique_GO_IDs}: a character vector containing all the unique GO terms'
 #' IDs for the terms associated with at least one gene symbol from the provided
-#' character vector
-#' \strong{`list_of_interest_aliases`}: a character vector of the same-species
+#' character vector}
+#' \par{\strong{list_of_interest_aliases}: a character vector of the same-species
 #' aliases associated with any gene symbol from the provided character vector AND
-#' the provided gene symbol character vector
-#' \strong{`aliases`}: a character vector of only the same-species aliases associated
-#' with any gene symbol from the provided character vector
+#' the provided gene symbol character vector}
+#' \par{\strong{aliases}: a character vector of only the same-species aliases associated
+#' with any gene symbol from the provided character vector}
 #'
 #' @details
 #' Queries the Bioconductor db to extract the GO info for each gene/protein in a
 #' provided character vector.
 #'
-#' \strong{`species`} can be one of 'human', 'HS', 'homo sapiens', 'mouse', 'Mm', 'mus musculus', 'drosophila', 'fly', 'fruit fly', 'DM' (all case insensitive)
+#' \strong{species} can be one of (all case sensitive):
+#' \par{\strong{human}, \strong{HS}, \strong{homo sapiens},}
+#' \par{\strong{mouse}, \strong{Mm}, \strong{mus musculus},}
+#' \par{\strong{drosophila}, \strong{fly}, \strong{fruit fly}, or \strong{DM}}
 #'
 #' @examples
 #' data(aDRG_DEG_list)
