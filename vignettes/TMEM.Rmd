@@ -46,30 +46,35 @@ We'll use the datasets included in the `TMEM` package to demonstrate its functio
 
 ### **get_GO_info**
 
-After installing and attaching the `TMEM` package, one of its crucial functions is
-the `get_GO_info` that gathers all the gene ontology information of a list of gene
-or protein identifiers
+After installing and attaching the `TMEM` package, one of its crucial functions
+is the `get_GO_info` that gathers all the gene ontology information of a list of
+gene or protein identifiers
 
-This is what is called **gene set enrichment analysis (GSEA)**
+This is called **gene set enrichment analysis (GSEA)**
 
-The `GSEA` conducted on this dataset is included in full in [a markdown of another repository](https://github.com/eriklarsen4/Itch/blob/main/Code/GSEA/ItchGSEA.md),
-along with additional analyses for [that paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/)
+The `GSEA` conducted on this dataset is included in full in
+[a markdown of another repository](https://github.com/eriklarsen4/Itch/blob/main/Code/GSEA/ItchGSEA.md),
+along with additional analyses for [that paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/#_ad93_)
 
-The real utility of the function is gathering all the relevant information in one
-place without needing to generate multiple files and analyses in a browser-- it's
-all in-house
+There, we used the statistical results directly from the `geneontology.org`
+website
 
-However, this `GSEA` utilizes `Bioconductor`'s **AnnotationDbi** package, thus, there are discrepancies
-with, for example, `geneontology.org`'s annotations
+The real utility of the `get_GO_info` function is in gathering all the relevant
+information in one place without needing to generate multiple files and analyses
+across one or more browsers-- it's all in-house
 
-`Bioconductor` also does not employ `geneontology.org`'s gene ontology (nesting) structure,
-which effects any statistics a user might try to extract
+However, because this function utilizes `Bioconductor`'s **AnnotationDbi** and
+**GO.db** packages, there are (unsurprisingly) discrepancies between
+`geneontology.org`'s annotations and `Bioconductor`'s. Furthermore,
+`Bioconductor` does not employ `geneontology.org`'s gene ontology nesting
+structure (see the vignette), which effects statistics (also not provided by
+`Bioconductor`) a user might try to extract
 
-I suggest using this function for exploratory work and plotting, while relying on
-`geneontology.org`'s [web browser](https://geneontology.org/) directly for publications-- I've
-noticed differences between `GO.db R package` results and those from the browser.
+Thus, for now, I recommend using the `get_GO_info` function for exploratory work
+and plotting, while relying on `geneontology.org`'s
+[web browser](https://geneontology.org/) directly for publications
 
-The statistical discrepancies are noted in the examples section of this vignette
+The statistical discrepancies are noted in the examples section of this markdown
 
 ```{r get_GO_info call, include = T, warning = F, message = F, echo = T}
 ## First import the data in the package
@@ -364,25 +369,26 @@ head(GO_info_by_term_df |>
 Determining which `GO`s (themes) are worth looking into further is the entire
 point of `GSEA`
 
-The `get_GO_info` function returns all the `GO Terms` relevant to a user's provided list, and
-does not include all annotated `GO Terms`
+The `get_GO_info` function returns all the `GO Terms` relevant to a user's
+provided list, and does not include all annotated `GO Terms`
 
-The function also relies on `Bioconductor`'s species-specific databases, as well as
-its own version of the `GO.db`'s annotations (which may, *themselves* differ from
-annotations on the `geneontology.org` website)
+As described in the **get_GO_info Background** section above, there are
+discrepancies between `Bioconductor`'s R packages and the `geneontology.org`
+website in terms of their annotations, which effect statistical inference
 
-Thus, there are discrepancies in which genes map to which terms, and in the adaptation
-of [PANTHER](https://pantherdb.org/tools/)'s
-(via [geneontology.org](https://geneontology.org/)) statistical methods
+Below, I derive enrichment according to `PANTHER`'s
+[documentation](https://pantherdb.org/tips/tips_overrep.jsp) and perform
+its subsequent statistical test with FDR correction and compare these results to
+the image from the `geneontology.org` website:
 
-In brief, `PANTHER` permits the computation of a binomial test statistic or, via
-Fisher's exact test, the probability of (in this case) observing at least the
-number of gene/protein IDs (or more) from the submitted list in a given `GO Term`
+In brief, `PANTHER` (`geneontology.org`) permits the computation of a
+binomial test statistic or, via Fisher's exact test, the probability of 
+in this case) observing at least the number of gene/protein IDs (or more) from
+the submitted list in a given `GO Term`
 
-`PANTHER` provides corresponding adjusted p-values via the `Benjamini-Hochberg Method`
-for each statistic (Fisher's p-value, binomial test statistic's p-value)
-
-See below examples of this
+`PANTHER` provides corresponding adjusted p-values via the
+`Benjamini-Hochberg Method` for each statistic (Fisher's p-value, binomial test
+statistic's p-value)
 
 ```{r Find_Enriched_GOs setup, include = T, message = F, warning = F, echo = T}
 

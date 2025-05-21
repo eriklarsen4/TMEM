@@ -45,27 +45,30 @@ The `GSEA` conducted on this dataset is included in full in
 [a markdown of another repository](https://github.com/eriklarsen4/Itch/blob/main/Code/GSEA/ItchGSEA.md),
 along with additional analyses for [that paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/#_ad93_)
 
-The real utility of the function is gathering all the relevant information in
-one place without needing to generate multiple files and analyses in a browser--
-it's all in-house
+There, we used the statistical results directly from the `geneontology.org`
+website
 
-However, this `GSEA` utilizes `Bioconductor`'s **AnnotationDbi** package, thus,
-there are discrepancies with, for example, `geneontology.org`'s annotations and its
-statistics (test statistics and p-value), even when computed exactly as described in
-`geneontology.org/PANTHER`'s [documentation](https://pantherdb.org/tips/tips_overrep.jsp)
+The real utility of the `get_GO_info` function is in gathering all the relevant
+information in one place without needing to generate multiple files and analyses
+across one or more browsers-- it's all in-house
 
-Relatedly, `Bioconductor`'s gene ontologies do not employ `geneontology.org`'s gene ontology (nesting)
-structure, which effects any statistics a user might try to extract
+However, because this function utilizes `Bioconductor`'s **AnnotationDbi** and
+**GO.db** packages, there are (unsurprisingly) discrepancies between
+`geneontology.org`'s annotations and `Bioconductor`'s. Furthermore,
+`Bioconductor` does not employ `geneontology.org`'s gene ontology nesting
+structure (pictured below), which effects statistics (also not provided by
+`Bioconductor`) a user might try to extract
 
 ![](https://github.com/eriklarsen4/TMEM/blob/main/vignettes/GOorgNesting.jpg)<!-- -->
 
 
-For now, I recommend using the `get_GO_info` function for exploratory work and plotting, while relying
-on `geneontology.org`'s [web browser](https://geneontology.org/) directly for
-publications-- I've noticed differences between `GO.db R package` results and
-those from the browser
+Thus, for now, I recommend using the `get_GO_info` function for exploratory work
+and plotting, while relying on `geneontology.org`'s
+[web browser](https://geneontology.org/) directly for publications
 
-The statistical discrepancies are noted in the examples section of this vignette
+The statistical discrepancies are noted in the examples section of the
+[markdown](https://github.com/eriklarsen4/TMEM/blob/main/vignettes/TMEM.Rmd)
+for this vignette
 
 #### Example
 
@@ -444,136 +447,4 @@ head(GO_info_by_term_df |>
 ```
 ```r
 [1] "Adrb1"    "Adrb2"    "App"      "Avp"      "Bdnf"     "Cacna2d1"
-```
-
-### **Finding enriched GOs from get_GO_info**
-
-Determining which `GO`s (themes) are worth looking into further is the entire
-point of `GSEA`
-
-The `get_GO_info` function returns all the `GO Terms` relevant to a user's provided list,
-and does not include all annotated `GO Terms`
-
-The function also relies on `Bioconductor`'s species-specific databases, as well
-as its own version of the `GO.db`'s annotations (which may, *themselves* differ
-from annotations on the `geneontology.org` website)
-
-Thus, there are discrepancies in which genes map to which terms, and in the
-adaptation of [PANTHER](https://pantherdb.org/tools/)'s
-(via [geneontology.org](https://geneontology.org/)) statistical methods
-
-In brief, `PANTHER` permits the computation of a binomial test statistic or, via
-Fisher's exact test, the probability of (in this case) observing at least the
-number of gene/protein IDs (or more) from the submitted list in a given `GO Term`
-
-`PANTHER` provides corresponding adjusted p-values via the
-`Benjamini-Hochberg Method` for each statistic (Fisher's p-value, binomial test
-statistic's p-value)
-
-See below examples of this
-
-```r
-Genes_in_Human_Genome <- 23481
-Genes_in_Mouse_Genome <- 54879
-
-# note that there are 21836 uniquely mapped genes
-
-GO_info_by_term_df2 <- GO_info_by_term_df |> 
-  dplyr::arrange(desc(Overlap)) |> 
-  dplyr::mutate(Term_Freq = GO_Term_Size/Genes_in_Mouse_Genome,
-                Expected = length(aDRG_DEG_list) * Term_Freq,
-                FE = Overlap/Expected) |> 
-  dplyr::filter(!is.na(GO_Term))
-```
-
-Compute the p-values according to `PANTHER`'s documentation
-
-```r
-for (i in 1:nrow(GO_info_by_term_df2)) {
-  
-  # compute p-value for binomial test statistic according to PANTHER's 
-  # documentation
-  
-    if (GO_info_by_term_df2$Overlap[i] > GO_info_by_term_df2$Expected[i]) { # for over-representation
-    GO_INFO_by_TERM_df2$pval[i] <- sum(
-      (GO_info_by_term_df2$Term_Freq[i]^(seq(GO_info_by_term_df2$Overlap[i],
-                                             length(aDRG_DEG_list))
-                                         ))*(1 - GO_info_by_term_df2$Term_Freq[i])^(seq(length(aDRG_DEG_list)-GO_info_by_term_df2$Overlap[i],
-                                                                                      0
-                                                                                     )
-                                                                                 )
-    )
-    } else { # for under-representation
-    GO_info_by_term_df2$pval[i] <- sum(
-      ((GO_info_by_term_df2$Term_Freq[i])^(seq(0,GO_info_by_term_df2$Overlap[i])
-                                         ))*(1 - GO_info_by_term_df2$Term_Freq[i])^(seq(length(aDRG_DEG_list),
-                                                                                      GO_info_by_term_df2$Overlap[i]
-                                                                                     
-                                                                                     )
-                                                                                 )
-    )
-    }
-}
-```
-
-Compute p-values using `rstatix`'s binomial test for both `df`s
-
-```r
-
-GO_info_by_term_df2$binom_pval = NA_real_
-
-for (i in 1:nrow(GO_info_by_term_df2)) {
-  GO_info_by_term_df2$binom_pval[i] = rstatix::binom_test(
-    x = c(GO_info_by_term_df2$Overlap[i],
-          GO_info_by_term_df2$GO_Term_Size[i]-GO_info_by_term_df2$Overlap[i]),
-    p = (GO_info_by_term_df2$GO_Term_Size[i]/Genes_in_Mouse_Genome),
-    alternative = 'two.sided',
-    conf.level = 0.95,
-    detailed = TRUE) |> 
-    dplyr::select(p) |> unlist() |> as.character() |> as.numeric()
-}
-
-```
-
-Add Adjusted P-values using BHM
-
-Note these, and all p-values do not match those from all the same results from
-the `geneontology.org` website (the image in the `get_GO_info` function 
-**Background** section)
-
-This will be addressed or corrected in later versions
-
-```r
-
-GO_info_by_term_df2$binom_adjp = NA_real_
-
-for (i in 1:nrow(GO_info_by_term_df2)) {
-  GO_info_by_term_df2$binom_adjp[i] = rstatix::binom_test(
-    x = c(GO_info_by_term_df2$Overlap[i],
-          GO_info_by_term_df2$GO_Term_Size[i]-GO_info_by_term_df2$Overlap[i]),
-    p = (GO_info_by_term_df2$GO_Term_Size[i]/Genes_in_Mouse_Genome),
-    alternative = 'two.sided',
-    conf.level = 0.95,
-    detailed = TRUE) |> 
-    dplyr::select(p) |> unlist() |> as.character() |> as.numeric()
-}
-
-GO_info_by_term_df2 <- GO_info_by_term_df2 |> 
-  dplyr::mutate(adjp = p.adjust(p = GO_info_by_term_df2$pval,
-                                method = 'BH'), .after= pval)
-
-GO_info_by_term_df2$binom_adjp = p.adjust(p = GO_info_by_term_df2$binom_pval,
-                                          method = 'BH')
-```
-```r
-head(GO_info_by_term_df2 |> dplyr::select(-contains("Gene_IDs")))
-```
-```r
-  GO_Term_ID                    GO_Term GO_Term_Size Overlap Term_Freq  Expected       FE          pval          adjp    binom_pval    binom_adjp
-1 GO:0003674         molecular_function        28407     354 0.5176297 194.11114 1.823698 6.615575e-107 4.686767e-105 4.940656e-324 1.086944e-321
-2 GO:0005575         cellular_component        28573     353 0.5206545 195.24545 1.807981 5.449570e-106 3.736179e-104 4.940656e-324 1.086944e-321
-3 GO:0008150         biological_process        28891     351 0.5264491 197.41841 1.777950 2.982992e-104 1.940771e-102 4.940656e-324 1.086944e-321
-4 GO:0110165 cellular anatomical entity        19202     346 0.3498970 131.21139 2.636966 1.304309e-163 5.940196e-161 4.940656e-324 1.086944e-321
-5 GO:0009987           cellular process        17541     322 0.3196305 119.86142 2.686436 8.086055e-169 6.444586e-166 4.940656e-324 1.086944e-321
-6 GO:0005488                    binding        14278     285 0.2601724  97.56464 2.921140 5.746307e-179 7.327690e-176 4.940656e-324 1.086944e-321
 ```
