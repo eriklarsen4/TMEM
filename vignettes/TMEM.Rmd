@@ -25,14 +25,6 @@ Alternatively, if the package is accepted by CRAN, install from CRAN
 utils::install.packages('TMEM')
 ```
 
-```{r Local install for dev, include = F, eval = F, warning = F, message = F, echo = F}
-devtools::install_local('C:/Users/Erik/Desktop/Programming/R/Bio/TMEM/TMEM_1.0.0.zip')
-devtools::install('C:/Users/Erik/Desktop/Programming/R/Bio/TMEM', dependencies = 'Imports')
-library(TMEM)
-devtools::load_all()
-```
-
-
 ### **Attach TMEM Package**
 
 ```{r Attach package, include = T, warning = F, message = F, echo = T}
