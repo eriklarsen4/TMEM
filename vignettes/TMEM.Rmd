@@ -1,9 +1,6 @@
 ---
 title: "TMEM"
-output: rmarkdown::html_vignette:
-  md_extensions: [
-  "-autolink_bare_uris"
-  ]
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{TMEM}
   %\VignetteEngine{knitr::rmarkdown}
