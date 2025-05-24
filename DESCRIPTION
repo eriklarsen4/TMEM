@@ -4,15 +4,17 @@ Title: Downstream Data Analysis Functions for NGS and Microscopy Data
 Version: 1.0.0
 Authors@R: c(person("Erik", "Larsen", email = "eriklarsen@arizona.edu", role = c("cre", "aut"), comment =  c(ORCID = '0000-0002-5878-1538')))
 Maintainer: Erik Larsen <eriklarsen@arizona.edu>
-Description: Data wrangling and downstream bioinformatics analysis of NGS data 
-    (gene or protein lists). Gathers and organizes gene symbol aliases,
-    orthologs, and species of the five model biological organisms for a given
-    list of interest. Facilitates the organization of gene ontology information
-    for analysis and annotation. This method's development began during the
-    analysis conducted for Larsen et al., (2022) (see below for URL) and was
-    also formally used for Wright et al., (2025) (see below for pre-print URL).
-    Example data used from the Itch repository (see below for URL).
-URL: <https://github.com/eriklarsen4/TMEM>, <https://github.com/eriklarsen4/Itch>, Larsen et al., (2022)<doi:10.1097/j.pain.0000000000002452>, Wright et al., (2025)<doi:10.1101/2025.02.01.635992>
+Description: Data wrangling and downstream bioinformatics analysis of NGS data
+(gene or protein lists). Gathers and organizes gene symbol aliases, orthologs, 
+and species of the five model biological organisms for a given
+list of interest. Facilitates the organization of gene ontology information
+for analysis and annotation. This method's development began during the analysis
+conducted for Larsen et al., (2022) (see URL field in DESCRIPTION for URL),
+persisted through Wright et al., (2023) (see URL field in DESCRIPTION for URL),
+and was also formally used for Wright et al., (2025) (will link URL after
+publication acceptance at Journal of Cell Science). Example data used from the
+eriklarsen4/Itch repository (see below for URL).
+URL: <https://github.com/eriklarsen4/TMEM>,<https://github.com/eriklarsen4/Itch>,<https://pmc.ncbi.nlm.nih.gov/articles/PMC10512654/>,<https://pmc.ncbi.nlm.nih.gov/articles/PMC10512654/>
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

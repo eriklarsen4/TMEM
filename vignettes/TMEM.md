@@ -43,7 +43,7 @@ This is called **gene set enrichment analysis (GSEA)**
 
 The `GSEA` conducted on this dataset is included in full in
 [a markdown of another repository](https://github.com/eriklarsen4/Itch/blob/main/Code/GSEA/ItchGSEA.md),
-along with additional analyses for [that paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/#_ad93_)
+along with additional analyses for [that paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/)
 
 There, we used the statistical results directly from the `geneontology.org`
 website
