@@ -81,7 +81,8 @@ The statistical discrepancies are noted in the examples section of this markdown
 data("aDRG_DEG_list")
 
 ## pass the variable into the function (data was derived from mouse)
-results <- TMEM::get_GO_info(list_of_interest = aDRG_DEG_list, species = 'mouse')
+results <- TMEM::get_GO_info(list_of_interest = aDRG_DEG_list[c(1:30)],
+                             species = 'mouse')
 ```
 
 Inspect results by unpacking everything from the returned list
@@ -134,7 +135,7 @@ Since the data is derived from `mouse`, `mouse` will serve as the `ref_species`
 
 ```{r get_orthologs_and_aliases call, include = T, message = F, warning = F, echo = T}
 ortholog_df <- TMEM::get_orthologs_and_aliases(ref_species = 'mouse',
-                                               list_of_interest = aDRG_DEG_list)
+                                               list_of_interest = aDRG_DEG_list[c(1:30)])
 ```
 
 Print the `ortholog_and_alias_fn` output to console
@@ -161,37 +162,24 @@ This can be useful for:
 #### Example
 
 ```{r query_GO fn call, include = T, message = F, warning = F, echo = T}
-TMEM::query_GO(model_org = 'human', string_terms = 'dense core vesicle|lysosome')
+query_GO_results <- TMEM::query_GO(model_org = 'human',
+                                   string_terms = 'dense core vesicle|lysosome')
 ```
 
-Extracting the gene/protein IDs associated with the `GO Terms` derived from the given
-regular expression(s) is non-trivial, depending on the function call.
+Extracting the gene/protein IDs associated with the `GO Terms` derived from the
+given regular expression(s) is non-trivial, depending on the function call.
 
-Those gene/protein IDs associated with a given term can be extracted directly using
-`dplyr` without storing all the function's results to an object in the global environment: 
+Those gene/protein IDs associated with a given term can be extracted directly
+using `dplyr` without storing all the function's results to an object in the
+global environment: 
   
 ```{r query_GO fn dplyr extraction, include = T, message = F, warning = F, echo = T}
-TMEM::query_GO(model_org = 'human', string_terms = 'dense core vesicle|lysosome') |> 
+query_GO_results |> 
   purrr::keep_at("GO_df") |> 
   as.data.frame() %>%
   dplyr::rename_with(., ~gsub(.x, pattern = 'GO_df.', replacement = '')) %>%
   dplyr::rename_with(., ~gsub(.x, pattern = '\\.\\.', replacement = 'N.')) |>
   dplyr::filter(GO.Term == 'endolysosome membrane') |> 
-  dplyr::select(Genes) |> 
-  unlist() |> 
-  as.character() %>%
-  stringr::str_split_1(., pattern = ';')
-```
-
-Alternatively, all of the results can be stored to an object in the global
-environment from which (in this example) the gene/protein IDs can be extracted:
-  
-```{r query_GO fn extraction, include = T, message = F, warning = F, echo = T}
-query_GO_results <- TMEM::query_GO(model_org = 'human',
-                                   string_terms = 'dense core vesicle|lysosome')
-  
-query_GO_results$GO_df |> 
-  dplyr::filter(`GO Term` == 'endolysosome membrane') |> 
   dplyr::select(Genes) |> 
   unlist() |> 
   as.character() %>%
