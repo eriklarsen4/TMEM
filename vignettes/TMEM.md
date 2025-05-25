@@ -2,7 +2,7 @@
 
 ### **Install the TMEM Package dev version from GitHub**
 
-Install the package on `github` (not yet published):
+Install the package on `github`:
 
 ``` r 
 # for when published
@@ -214,7 +214,7 @@ This is highly useful for generating transcriptional heatmaps
 
 ```r
 data("aDRG_TPM")
-head(TMEM::find_row_Z(Expression_Profile = aDRG_TPM))
+head(TMEM::find_row_Z(Expression_Profile = aDRG_TPM[c(1:10),]))
 ```
 ```r
           GeneID          WT1         WT2        WT3        WT4       Mut1
