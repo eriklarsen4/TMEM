@@ -1,5 +1,7 @@
  <!-- badges: start -->
   [![R-CMD-check](https://github.com/eriklarsen4/TMEM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/eriklarsen4/TMEM/actions/workflows/R-CMD-check.yaml)
+  ![Static Badge](https://img.shields.io/badge/MBNeuroLab-darkblue)
+  ![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)
   <!-- badges: end -->
 
 **TMEM**
