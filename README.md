@@ -26,7 +26,7 @@ This package contains functions for:
   plotting heatmaps
 
 Included data is derived from the publicly available dataset from the
-"[itch paper](<https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/>)", also
+"[itch paper](<https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445>)", also
 contained within the [eriklarsen4/Itch](<https://github.com/eriklarsen4/Itch>)
 repository.
 
@@ -40,8 +40,8 @@ respective URL.
 These functions were developed, in-house, years before any `Bioconductor`
 updates (APIs). The goal was to enable direct analysis and plotting of data
 acquired from websites providing downstream GSEA analysis (visualizing
-[usegalaxy.org](<https://usegalaxy.org/>) DESeq2 results,
-[geneontology.org/PANTHER](<https://geneontology.org/>)/KEGG results, etc.).
+[usegalaxy.org](<https://usegalaxy.org>) DESeq2 results,
+[geneontology.org/PANTHER](<https://geneontology.org>)/KEGG results, etc.).
 I have not yet compared the functionality between `Bioconductor`/GO.db with this package.
 
 Please see the [vignette](<https://github.com/eriklarsen4/TMEM/blob/main/vignettes/TMEM.md>) for more detail.
