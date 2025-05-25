@@ -18,7 +18,7 @@ Description: Data wrangling and downstream bioinformatics analysis of NGS data
     orthogene R package (see URL field in DESCRIPTION for URL), hence, the GPL-3
     license.
 URL: <https://github.com/eriklarsen4/TMEM>,<https://github.com/eriklarsen4/Itch>,<https://pmc.ncbi.nlm.nih.gov/articles/PMC10512654>,<https://pmc.ncbi.nlm.nih.gov/articles/PMC10512654>,<https://bioconductor.org/packages/release/bioc/html/orthogene.html>
-License: GPL-3 License
+LICENSE: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
