@@ -28,7 +28,7 @@ This package contains functions for:
   plotting heatmaps
 
 Included data is derived from the publicly available dataset from the
-"[itch paper](<https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445>)", also
+"[itch paper](<https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445>)". This data is also
 contained within the [eriklarsen4/Itch](<https://github.com/eriklarsen4/Itch>)
 repository.
 
@@ -36,7 +36,7 @@ Three publications involved the use of these functions and each of these
 publications have (or will have) their own repositories
 ([eriklarsen4/Itch](<https://github.com/eriklarsen4/Itch>),
 [eriklarsen4/Endo](<https://github.com/eriklarsen4/Endo>), and 
-`eriklarsen4/Hippo` coming soon). Please see those repositories for each paper's
+`eriklarsen4/Hippo` coming soon). Please see those repositories for more detailed vignettes and each paper's
 respective URL.
 
 These functions were developed, in-house, years before any `Bioconductor`
