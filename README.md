@@ -27,23 +27,25 @@ This package contains functions for:
   + extracting a Z-score matrix from a transcriptional profile dataframe for
   plotting heatmaps
 
-Included data is derived from the publicly available dataset from the
-"[itch paper](<https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445>)". This data is also
-contained within the [eriklarsen4/Itch](<https://github.com/eriklarsen4/Itch>)
-repository.
-
-Three publications involved the use of these functions and each of these
-publications have (or will have) their own repositories
-([eriklarsen4/Itch](<https://github.com/eriklarsen4/Itch>),
-[eriklarsen4/Endo](<https://github.com/eriklarsen4/Endo>), and 
-`eriklarsen4/Hippo` coming soon). Please see those repositories for more detailed vignettes and each paper's
-respective URL.
-
 These functions were developed, in-house, years before any `Bioconductor`
-updates (APIs). The goal was to enable direct analysis and plotting of data
+updates (APIs) that now contain similar functionality.
+The goal was to enable direct analysis and plotting of data
 acquired from websites providing downstream GSEA analysis (visualizing
 [usegalaxy.org](<https://usegalaxy.org>) DESeq2 results,
 [geneontology.org/PANTHER](<https://geneontology.org>)/KEGG results, etc.).
 I have not yet compared the functionality between `Bioconductor`/GO.db with this package.
 
-Please see the [vignette](<https://github.com/eriklarsen4/TMEM/blob/main/vignettes/TMEM.md>) for more detail.
+Three publications involved the use of these functions. Each of these
+publications have (or will have) their own repositories
+([eriklarsen4/Itch](<https://github.com/eriklarsen4/Itch>),
+[eriklarsen4/Endo](<https://github.com/eriklarsen4/Endo>), and 
+`eriklarsen4/Hippo` coming soon).
+Please see those repositories for vignettes including transcript expression [heatmaps, differential gene set analyses (volcano plots, MA plots)](https://github.com/eriklarsen4/Itch/blob/main/Code/DEA/ItchDEA.md),  [gene set enrichment analysis results](<https://github.com/eriklarsen4/Itch/blob/main/Code/GSEA/ItchGSEA.md>), [general statistical analyses (hypothesis testing and exploratory data analysis)](https://github.com/eriklarsen4/Endo/blob/master/vignettes/FIREpHly.md), and informal time series analyses. 
+They also contain each paper's respective URL (as of 6/18/2025, the [eriklarsen4/Endo](<https://github.com/eriklarsen4/Endo>) paper has been accepted by the *Journal of Cell Science*; the doi for this paper has not been released).
+
+The data included in this package is derived from the publicly available dataset from the
+"[itch paper](<https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445>)". This data is also
+contained within the [eriklarsen4/Itch](<https://github.com/eriklarsen4/Itch>)
+repository.
+
+Please see this repository's [vignette](<https://github.com/eriklarsen4/TMEM/blob/main/vignettes/TMEM.md>) for more detail about the **TMEM** package's functions.
