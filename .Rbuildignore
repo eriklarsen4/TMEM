@@ -4,3 +4,4 @@
 ^\.github$
 ^CRAN-SUBMISSION$
 ^.*devpkg\.R$
+^Dockerfile$

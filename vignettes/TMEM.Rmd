@@ -191,7 +191,7 @@ This is highly useful for generating transcriptional heatmaps
 
 ```{r find_row_Z call, include = T, message = F, warning = F, echo = T}
 data("aDRG_TPM")
-TMEM::find_row_Z(Expression_Profile = aDRG_TPM)
+TMEM::find_row_Z(Expression_Profile = aDRG_TPM[c(1:10),])
 ```
 
 
