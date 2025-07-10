@@ -41,7 +41,7 @@ publications have (or will have) their own repositories
 [eriklarsen4/Endo](<https://github.com/eriklarsen4/Endo>), and 
 `eriklarsen4/Hippo` coming soon).
 Please see those repositories for vignettes including transcript expression [heatmaps, differential gene set analyses (volcano plots, MA plots)](https://github.com/eriklarsen4/Itch/blob/main/Code/DEA/ItchDEA.md),  [gene set enrichment analysis results](<https://github.com/eriklarsen4/Itch/blob/main/Code/GSEA/ItchGSEA.md>), [general statistical analyses (hypothesis testing and exploratory data analysis)](https://github.com/eriklarsen4/Endo/blob/master/vignettes/FIREpHly.md), and informal time series analyses. 
-They also contain each paper's respective URL (as of 6/18/2025, the [eriklarsen4/Endo](<https://github.com/eriklarsen4/Endo>) paper has been accepted by the *Journal of Cell Science*; the doi for this paper has not been released).
+They also contain each paper's respective URL.
 
 The data included in this package is derived from the publicly available dataset from the
 "[itch paper](<https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445>)". This data is also
