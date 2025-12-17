@@ -1,9 +1,9 @@
+
+# copy the base image
 FROM rocker/rstudio:4.3.2
 
-ENV USER=rstudio
-ENV PASSWORD=tmem
+# copy the local tmem directory for the container
+COPY TMEM_1.0.0.zip /C:/Users/Erik/Desktop/Programming/R/Bio/TMEM/TMEM_1.0.0.zip
 
-COPY . /C:/Users/Erik/Desktop/Programming/R/Bio/TMEM
-WORKDIR /C:/Users/Erik/Desktop/Programming/R/Bio/TMEM
-
-EXPOSE 8787
+# install the TMEM package
+RUN R -e "install.packages('/C:/Users/Erik/Desktop/Programming/R/Bio/TMEM/TMEM_1.0.0.zip', repos = NULL, type = 'source')"
