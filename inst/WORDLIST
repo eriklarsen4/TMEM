@@ -18,6 +18,8 @@ NGS
 PMC
 TPM
 Tmem
+WES
+WTS
 aDRG
 al
 bargraphs
@@ -28,7 +30,7 @@ df
 drosophila
 eriklarsen
 et
-geneontology
+exome
 genomebiology
 github
 https
@@ -45,6 +47,6 @@ pseudogenes
 ribosomal
 tabset
 transcriptional
+transcriptome
 transmembrane
 unannotated
-usegalaxy
