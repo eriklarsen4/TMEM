@@ -26,7 +26,6 @@ Imports:
     tidyr,
     purrr,
     stringr,
-    orthogene (== 1.8.0),
     GO.db,
     org.Hs.eg.db,
     org.Mm.eg.db,
@@ -44,6 +43,7 @@ Suggests:
     rstatix,
     testthat (>= 3.0.0),
     spelling
+Remotes: neurogenomics@orthogene@v1.8.0
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Language: en-US
