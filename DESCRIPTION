@@ -26,7 +26,7 @@ Imports:
     tidyr,
     purrr,
     stringr,
-    orthogene (==1.8.0),
+    orthogene (== 1.8.0),
     GO.db,
     org.Hs.eg.db,
     org.Mm.eg.db,
