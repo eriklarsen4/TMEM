@@ -32,7 +32,8 @@ Imports:
     org.Dm.eg.db,
     AnnotationDbi,
     rlang,
-    assertthat
+    assertthat,
+    neurogenomics/orthogene@v1.8.0
 RoxygenNote: 7.3.1
 Depends: 
     R (>= 4.1.0)
@@ -43,7 +44,6 @@ Suggests:
     rstatix,
     testthat (>= 3.0.0),
     spelling
-Remotes: neurogenomics/orthogene@v1.8.0
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Language: en-US
