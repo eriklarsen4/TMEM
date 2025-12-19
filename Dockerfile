@@ -20,7 +20,7 @@ RUN install2.r --error --deps TRUE \
     assertthat \
     orthogene \
     grr \
-    rstatix \
+    rstatix
 
 # install the TMEM package
 RUN R -e "install.packages('TMEM_1.0.0.zip', repos = NULL, type = 'source')"
