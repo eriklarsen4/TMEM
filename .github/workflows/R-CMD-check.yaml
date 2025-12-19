@@ -42,9 +42,14 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: any::rcmdcheck, remotes
           needs: check
           error-on: '"error"'
+
+      - name: Install compatible orthogene package version
+        run: |
+          remotes::install_version("orthogene", version = "1.8.0")
+        shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v2
         with:
