@@ -44,8 +44,7 @@ Suggests:
     devtools,
     rstatix,
     testthat (>= 3.0.0),
-    spelling,
-    grr
+    spelling
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Language: en-US
