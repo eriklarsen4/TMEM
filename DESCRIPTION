@@ -21,6 +21,9 @@ URL: <https://github.com/eriklarsen4/TMEM>,<https://github.com/eriklarsen4/Itch>
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends: 
+    R (>= 4.3.2)
+biocViews:
 Imports:
     dplyr,
     tidyr,
@@ -35,16 +38,14 @@ Imports:
     assertthat,
     orthogene
 RoxygenNote: 7.3.1
-BiocViews:
-Depends: 
-    R (>= 4.3.2)
 Suggests: 
     knitr,
     rmarkdown,
     devtools,
     rstatix,
     testthat (>= 3.0.0),
-    spelling
+    spelling,
+    grr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Language: en-US
