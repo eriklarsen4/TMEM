@@ -42,7 +42,7 @@ jobs:
           error-on: '"error"'
 
       - name: Install compatible orthogene package version
-          run: remotes::install_version("orthogene", version = "1.8.0")
+        run: remotes::install_version("orthogene", version = "1.8.0")
           shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v2
