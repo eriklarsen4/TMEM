@@ -34,6 +34,9 @@ jobs:
         with:
           r-version: ${{ matrix.r-version }}
           use-public-rspm: true
+          packages: any::remotes
+          run: remotes::install_github("neurogenomcs/orthogene@v1.9.1")
+          shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -41,9 +44,9 @@ jobs:
           needs: check
           error-on: '"error"'
 
-      - name: Install compatible orthogene package version
-        run: remotes::install_github("neurogenomics/orthogene@v1.9.1")
-        shell: Rscript {0}
+      # - name: Install compatible orthogene package version
+      #   run: remotes::install_github("neurogenomics/orthogene@v1.9.1")
+      #   shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v2
         with:
