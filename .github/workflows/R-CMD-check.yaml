@@ -47,7 +47,7 @@ jobs:
           needs: check
 
           name: Install compatible orthogene package version
-          if: ${{ matrix.os. == 'ubuntu-latest' }}
+          if: ${{ matrix.os == 'ubuntu-latest' }}
           run: remotes::install_github("neurogenomics/orthogene@v1.9.1")
           shell: Rscript {0}
           error-on: '"error"'
