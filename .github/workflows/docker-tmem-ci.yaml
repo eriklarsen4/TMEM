@@ -32,7 +32,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ vars.DOCKER_USERNAME }}/tmem:latest
+          tags: ${{ steps.meta.outputs.tags }}
           #annotations: ${{ steps.meta.outputs.annotations }}
           provenance: true
           sbom: true
