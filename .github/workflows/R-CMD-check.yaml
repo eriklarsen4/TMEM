@@ -32,7 +32,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r@v2
         with:
-          r-version: ${{ matrix.os.r-version }}
+          r-version: ${{ matrix.r-version }}
           use-public-rspm: true
           # if: ${{ matrix.os == 'ubuntu-latest' }}
           # packages: any::remotes, any::rmdcheck, any::devtools
