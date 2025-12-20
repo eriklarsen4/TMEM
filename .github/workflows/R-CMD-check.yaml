@@ -35,21 +35,22 @@ jobs:
           r-version: ${{ matrix.os.r-version }}
           use-public-rspm: true
           # if: ${{ matrix.os == 'ubuntu-latest' }}
-          packages: any::remotes, any::rmdcheck, any::devtools
+          # packages: any::remotes, any::rmdcheck, any::devtools
           # run: devtools::install_version("pak", version = "0.3.1", repos = "https://cran.r-project.org")
           # packages: any::remotes, any::rmdcheck
-          run: remotes::install_github("neurogenomics/orthogene@v1.9.1")
-          shell: Rscript {0}
+          # run: remotes::install_github("neurogenomics/orthogene@v1.9.1")
+          # shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck , any::remotes
           needs: check
-          error-on: '"error"'
 
-      # - name: Install compatible orthogene package version
-      #   run: remotes::install_github("neurogenomics/orthogene@v1.9.1")
-      #   shell: Rscript {0}
+          name: Install compatible orthogene package version
+          if: ${{ matrix.os. == 'ubuntu-latest' }}
+          run: remotes::install_github("neurogenomics/orthogene@v1.9.1")
+          shell: Rscript {0}
+          error-on: '"error"'
 
       - uses: r-lib/actions/check-r-package@v2
         with:
