@@ -37,10 +37,12 @@
 #'  (complexes, etc.)
 #'
 #' @examples
+#' \donttest{
 #' query_GO(
 #'          model_org = 'human',
 #'          string_terms = 'dense core vesicle'
 #'          )
+#' }
 #'
 #' @importFrom AnnotationDbi keys
 #' @importFrom AnnotationDbi mapIds

@@ -59,10 +59,8 @@
 #' }
 #'
 #' @examples
-#' data(aDRG_DEG_list)
-#' \donttest{
-#' get_GO_info(list_of_interest = aDRG_DEG_list, species = 'mouse')
-#' }
+#' aDRG_DEG_list <- TMEM::aDRG_DEG_list
+#' get_GO_info(list_of_interest = aDRG_DEG_list[c(1:5)], species = 'mouse')
 #'
 #' @importFrom AnnotationDbi keys
 #' @importFrom AnnotationDbi mapIds
@@ -111,16 +109,12 @@ get_GO_info <- function(list_of_interest, species) {
       )
 
     } else {
-
       next()
-
     }
   }
   ## list returns all input gene/protein IDs AND alias gene/protein IDs
     ## if none returned, input gene/protein IDs are invalid, remaining function fails
-  assertthat::see_if(length(aliases |>
-                              unlist() |>
-                              as.character()) > 0,
+  assertthat::see_if(length(aliases |> unlist() |> as.character()) > 0,
                      msg = 'No valid gene symbols!')
 
   ## make a new list of interest that includes the original IDs AND aliases
@@ -173,62 +167,46 @@ get_GO_info <- function(list_of_interest, species) {
   ## skip over the genes/proteins without any
   for (i in seq_len(length(GO_IDs))) {
     if ( !is.na(GO_IDs[[i]]) |> any() ) {
-
       GENE_GO_INFO[i,3] <- paste0(names(suppressMessages(AnnotationDbi::mapIds(GO.db::GO.db, GO_IDs[[i]][], 'TERM', 'GOID'))), collapse = ';')
-
     } else {
-
       GENE_GO_INFO[i,3] <- 'None'
-
     }
   }
 
   for (i in seq_len(length(list_of_interest)) ) {
-
     GENE_GO_INFO[i,1] <- list_of_interest[i]
-
   }
 
   ## Extract the GO IDs and remove the redundant ones;
   ## Fill the 3rd column with the numbers of GO Terms associated with each gene/protein
   ## skip over the genes/proteins without any
   for (i in seq_len(length(GO_IDs)) ) {
-
     if ( !is.na(GO_IDs[[i]]) |> any() ) {
-
       x <- stringr::str_split(as.vector(GENE_GO_INFO[i,3]), pattern = ';', simplify = TRUE)
       x <- c(as.character(x[which(x %in% x == TRUE )]))
       GENE_GO_INFO[i,3] <- paste0(unique(x), collapse = ';')
       GENE_GO_INFO[i,2] <- paste0(as.numeric(length(unique(x))))
-
     } else {
-
       GENE_GO_INFO[i,3] <- 'None'
       GENE_GO_INFO[i,2] <- 0
     }
-
-
   }
 
   ## Fill the 4th column with the concatenated GO Terms associated with each gene/protein
   ## skip over the genes/proteins without any
   for (i in seq_len(length(GO_IDs)) ) {
     if ( !is.na(GO_IDs[[i]]) |> any() ) {
-
       x <- stringr::str_split(as.vector(GENE_GO_INFO[i,3]), pattern = ';', simplify = TRUE)
       GENE_GO_INFO[i,4] <- paste0(as.character(suppressMessages(AnnotationDbi::mapIds(GO.db::GO.db, keys = x, keytype = 'GOID', 'TERM'))), collapse = ';')
     } else {
       GENE_GO_INFO[i,4] <- 'None'
     }
   }
-
-
   ## Extract all of the terms/IDs into one vector to find unique GO terms
-  Unique_GOs <- c(unique(as.character(stringr::str_split(as.vector(GENE_GO_INFO[,4]), pattern = ';', simplify = T))))
-  Unique_GO_IDs <- c(unique(as.character(stringr::str_split(as.vector(GENE_GO_INFO[,3]), pattern = ';', simplify = T))))
+  Unique_GOs <- c(unique(as.character(stringr::str_split(as.vector(GENE_GO_INFO[,4]), pattern = ';', simplify = TRUE))))
+  Unique_GO_IDs <- c(unique(as.character(stringr::str_split(as.vector(GENE_GO_INFO[,3]), pattern = ';', simplify = TRUE))))
 
   if (any(Unique_GOs == '')) {
-
     Unique_GOs <- Unique_GOs[-which(Unique_GOs == '')]
     Unique_GO_IDs <- Unique_GO_IDs[-which(Unique_GO_IDs == '')]
   }
@@ -265,11 +243,10 @@ get_GO_info <- function(list_of_interest, species) {
     GO_INFO[i,6] <- paste0(c(list_of_interest[which(c(list_of_interest) %in% unique(GO.list[[i]]) == T)]), collapse = ';')
   }
   ## Convert to df
-  GO_INFO <- as.data.frame(GO_INFO) |> dplyr::mutate(GO_Term_Size = as.numeric(.data$GO_Term_Size), Overlap = as.numeric(.data$Overlap))
-  GENE_GO_INFO_df <- as.data.frame(GENE_GO_INFO) |>
+  GO_INFO <- GO_INFO |> as.data.frame() |> dplyr::mutate(GO_Term_Size = as.numeric(.data$GO_Term_Size), Overlap = as.numeric(.data$Overlap))
+  GENE_GO_INFO_df <- GENE_GO_INFO |> as.data.frame() |>
     dplyr::mutate(Num_GO_Terms = as.numeric(.data$Num_GO_Terms)) |>
     dplyr::filter(!is.na(.data$GeneID))
-
 
   # Export ----
   GO_info_list <- list("gene_GO_info_df" = GENE_GO_INFO_df,

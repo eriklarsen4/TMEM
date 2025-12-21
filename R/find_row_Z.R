@@ -36,7 +36,7 @@ find_row_Z <- function(Expression_Profile){
   message('find_row_Z expects the first column of input dataframe, `Expression_Profile`, to contain character IDs.\nComputations are conducted across c(2:ncol(`Expression_Profile`))!')
 
   # create an index of column numbers (samples) with expression values
-  idx <- which(vapply(Expression_Profile, is.numeric) == TRUE) |> as.numeric()
+  idx <- which(sapply(Expression_Profile, is.numeric) == TRUE) |> as.numeric()
 
   Z <- Expression_Profile |>
     dplyr::rowwise() %>%

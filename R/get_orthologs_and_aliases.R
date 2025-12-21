@@ -29,9 +29,11 @@
 #'    \strong{"fly"}
 #'
 #' @examples
-#' data("aDRG_DEG_list")
+#' \donttest{
+#' aDRG_DEG_list <- TMEM::aDRG_DEG_list
 #' get_orthologs_and_aliases(ref_species = 'mouse',
-#'                          list_of_interest = aDRG_DEG_list)
+#'                          list_of_interest = aDRG_DEG_list[c(1:5)])
+#' }
 #'
 #' @import dplyr
 #' @import org.Hs.eg.db
@@ -43,7 +45,6 @@
 #' @import orthogene
 #' @import tidyr
 #' @import assertthat
-#' @importFrom rlang .data
 #'
 #' @references [orthogene](https://github.com/neurogenomics/orthogene)
 #'
@@ -85,24 +86,19 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
   for (i in seq_len(length(list_of_interest)) ) {
     if ( list_of_interest[i] %in% AnnotationDbi::keys(species_nickname_db_object, keytype = 'SYMBOL') ) {
 
-      listy[[i]] <- suppressMessages(AnnotationDbi::mapIds(species_nickname_db_object,
-                                                           keys = c(list_of_interest[i]),
-                                                           keytype = 'SYMBOL',
-                                                           column = 'ALIAS',
-                                                           multiVals = 'list')
+      listy[[i]] <- suppressMessages(AnnotationDbi::mapIds(species_nickname_db_object, keys = c(list_of_interest[i]), keytype = 'SYMBOL',
+                                                           column = 'ALIAS', multiVals = 'list')
       )
 
     } else {
-
       next()
-
     }
   }
 
   ## convert the aliases list to a dataframe
   ALIAS <- purrr::list_flatten(listy) |>
     purrr::map_df(.f = as.data.frame) |>
-    dplyr::rename(Aliases = .data$`.x[[i]]`) |>
+    dplyr::rename(Aliases = 1) |>
     dplyr::mutate(SYMBOL = '', .before = 1)
 
   ## fill the "Symbol" column with the genes from the list of interest

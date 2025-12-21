@@ -37,9 +37,10 @@ Queries the Bioconductor db to extract the aliases of the provided gene
    \strong{"fly"}
 }
 \examples{
-\donttest{data("aDRG_DEG_list")
+\donttest{
+aDRG_DEG_list <- TMEM::aDRG_DEG_list
 get_orthologs_and_aliases(ref_species = 'mouse',
-                         list_of_interest = aDRG_DEG_list)
+                         list_of_interest = aDRG_DEG_list[c(1:5)])
 }
 
 }
