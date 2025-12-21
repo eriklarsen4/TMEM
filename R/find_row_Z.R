@@ -16,10 +16,8 @@
 #'
 #'
 #' @examples
-#' \donttest{
-#' data(aDRG_TPM)
-#' find_row_Z(Expression_Profile = aDRG_TPM)
-#' }
+#' aDRG_TPM <- TMEM::aDRG_TPM
+#' find_row_Z(Expression_Profile = aDRG_TPM[c(1:5),])
 #'
 #' @import assertthat
 #' @import dplyr

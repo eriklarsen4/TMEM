@@ -255,12 +255,5 @@ get_GO_info <- function(list_of_interest, species) {
                        "unique_GOs" = Unique_GOs,
                        "unique_GO_IDs" = Unique_GO_IDs,
                        "GO_info_by_term_df" = GO_INFO)
-  # GENE_GO_INFO_df <<- GENE_GO_INFO_df
-  # GO_INFO_by_TERM_df <<- GO_INFO
-  # Unique_GOs <<- Unique_GOs
-  # Unique_GO_IDs <<- Unique_GO_IDs
-  # list_of_interest_aliases <<- list_of_interest_and_aliases
-  # # all_unique_genes <<- all_unique_genes
-  # aliases <<- aliases
   return(GO_info_list)
 }
