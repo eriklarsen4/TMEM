@@ -2,7 +2,7 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [main, master]
+    branches: [master]
   pull_request:
 
 name: R-CMD-check.yaml
@@ -34,23 +34,11 @@ jobs:
         with:
           r-version: ${{ matrix.r-version }}
           use-public-rspm: true
-          # if: ${{ matrix.os == 'ubuntu-latest' }}
-          # packages: any::remotes, any::rmdcheck, any::devtools
-          # run: devtools::install_version("pak", version = "0.3.1", repos = "https://cran.r-project.org")
-          # packages: any::remotes, any::rmdcheck
-          # run: remotes::install_github("neurogenomics/orthogene@v1.9.1")
-          # shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck , remotes, BiocManager
           needs: check
-
-          name: Install compatible orthogene package version
-          if: ${{ matrix.os == 'ubuntu-latest' }}
-          run: BiocManager::install(version = '3.18'), BiocManager::install("neurogenomics/orthogene@v1.8.0")
-          shell: Rscript {0}
-          # error-on: '"error"'
 
       - uses: r-lib/actions/check-r-package@v2
         with:
