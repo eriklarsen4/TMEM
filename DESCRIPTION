@@ -22,7 +22,7 @@ License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: 
-    R (>= 4.3.2)
+    R (>= 4.3.0)
 biocViews:
 Imports:
     dplyr,
