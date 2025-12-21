@@ -29,10 +29,9 @@
 #'    \strong{"fly"}
 #'
 #' @examples
-#' \donttest{data("aDRG_DEG_list")
+#' data("aDRG_DEG_list")
 #' get_orthologs_and_aliases(ref_species = 'mouse',
 #'                          list_of_interest = aDRG_DEG_list)
-#' }
 #'
 #' @import dplyr
 #' @import org.Hs.eg.db
@@ -70,7 +69,7 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
 
   ## all the model organisms
   species <- c('human', 'mouse', 'fly', 'macaque', 'zebrafish')
-  species <- species[which(species %notin% ref_species == T)]
+  species <- species[which(species %notin% ref_species == TRUE)]
 
   ## the reference species db object
   species_nickname_db_object <- vector()
@@ -83,7 +82,7 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
   }
 
   # extract the list of aliases ----
-  for (i in 1:length(list_of_interest)) {
+  for (i in seq_len(length(list_of_interest)) ) {
     if ( list_of_interest[i] %in% AnnotationDbi::keys(species_nickname_db_object, keytype = 'SYMBOL') ) {
 
       listy[[i]] <- suppressMessages(AnnotationDbi::mapIds(species_nickname_db_object,
@@ -108,7 +107,7 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
 
   ## fill the "Symbol" column with the genes from the list of interest
   ## aliases of these genes are the 'Aliases' column
-  for (i in 1:length(listy)) {
+  for (i in seq_len(length(listy)) ) {
 
     ALIAS$SYMBOL[which(ALIAS$Aliases %in% listy[[i]][[1]] == T)] = listy[[i]] |> names()
 
@@ -122,7 +121,7 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
     dplyr::filter(is.na(.data$Aliases) | .data$Aliases != '')
 
   # extract ortholog information on all genes (genes in the input list and aliases) ----
-  for (i in 1:length(species) ) {
+  for (i in seq_len(length(species)) ) {
 
     result[[i]] <- suppressMessages(orthogene::map_orthologs(genes = c(ALIAS |>
                                                                          unlist() |>
@@ -131,7 +130,7 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
                                                                            !is.na(c(ALIAS |>
                                                                                       unlist() |>
                                                                                       as.character() |>
-                                                                                      unique())) == T)],
+                                                                                      unique())) == TRUE)],
                                                              input_species = ref_species,
                                                              output_species = species[i]) |>
                                       dplyr::mutate(ref_species = as.character(ref_species), .before = 1)
@@ -146,7 +145,7 @@ get_orthologs_and_aliases <- function(ref_species, list_of_interest) {
                                  .data$ortholog_gene,
                                  .data$ortholog_ensg,
                                  .data$description)) %>%
-    dplyr::mutate(across(c(1:5), ~dplyr::case_when(.x == 'N/A' ~ NA, TRUE ~ .x))) |>
+    dplyr::mutate(dplyr::across(c(1:5), ~dplyr::case_when(.x == 'N/A' ~ NA, TRUE ~ .x))) |>
     tidyr::pivot_wider(id_cols = c(ref_species,
                                    .data$input_gene),
                        names_from = .data$name,

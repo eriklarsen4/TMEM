@@ -99,7 +99,7 @@ get_GO_info <- function(list_of_interest, species) {
   }
   # Next, acquire all aliases within species ----
   aliases <- list()
-  for (i in 1:length(list_of_interest)) {
+  for (i in seq_len(length(list_of_interest))) {
 
     if (list_of_interest[i] %in% AnnotationDbi::keys(abbrev_species_name, keytype = 'SYMBOL')) {
 
@@ -171,7 +171,7 @@ get_GO_info <- function(list_of_interest, species) {
 
   ## Fill the GO Term ID column with the concatenated GO Term IDs associated with each gene/protein
   ## skip over the genes/proteins without any
-  for (i in 1:length(GO_IDs)) {
+  for (i in seq_len(length(GO_IDs))) {
     if ( !is.na(GO_IDs[[i]]) |> any() ) {
 
       GENE_GO_INFO[i,3] <- paste0(names(suppressMessages(AnnotationDbi::mapIds(GO.db::GO.db, GO_IDs[[i]][], 'TERM', 'GOID'))), collapse = ';')
@@ -183,7 +183,7 @@ get_GO_info <- function(list_of_interest, species) {
     }
   }
 
-  for (i in 1:length(list_of_interest)) {
+  for (i in seq_len(length(list_of_interest)) ) {
 
     GENE_GO_INFO[i,1] <- list_of_interest[i]
 
@@ -192,7 +192,7 @@ get_GO_info <- function(list_of_interest, species) {
   ## Extract the GO IDs and remove the redundant ones;
   ## Fill the 3rd column with the numbers of GO Terms associated with each gene/protein
   ## skip over the genes/proteins without any
-  for (i in 1:length(GO_IDs)) {
+  for (i in seq_len(length(GO_IDs)) ) {
 
     if ( !is.na(GO_IDs[[i]]) |> any() ) {
 
@@ -212,7 +212,7 @@ get_GO_info <- function(list_of_interest, species) {
 
   ## Fill the 4th column with the concatenated GO Terms associated with each gene/protein
   ## skip over the genes/proteins without any
-  for (i in 1:length(GO_IDs)) {
+  for (i in seq_len(length(GO_IDs)) ) {
     if ( !is.na(GO_IDs[[i]]) |> any() ) {
 
       x <- stringr::str_split(as.vector(GENE_GO_INFO[i,3]), pattern = ';', simplify = TRUE)
@@ -250,7 +250,7 @@ get_GO_info <- function(list_of_interest, species) {
   GO_INFO[ ,c(1,2,4,6)] <- ""
   GO_INFO[ , c(3,5)] <- 0
 
-  for (i in 1:length(Unique_GOs)) {
+  for (i in seq_len(length(Unique_GOs)) ) {
     ## Store the IDs
     GO_INFO[i,1] <- Unique_GO_IDs[i]
     GO_INFO[i,2] <- Unique_GOs[i]

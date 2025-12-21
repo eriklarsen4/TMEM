@@ -23,7 +23,13 @@ Encoding: UTF-8
 LazyData: true
 Depends: 
     R (>= 4.3.0)
-biocViews:
+biocViews: 
+  orthogene, 
+  GO.db, 
+  org.Hs.eg.db, 
+  org.Mm.eg.db, 
+  org.Dm.eg.db, 
+  AnnotationDbi
 Imports:
     dplyr,
     tidyr,
