@@ -127,7 +127,7 @@ Since the data is derived from `mouse`, `mouse` will serve as the `ref_species`
 
 ```{r get_orthologs_and_aliases call, include = T, message = F, warning = F, echo = T}
 ortholog_df <- TMEM::get_orthologs_and_aliases(ref_species = 'mouse',
-                                               list_of_interest = aDRG_DEG_list[c(1:30)])
+                                               list_of_interest = aDRG_DEG_list[c(1:6)])
 ```
 
 Print the `ortholog_and_alias_fn` output to console
@@ -191,7 +191,7 @@ This is highly useful for generating heatmaps
 
 ```{r find_row_Z call, include = T, message = F, warning = F, echo = T}
 data("aDRG_TPM")
-TMEM::find_row_Z(Expression_Profile = aDRG_TPM[c(1:10),])
+TMEM::find_row_Z(Expression_Profile = aDRG_TPM[c(1:5),])
 ```
 
 
@@ -259,7 +259,7 @@ c(GO_info_by_term_df |>
       stringr::str_split_1(., pattern = ';') |> 
       unique()
   ) %notin%
-  c(aDRG_DEG_list ) == T
+  c(aDRG_DEG_list ) == TRUE
 )
 ] # All the genes in all the GO Terms indexed by those that are NOT in the list 
     # of interest
@@ -287,7 +287,7 @@ c(GO_info_by_term_df |>
   as.character() %>%
   paste0(., collapse = ';') %>%
   stringr::str_split_1(., pattern = ';') |> 
-  duplicated() == T
+  duplicated() == TRUE
 )]
 
 ```

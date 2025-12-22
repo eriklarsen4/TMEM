@@ -29,11 +29,9 @@
 #'    \strong{"fly"}
 #'
 #' @examples
-#' \donttest{
 #' aDRG_DEG_list <- TMEM::aDRG_DEG_list
 #' get_orthologs_and_aliases(ref_species = 'mouse',
 #'                          list_of_interest = aDRG_DEG_list[c(1:5)])
-#' }
 #'
 #' @import dplyr
 #' @import org.Hs.eg.db
