@@ -1,0 +1,25 @@
+# Ignore everything by default
+**
+
+# Allow TMEM source archives (any version)
+!TMEM_*.zip
+
+# Allow Docker build files
+!Dockerfile
+!.dockerignore
+
+# Allow documentation and metadata
+!README.md
+!LICENSE
+!CITATION
+
+# Preserve your existing ignore rules
+.github/
+.gitignore
+.Rproj.user/
+TMEM.Rproj
+*.Rhistory
+TMEMapp/
+vignettes/
+*.md
+^CRAN*

@@ -1,0 +1,9 @@
+.github/
+.gitignore
+.Rproj.user/
+TMEM.Rproj
+*.Rhistory
+TMEMapp/
+vignettes/
+*.md
+^CRAN*
