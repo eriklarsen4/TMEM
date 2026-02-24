@@ -1,8 +1,11 @@
 # Ignore everything by default
 **
 
-# Allow TMEM source archives (any version)
-!TMEM_*.zip
+# Allow TMEM source tree
+!TMEM/
+
+# Ignore Windows binary packages
+TMEM_*.zip
 
 # Allow Docker build files
 !Dockerfile

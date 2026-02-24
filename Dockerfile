@@ -12,9 +12,11 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the TMEM package source archive into the container
-# (Assumes TMEM_1.0.0.tar.gz is built before docker build)
-COPY TMEM_1.0.0.tar.gz /tmp/
+# Copy the TMEM source tree into the container
+# (Binary artifacts are excluded via .dockerignore)
+COPY TMEM /TMEM
+WORKDIR /TMEM
+
 # Install Bioconductor annotation packages required by TMEM
 RUN R -e "install.packages('BiocManager'); \
           BiocManager::install(version = '3.18', ask = FALSE); \
@@ -28,11 +30,10 @@ RUN R -e "install.packages(c('dplyr','tidyr','purrr','stringr','rlang','assertth
 # Install orthogene from CRAN (grr dependency removed upstream)
 RUN R -e "install.packages('orthogene', repos='https://cloud.r-project.org')"
 
-# Install TMEM from the copied source archive
-RUN R -e \"install.packages('/tmp/TMEM_1.0.0.tar.gz', repos = NULL, type = 'source')\"
-
-# Remove temporary files
-RUN rm -f /tmp/TMEM_1.0.0.tar.gz
+# Install TMEM from the local source directory
+# (This replaces the old .tar.gz install step)
+RUN R -e "install.packages('remotes', repos='https://cloud.r-project.org'); \
+          remotes::install_local('.', upgrade = 'never')"
 
 # Default command (optional)
 CMD ["bash"]
