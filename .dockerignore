@@ -1,8 +1,13 @@
 # Ignore everything by default
 **
 
-# Allow TMEM source tree
-!TMEM/
+# Un-ignore the TMEM package (repo root)
+!DESCRIPTION
+!NAMESPACE
+!R/
+!man/
+!inst/
+!data/
 
 # Ignore Windows binary packages
 TMEM_*.zip

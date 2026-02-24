@@ -12,9 +12,9 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the TMEM source tree into the container
-# (Binary artifacts are excluded via .dockerignore)
-COPY TMEM /TMEM
+# Copy the TMEM package (repo root) into the container
+# The .dockerignore ensures only package files are included
+COPY . /TMEM
 WORKDIR /TMEM
 
 # Install Bioconductor annotation packages required by TMEM
