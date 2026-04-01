@@ -6,3 +6,8 @@ inst/doc
 ^.*\.devpkg.R
 ^.app
 ^TMEMapp
+TMEM_*.tar.gz
+TMEM_*.zip
+build/
+dockerfile.app
+dockerfile.app.txt
