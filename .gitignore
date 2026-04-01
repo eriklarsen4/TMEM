@@ -8,3 +8,5 @@ inst/doc
 ^TMEMapp
 TMEM_*.tar.gz
 TMEM_*.zip
+TMEMapp/.dockerignore
+pipelin goals.txt
