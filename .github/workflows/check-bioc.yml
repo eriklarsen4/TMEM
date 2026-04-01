@@ -44,11 +44,11 @@ jobs:
       - name: Install package dependencies
         run: |
           Rscript -e 'install.packages("remotes", repos="https://cloud.r-project.org")'
-          Rscript -e 'devtools::install_deps(dependencies = TRUE)'
+          Rscript -e 'remotes::install_deps(dependencies = TRUE)'
 
       - name: Install package
         run: |
-          Rscript -e 'devtools::install(".", upgrade="never")'
+          Rscript -e 'remotes::install_local(".", upgrade="never")'
 
       - name: Run R CMD check
         uses: r-lib/actions/check-r-package@v2

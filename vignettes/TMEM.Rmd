@@ -11,25 +11,28 @@ vignette: >
 
 ### **Install TMEM Package from GitHub**
 
-Install the package from `github`
+Install the package from `github` 
 
 ```{r Github install package, include = TRUE, eval = FALSE, warning = FALSE, message = FALSE, echo = TRUE}
-devtools::install_github('https://github.com/eriklarsen4/TMEM')
+install.packages("remotes")
+remotes::install_github("eriklarsen4/TMEM")
 ```
 
 ### **Install TMEM Package from CRAN**
 
-Alternatively, if the package is accepted by CRAN, install from CRAN
+Alternatively, if the package is accepted by `Bioconductor`, install from 
+`Bioconductor`
 
-```{r CRAN install TMEM package, include = TRUE, eval = FALSE, warning = FALSE, message = FALSE, echo = TRUE}
-# utils::install.packages('TMEM')
+```{r Bioconductor install TMEM package, include = TRUE, eval = FALSE, warning = FALSE, message = FALSE, echo = TRUE}
+# Install from Bioconductor
+install.packages("BiocManager")
+BiocManager::install("TMEM")
 ```
 
 ### **Attach TMEM Package**
 
 ```{r Attach package, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
 library(TMEM)
-devtools::load_all()
 ```
 
 We'll use the datasets included in the `TMEM` package to demonstrate its functions.
@@ -38,35 +41,36 @@ We'll use the datasets included in the `TMEM` package to demonstrate its functio
 
 ### **get_GO_info**
 
-After installing and attaching the `TMEM` package, one of its crucial functions
-is the `get_GO_info` that gathers all the gene ontology information of a list of
-gene or protein identifiers
++ A crucial function of the `TMEM` package is the `get_GO_info` function that 
+gathers **ALL** the gene ontology information of a list of gene or protein 
+identifiers
 
-This is called **gene set enrichment analysis (GSEA)**
++ This is called **gene set enrichment analysis (GSEA)**
 
-The `GSEA` conducted on this dataset is included in full in
++ The `GSEA` conducted on this dataset is included in full in
 [a markdown of another repository](https://github.com/eriklarsen4/Itch/blob/main/Code/GSEA/ItchGSEA.md),
 along with additional analyses for [that paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8854445/)
 
-There, we used the statistical results directly from the `geneontology.org`
-website
++ There, we used the statistical results directly from the `geneontology.org`
+website; this pre-dated the `clusterProfiler` package
 
-The real utility of the `get_GO_info` function is in gathering all the relevant
-information in one place without needing to generate multiple files and analyses
-across one or more browsers-- it's all in-house
++ The `get_GO_info` function gathers all the relevant information in one place 
+without needing to generate multiple files and analyses across 1+ browsers-- 
+it's all in-house
 
-However, because this function utilizes `Bioconductor`'s **AnnotationDbi** and
-**GO.db** packages, there are (unsurprisingly) discrepancies between
-`geneontology.org`'s annotations and `Bioconductor`'s. Furthermore,
-`Bioconductor` does not employ `geneontology.org`'s gene ontology nesting
-structure (see the vignette), which effects statistics (also not provided by
-`Bioconductor`) a user might try to extract
++ However, there are (unsurprisingly) discrepancies between `geneontology.org`'s
+annotations and `Bioconductor`'s
 
-Thus, for now, I recommend using the `get_GO_info` function for exploratory work
++ Furthermore, `Bioconductor` does not employ `geneontology.org`'s gene ontology 
+nesting structure (see the vignette), which effects statistics (also not 
+provided by `Bioconductor`) a user might try to extract
+
++ For now, I recommend using the `get_GO_info` function for exploratory work
 and plotting, while relying on `geneontology.org`'s
-[web browser](https://geneontology.org/) directly for publication statistics
+[web browser](https://geneontology.org/) directly, or the `clusterProfiler` 
+package for publication statistics
 
-The statistical discrepancies are noted in the examples section of this markdown
++ The statistical discrepancies are noted in the examples section of this markdown
 
 ```{r get_GO_info call, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
 ## First import the data in the package
@@ -77,7 +81,7 @@ results <- TMEM::get_GO_info(list_of_interest = aDRG_DEG_list[c(1:30)],
                              species = 'mouse')
 ```
 
-Inspect results by unpacking everything from the returned list
++ Inspect results by unpacking everything from the returned list
 
 ```{r GO_INFO_results, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
   ## GO INFO about each Unique GO returned by the list
@@ -111,7 +115,7 @@ unique_GO_IDs <- results |>
   purrr::keep_at("unique_GO_IDs")
 ```
 
-Print the `GO_info_by_term_df` to the console
++ Print the `GO_info_by_term_df` to the console
 
 ```{r Show GO_info_df, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
 head(GO_info_by_term_df)
@@ -121,9 +125,9 @@ head(GO_info_by_term_df)
 
 #### Example
 
-Pass the gene list to the `get_orthologs_and_aliases`
++ Pass the gene list to the `get_orthologs_and_aliases`
 
-Since the data is derived from `mouse`, `mouse` will serve as the `ref_species`
++ Since the data is derived from `mouse`, `mouse` will serve as the `ref_species`
 
 ```{r get_orthologs_and_aliases call, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
 ortholog_df <- TMEM::get_orthologs_and_aliases(ref_species = 'mouse',
@@ -136,15 +140,14 @@ Print the `ortholog_and_alias_fn` output to console
 head(ortholog_df)
 ```
 
-It may be very useful to pass the list of genes with their aliases 
++ *I recommend passing the list of genes with their aliases*, 
 (c(`list_of_interest_aliases`, `aDRG_DEG_list`)) to the `get_GO_info` function
 
 ### **query_GO**
 
 #### Background
 
-Another useful function with multiple uses is finding genes/proteins annotated 
-to certain `GO Terms`
+Want to find multiple genes/proteins annotated to certain `GO Terms`?
 
 This can be useful for:
 + investigating molecular pathways
@@ -158,10 +161,10 @@ query_GO_results <- TMEM::query_GO(model_org = 'human',
                                    string_terms = 'dense core vesicle|lysosome')
 ```
 
-Extracting the gene/protein IDs associated with the `GO Terms` derived from the
++ Extracting the gene/protein IDs associated with the `GO Terms` derived from the
 given regular expression(s) is non-trivial, depending on the function call.
 
-Those gene/protein IDs associated with a given term can be extracted directly
++ Those gene/protein IDs associated with a given term can be extracted directly
 using `dplyr` without storing all the function's results to an object in the
 global environment: 
   
@@ -182,10 +185,10 @@ query_GO_results |>
 
 #### Background
 
-This function computes a Z-score for a provided matrix, currently agnostic to 
++ This function computes a Z-score for a provided matrix, currently agnostic to 
 grouping
 
-This is highly useful for generating heatmaps
++ This is highly useful for generating heatmaps
 
 #### Example
 
@@ -199,13 +202,12 @@ TMEM::find_row_Z(Expression_Profile = aDRG_TPM[c(1:5),])
 
 ### **Finding Genes Related by a Generic GO Term relevant to a list of interest**
 
-Interested in finding out what has been documented to be related to a certain
-cellular phenomenon?
++ Interested in finding genes/proteins related to a certain cellular phenomenon?
 
-When there are multiple terms involving a certain phrase (i.e. organelles or processes),
-simply searching GO terms using regular expressions is an effective approach
++ When there are multiple terms involving a certain `GO` phrase (i.e. 
+`organelles` or `processes`), search `GO` terms with regular expressions!
 
-Obviously, this provides larger scope than investigating a specific term
++ Obviously, this provides larger scope than investigating a specific term
 
 ```{r Find_Genes_Related_By_Generic_GO_Term, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
 GO_info_by_term_df |> 
@@ -218,10 +220,14 @@ GO_info_by_term_df |>
   unique()
 ```
 
-Similarly, the results returned by the `get_GO_info` function include all the
++ Similarly, the results returned by the `get_GO_info` function include all the
 information on all the `GO Term`s-- not just including the genes/proteins from
 the list of interest that are associated with a `GO Term` (these IDs are called
-"`Overlap`"); it provides *all* the IDs associated with the `GO Term`
+"`Overlap`")
+
++ It provides *all* the IDs associated with the `GO Term`
+
++ `clusterProfiler` does not-- *it only includes statistically enriched terms*
 
 ```{r Find_All_Genes_Related_By_Generic_GO_Term, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
 GO_info_by_term_df |> 
@@ -234,8 +240,8 @@ GO_info_by_term_df |>
   unique()
 ```
 
-Lastly, to find those IDs across generic GO Terms **NOT** also in the provided list
-of IDs:
++ Lastly, to find those IDs across generic `GO Terms` **NOT** also in the 
+provided list of IDs:
 
 ```{r Find_Genes_Not_in_List_Across_GO_Terms, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
 "%notin%" <- Negate("%in%")
@@ -267,8 +273,8 @@ c(GO_info_by_term_df |>
 
 ### **Finding Genes Related by Multiple Precise GO Terms**
 
-Interested in which genes from your list of interest overlap across multiple
-`GO Term`s elicited by your query/list of interest?
++ Interested in which genes from your list of interest overlap across multiple
+`GO Term`s?
 
 ```{r Find_Genes_Related_By_GO_Terms, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
 c(GO_info_by_term_df |> 
@@ -294,7 +300,7 @@ c(GO_info_by_term_df |>
 
 ### **Finding GO of Any Number of Genes**
 
-When a user is interested in all of the `Go Terms` that are shared by multiple
++ When a user is interested in all of the `Go Terms` that are shared by multiple
 gene/protein IDs from the user's list of gene/protein IDs:
 
 ```{r Find_GOs_of_Muliple_Genes, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
@@ -310,8 +316,8 @@ head(gene_GO_info_df |>
   )
 ```
 
-Similarly, repeating the above for just one gene/protein is simpler-- remove the
-`|` and subsequent `GeneID`s:
++ Similarly, repeating the above for just one gene/protein is simpler-- remove the
+`|` in the `dplyr::filter` command and subsequent `GeneID`s:
 
 ```{r Find_All_GOs_of_One_Gene, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
 head(gene_GO_info_df |>
@@ -339,27 +345,27 @@ head(GO_info_by_term_df |>
 
 ### **Finding Enriched GOs from the get_GO_info function**
 
-Determining which `GO`s (themes) are worth looking into further is the entire
++ Determining which `GO`s (themes) are worth looking into further is the entire
 point of `GSEA`
 
-The `get_GO_info` function returns all the `GO Terms` relevant to a user's
-provided list, and does not include all annotated `GO Terms`
++ The `get_GO_info` function returns all the `GO Terms` relevant to a user's
+provided list
 
-As described in the **get_GO_info Background** section above, there are
-discrepancies between `Bioconductor`'s R packages and the `geneontology.org`
++ As described in the [get_GO_info Background](#get_GO_info-Background) section 
+above, there are discrepancies between `Bioconductor`'s R packages and the `geneontology.org`
 website in terms of their annotations, which effect statistical inference
 
-Below, I derive enrichment according to `PANTHER`'s
++ Below, I derive enrichment according to `PANTHER`'s
 [documentation](https://pantherdb.org/tips/tips_overrep.jsp) and perform
 its subsequent statistical test with FDR correction and compare these results to
 the image from the `geneontology.org` website:
 
-In brief, `PANTHER` (`geneontology.org`) permits the computation of a
++ In brief, `PANTHER` (`geneontology.org`) permits the computation of a
 binomial test statistic or, via Fisher's exact test, the probability of 
 in this case) observing at least the number of gene/protein IDs (or more) from
 the submitted list in a given `GO Term`
 
-`PANTHER` provides corresponding adjusted p-values via the
++ `PANTHER` provides corresponding adjusted p-values via the
 `Benjamini-Hochberg Method` for each statistic (Fisher's p-value, binomial test
 statistic's p-value)
 
@@ -379,7 +385,7 @@ GO_info_by_term_df2 <- GO_info_by_term_df |>
 
 ```
 
-Compute the p-values according to `PANTHER`'s documentation
++ Compute the p-values according to `PANTHER`'s documentation
 
 ```{r PANTHERs pval method, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
 for (i in seq_along(nrow(GO_info_by_term_df2)) ) {
@@ -409,7 +415,7 @@ for (i in seq_along(nrow(GO_info_by_term_df2)) ) {
 
 ```
 
-Compute p-values using `rstatix`'s binomial test for both `df`s
++ Compute p-values using `rstatix`'s binomial test for both `df`s
 
 ```{r rstatixs pval method, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
 
@@ -431,9 +437,9 @@ for (i in seq_along(nrow(GO_info_by_term_df2)) ) {
 
 ```
 
-Add Adjusted P-values using BHM
++ Add **Adjusted P-values** using `BHM`
 
-Note these, and all p-values do not match those from all the same results from
++ Note these, and all p-values, do not match those from all the same results from
 the `geneontology.org` website (the image in the `get_GO_info` function 
 **Background** section)
 

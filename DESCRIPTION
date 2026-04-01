@@ -50,7 +50,6 @@ RoxygenNote: 7.3.3
 Suggests:
     knitr,
     rmarkdown,
-    devtools,
     rstatix,
     testthat (>= 3.0.0),
     spelling
