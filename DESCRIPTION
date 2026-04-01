@@ -28,7 +28,11 @@ biocViews:
     GO,
     Orthology,
     OrganismData,
-    AnnotationData
+    AnnotationData,
+    Annotation,
+    FunctionalAnnotation,
+    Software,
+    GeneSetEnrichment
 Imports:
     dplyr,
     tidyr,

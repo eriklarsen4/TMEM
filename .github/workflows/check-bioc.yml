@@ -63,6 +63,11 @@ jobs:
           ))
         shell: Rscript {0}
 
+      - name: Install orthogene (>=1.8.0)
+        run: |
+          BiocManager::install("orthogene", ask = FALSE)
+        shell: Rscript {0}
+
       - name: Install package dependencies
         run: |
           install.packages("remotes")
