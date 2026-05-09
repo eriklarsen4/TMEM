@@ -121,7 +121,7 @@ unique_GO_IDs <- results |>
 
 + Print the `GO_info_by_term_df` to the console
 
-```{r Show GO_info_df, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```{r Show GO_info_df, eval = T, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
 head(GO_info_by_term_df)
 ```
 
@@ -140,7 +140,7 @@ ortholog_df <- TMEM::get_orthologs_and_aliases(ref_species = 'mouse',
 
 Print the `ortholog_and_alias_fn` output to console
 
-```{r Show ortholog results, include = T, message = F, warning = F, echo = T}
+```{r Show ortholog results, eval = T, include = T, message = F, warning = F, echo = T}
 head(ortholog_df)
 ```
 
@@ -172,7 +172,7 @@ given regular expression(s) is non-trivial, depending on the function call.
 using `dplyr` without storing all the function's results to an object in the
 global environment: 
   
-```{r query_GO fn dplyr extraction, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```{r query_GO fn dplyr extraction, eval = T, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
 query_GO_results |> 
   purrr::keep_at("GO_df") |> 
   as.data.frame() %>%
@@ -180,9 +180,9 @@ query_GO_results |>
   dplyr::rename_with(., ~gsub(.x, pattern = '\\.\\.', replacement = 'N.')) |>
   dplyr::filter(GO.Term == 'endolysosome membrane') |> 
   dplyr::select(Genes) |> 
-  unlist() |> 
-  as.character() %>%
-  stringr::str_split_1(., pattern = ';')
+  dplyr::pull() %>%
+  stringr::str_split_1(., pattern = ';') |> 
+  head()
 ```
 
 ### **find_row_Z**
@@ -196,9 +196,9 @@ grouping
 
 #### Example
 
-```{r find_row_Z call, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```{r find_row_Z call, eval = T, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
 aDRG_TPM <- TMEM::aDRG_TPM
-TMEM::find_row_Z(Expression_Profile = aDRG_TPM[c(1:5),])
+TMEM::find_row_Z(Expression_Profile = aDRG_TPM[c(1:5),]) |> head()
 ```
 
 
@@ -213,15 +213,15 @@ TMEM::find_row_Z(Expression_Profile = aDRG_TPM[c(1:5),])
 
 + Obviously, this provides larger scope than investigating a specific term
 
-```{r Find_Genes_Related_By_Generic_GO_Term, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
+```{r Find_Genes_Related_By_Generic_GO_Term, eval = T, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
 GO_info_by_term_df |> 
   dplyr::filter(grepl(GO_Term, pattern = 'dense core vesicle')) |> 
   dplyr::select(Gene_IDs_from_List) |> 
-  unlist() |> 
-  as.character() %>%
+  dplyr::pull() %>%
   paste0(., collapse = ';') %>%
   stringr::str_split_1(., pattern = ';') |> 
-  unique()
+  unique() |> 
+  head()
 ```
 
 + Similarly, the results returned by the `get_GO_info` function include all the
@@ -237,24 +237,23 @@ the list of interest that are associated with a `GO Term` (these IDs are called
 GO_info_by_term_df |> 
   dplyr::filter(grepl(GO_Term, pattern = 'dense core vesicle')) |> 
   dplyr::select(Gene_IDs) |> 
-  unlist() |> 
-  as.character() %>%
+  dplyr::pull() %>%
   paste0(., collapse = ';') %>%
   stringr::str_split_1(., pattern = ';') |> 
-  unique()
+  unique() |> 
+  head()
 ```
 
 + Lastly, to find those IDs across generic `GO Terms` **NOT** also in the 
 provided list of IDs:
 
-```{r Find_Genes_Not_in_List_Across_GO_Terms, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
+```{r Find_Genes_Not_in_List_Across_GO_Terms, eval = T, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
 "%notin%" <- Negate("%in%")
 
 c(GO_info_by_term_df |> 
     dplyr::filter(grepl(GO_Term, pattern = 'dense core vesicle')) |> 
     dplyr::select(Gene_IDs) |>
-    unlist() |> 
-    as.character() %>%
+    dplyr::pull() %>%
     paste0(., collapse = ';') %>%
     stringr::str_split_1(., pattern = ';') |> 
     unique() # All the genes in all the GO Terms
@@ -263,8 +262,7 @@ c(GO_info_by_term_df |>
   c(GO_info_by_term_df |> 
       dplyr::filter(grepl(GO_Term, pattern = 'dense core vesicle')) |> 
       dplyr::select(Gene_IDs) |>
-      unlist() |> 
-      as.character() %>%
+      dplyr::pull() %>%
       paste0(., collapse = ';') %>%
       stringr::str_split_1(., pattern = ';') |> 
       unique()
@@ -280,21 +278,19 @@ c(GO_info_by_term_df |>
 + Interested in which genes from your list of interest overlap across multiple
 `GO Term`s?
 
-```{r Find_Genes_Related_By_GO_Terms, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```{r Find_Genes_Related_By_GO_Terms, eval = T, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
 c(GO_info_by_term_df |> 
   dplyr::filter(GO_Term == 'neuronal dense core vesicle' |
                   GO_Term == 'regulation of cell migration') |> 
   dplyr::select(Gene_IDs_from_List) |> 
-  unlist() |> 
-  as.character() %>%
+  dplyr::pull() %>%
   paste0(., collapse = ';')%>%
   stringr::str_split_1(., pattern = ';'))[which(GO_info_by_term_df |> 
   dplyr::filter(GO_Term == 'neuronal dense core vesicle' |
                   GO_Term == 'regulation of cell migration'
                 ) |> 
   dplyr::select(Gene_IDs_from_List) |> 
-  unlist() |>
-  as.character() %>%
+  dplyr::pull() %>%
   paste0(., collapse = ';') %>%
   stringr::str_split_1(., pattern = ';') |> 
   duplicated() == TRUE
@@ -307,41 +303,38 @@ c(GO_info_by_term_df |>
 + When a user is interested in all of the `Go Terms` that are shared by multiple
 gene/protein IDs from the user's list of gene/protein IDs:
 
-```{r Find_GOs_of_Muliple_Genes, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
-head(gene_GO_info_df |> 
+```{r Find_GOs_of_Muliple_Genes, eval = T, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+gene_GO_info_df |> 
   dplyr::filter(GeneID == 'Lpar3' |
                   GeneID == 'Lpar5') |>
   dplyr::select(GO_Terms) |> 
-  unlist() |> 
-  as.character() %>%
+  dplyr::pull() %>%
   paste0(., collapse = ';') %>%
   stringr::str_split_1(., pattern = ';') |>
-  unique()
-  )
+  unique() |> 
+  head()
 ```
 
 + Similarly, repeating the above for just one gene/protein is simpler-- remove the
 `|` in the `dplyr::filter` command and subsequent `GeneID`s:
 
-```{r Find_All_GOs_of_One_Gene, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
-head(gene_GO_info_df |>
+```{r Find_All_GOs_of_One_Gene, eval = T, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+gene_GO_info_df |>
   dplyr::filter(GeneID == 'Il31ra') |> 
   dplyr::select(GO_Terms) |> 
-  unlist() |>
-  as.character() %>%
-  stringr::str_split_1(., pattern = ';')
-  )
+  dplyr::pull() %>%
+  stringr::str_split_1(., pattern = ';') |> 
+  head()
 ```
 
 ### **Finding Genes of a Specific GO Term**
 
-```{r Finding_Genes_of_a_Specific_GO_Term, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
-head(GO_info_by_term_df |> 
+```{r Finding_Genes_of_a_Specific_GO_Term, eval = T, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
+GO_info_by_term_df |> 
   dplyr::filter(GO_Term == 'neuronal dense core vesicle') |> 
   dplyr::select(Gene_IDs) |> 
-  unlist() |> 
-  as.character() %>%
+  dplyr::pull() %>%
   paste0(., collapse = ';') %>%
-  stringr::str_split_1(., pattern = ';')
-)
+  stringr::str_split_1(., pattern = ';') |> 
+  head()
 ```
