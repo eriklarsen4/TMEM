@@ -8,3 +8,5 @@
 ^.app
 ^TMEMapp
 .docker
+^\.positai$
+^\.claude$
