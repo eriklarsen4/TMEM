@@ -4,3 +4,9 @@
 .Ruserdata
 inst/doc
 ^.*\.devpkg.R
+.Rproj.user
+.positai
+.Rproj.user
+.positai
+.Rproj.user
+.positai
