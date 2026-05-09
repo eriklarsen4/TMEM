@@ -4,9 +4,10 @@
 .Ruserdata
 inst/doc
 ^.*\.devpkg.R
-.Rproj.user
-.positai
-.Rproj.user
-.positai
-.Rproj.user
+^.app
+^TMEMapp
+TMEM_*.tar.gz
+TMEM_*.zip
+TMEMapp/.dockerignore
+pipelin goals.txt
 .positai

@@ -1,29 +1,22 @@
----
-title: "TMEM"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{TMEM}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
+# TMEM Package Vignette
 
-## Package Install {.tabset .tabset-pills .tabset-fade}
+## Package Install
 
 ### **Install TMEM Package from GitHub**
 
-Install the package from `github` 
++ Install the package from `github` 
 
-```{r Github install package, include = TRUE, eval = FALSE, warning = FALSE, message = FALSE, echo = TRUE}
+```r
 install.packages("remotes")
 remotes::install_github("eriklarsen4/TMEM")
 ```
 
 ### **Install TMEM Package from CRAN**
 
-Alternatively, if the package is accepted by `Bioconductor`, install from 
++ Alternatively, if the package is accepted by `Bioconductor`, install from 
 `Bioconductor`
 
-```{r Bioconductor install TMEM package, include = TRUE, eval = FALSE, warning = FALSE, message = FALSE, echo = TRUE}
+```r
 # Install from Bioconductor
 install.packages("BiocManager")
 BiocManager::install("TMEM")
@@ -31,13 +24,13 @@ BiocManager::install("TMEM")
 
 ### **Attach TMEM Package**
 
-```{r Attach package, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
+```r
 library(TMEM)
 ```
 
-We'll use the datasets included in the `TMEM` package to demonstrate its functions.
++ We'll use the datasets included in the `TMEM` package to demonstrate its functions.
 
-## Functions {.tabset .tabset-pills .tabset-fade}
+## Functions
 
 ### **get_GO_info**
 
@@ -65,10 +58,6 @@ annotations and `Bioconductor`'s
 nesting structure (see the vignette), which effects statistics (also not 
 provided by `Bioconductor`) a user might try to extract
 
-+ While the `clusterProfiler` package effectively *does* gather this, it is 
-limited to *only significantly enriched terms* which can be abritrary at times, 
-especially for small datasets
-
 + For now, I recommend using the `get_GO_info` function for exploratory work
 and plotting, while relying on `geneontology.org`'s
 [web browser](https://geneontology.org/) directly, or the `clusterProfiler` 
@@ -76,7 +65,7 @@ package for publication statistics
 
 + The statistical discrepancies are noted in the examples section of this markdown
 
-```{r get_GO_info call, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
+```r
 ## First import the data in the package
 data("aDRG_DEG_list")
 
@@ -87,7 +76,7 @@ results <- TMEM::get_GO_info(list_of_interest = aDRG_DEG_list[c(1:30)],
 
 + Inspect results by unpacking everything from the returned list
 
-```{r GO_INFO_results, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```r
   ## GO INFO about each Unique GO returned by the list
 GO_info_by_term_df <- results |> 
   purrr::keep_at("GO_info_by_term_df") |> 
@@ -121,7 +110,7 @@ unique_GO_IDs <- results |>
 
 + Print the `GO_info_by_term_df` to the console
 
-```{r Show GO_info_df, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```r
 head(GO_info_by_term_df)
 ```
 
@@ -133,14 +122,14 @@ head(GO_info_by_term_df)
 
 + Since the data is derived from `mouse`, `mouse` will serve as the `ref_species`
 
-```{r get_orthologs_and_aliases call, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```r
 ortholog_df <- TMEM::get_orthologs_and_aliases(ref_species = 'mouse',
                                                list_of_interest = aDRG_DEG_list[c(1:30)])
 ```
 
-Print the `ortholog_and_alias_fn` output to console
++ Print the `ortholog_and_alias_fn` output to console
 
-```{r Show ortholog results, include = T, message = F, warning = F, echo = T}
+```r
 head(ortholog_df)
 ```
 
@@ -151,16 +140,16 @@ head(ortholog_df)
 
 #### Background
 
-Want to find multiple genes/proteins annotated to certain `GO Terms`?
++ Want to find multiple genes/proteins annotated to certain `GO Terms`?
 
-This can be useful for:
-+ investigating molecular pathways
-+ investigating complexes (for cross-checking or discovery)
-+ finding multiple `GO Terms` that contain a regular expression string
++ This can be useful for:
+  + investigating molecular pathways
+  + investigating complexes (for cross-checking or discovery)
+  + finding multiple `GO Terms` that contain a regular expression string
 
 #### Example
 
-```{r query_GO fn call, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```r
 query_GO_results <- TMEM::query_GO(model_org = 'human',
                                    string_terms = 'dense core vesicle|lysosome')
 ```
@@ -172,7 +161,7 @@ given regular expression(s) is non-trivial, depending on the function call.
 using `dplyr` without storing all the function's results to an object in the
 global environment: 
   
-```{r query_GO fn dplyr extraction, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```r
 query_GO_results |> 
   purrr::keep_at("GO_df") |> 
   as.data.frame() %>%
@@ -196,13 +185,13 @@ grouping
 
 #### Example
 
-```{r find_row_Z call, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```r
 aDRG_TPM <- TMEM::aDRG_TPM
 TMEM::find_row_Z(Expression_Profile = aDRG_TPM[c(1:5),])
 ```
 
 
-## Example Uses {.tabset .tabset-pills .tabset-fade}
+## Example Uses
 
 ### **Finding Genes Related by a Generic GO Term relevant to a list of interest**
 
@@ -213,7 +202,7 @@ TMEM::find_row_Z(Expression_Profile = aDRG_TPM[c(1:5),])
 
 + Obviously, this provides larger scope than investigating a specific term
 
-```{r Find_Genes_Related_By_Generic_GO_Term, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
+```r
 GO_info_by_term_df |> 
   dplyr::filter(grepl(GO_Term, pattern = 'dense core vesicle')) |> 
   dplyr::select(Gene_IDs_from_List) |> 
@@ -233,7 +222,7 @@ the list of interest that are associated with a `GO Term` (these IDs are called
 
 + `clusterProfiler` does not-- *it only includes statistically enriched terms*
 
-```{r Find_All_Genes_Related_By_Generic_GO_Term, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
+```r
 GO_info_by_term_df |> 
   dplyr::filter(grepl(GO_Term, pattern = 'dense core vesicle')) |> 
   dplyr::select(Gene_IDs) |> 
@@ -247,7 +236,7 @@ GO_info_by_term_df |>
 + Lastly, to find those IDs across generic `GO Terms` **NOT** also in the 
 provided list of IDs:
 
-```{r Find_Genes_Not_in_List_Across_GO_Terms, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
+```r
 "%notin%" <- Negate("%in%")
 
 c(GO_info_by_term_df |> 
@@ -280,7 +269,7 @@ c(GO_info_by_term_df |>
 + Interested in which genes from your list of interest overlap across multiple
 `GO Term`s?
 
-```{r Find_Genes_Related_By_GO_Terms, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```r
 c(GO_info_by_term_df |> 
   dplyr::filter(GO_Term == 'neuronal dense core vesicle' |
                   GO_Term == 'regulation of cell migration') |> 
@@ -307,7 +296,7 @@ c(GO_info_by_term_df |>
 + When a user is interested in all of the `Go Terms` that are shared by multiple
 gene/protein IDs from the user's list of gene/protein IDs:
 
-```{r Find_GOs_of_Muliple_Genes, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```r
 head(gene_GO_info_df |> 
   dplyr::filter(GeneID == 'Lpar3' |
                   GeneID == 'Lpar5') |>
@@ -323,7 +312,7 @@ head(gene_GO_info_df |>
 + Similarly, repeating the above for just one gene/protein is simpler-- remove the
 `|` in the `dplyr::filter` command and subsequent `GeneID`s:
 
-```{r Find_All_GOs_of_One_Gene, include = TRUE, message = FALSE, warning = FALSE, echo = TRUE}
+```r
 head(gene_GO_info_df |>
   dplyr::filter(GeneID == 'Il31ra') |> 
   dplyr::select(GO_Terms) |> 
@@ -335,7 +324,7 @@ head(gene_GO_info_df |>
 
 ### **Finding Genes of a Specific GO Term**
 
-```{r Finding_Genes_of_a_Specific_GO_Term, include = TRUE, warning = FALSE, message = FALSE, echo = TRUE}
+```r
 head(GO_info_by_term_df |> 
   dplyr::filter(GO_Term == 'neuronal dense core vesicle') |> 
   dplyr::select(Gene_IDs) |> 
@@ -344,4 +333,135 @@ head(GO_info_by_term_df |>
   paste0(., collapse = ';') %>%
   stringr::str_split_1(., pattern = ';')
 )
+```
+
+
+### **Finding Enriched GOs from the get_GO_info function**
+
++ Determining which `GO`s (themes) are worth looking into further is the entire
+point of `GSEA`
+
++ The `get_GO_info` function returns all the `GO Terms` relevant to a user's
+provided list
+
++ As described in the [get_GO_info Background](#get_GO_info-Background) section 
+above, there are discrepancies between `Bioconductor`'s R packages and the `geneontology.org`
+website in terms of their annotations, which effect statistical inference
+
++ Below, I derive enrichment according to `PANTHER`'s
+[documentation](https://pantherdb.org/tips/tips_overrep.jsp) and perform
+its subsequent statistical test with FDR correction and compare these results to
+the image from the `geneontology.org` website:
+
++ In brief, `PANTHER` (`geneontology.org`) permits the computation of a
+binomial test statistic or, via Fisher's exact test, the probability of 
+in this case) observing at least the number of gene/protein IDs (or more) from
+the submitted list in a given `GO Term`
+
++ `PANTHER` provides corresponding adjusted p-values via the
+`Benjamini-Hochberg Method` for each statistic (Fisher's p-value, binomial test
+statistic's p-value)
+
+```r
+
+Genes_in_Human_Genome <- 23481
+Genes_in_Mouse_Genome <- 54879
+
+# note that there are 21836 uniquely mapped genes
+
+GO_info_by_term_df2 <- GO_info_by_term_df |> 
+  dplyr::arrange(desc(Overlap)) |> 
+  dplyr::mutate(Term_Freq = GO_Term_Size/Genes_in_Mouse_Genome,
+                Expected = length(aDRG_DEG_list) * Term_Freq,
+                FE = Overlap/Expected) |> 
+  dplyr::filter(!is.na(GO_Term))
+
+```
+
++ Compute the p-values according to `PANTHER`'s documentation
+
+```r
+for (i in seq_along(nrow(GO_info_by_term_df2)) ) {
+  
+  # compute p-value for binomial test statistic according to PANTHER's documentation
+  
+    if (GO_info_by_term_df2$Overlap[i] > GO_info_by_term_df2$Expected[i]) { # for over-representation
+    GO_info_by_term_df2$pval[i] <- sum(
+      (GO_info_by_term_df2$Term_Freq[i]^(seq(GO_info_by_term_df2$Overlap[i],
+                                             length(aDRG_DEG_list))
+                                         ))*(1 - GO_info_by_term_df2$Term_Freq[i])^(seq(length(aDRG_DEG_list)-GO_info_by_term_df2$Overlap[i],
+                                                                                      0
+                                                                                     )
+                                                                                 )
+    )
+    } else { # for under-representation
+    GO_info_by_term_df2$pval[i] <- sum(
+      ((GO_info_by_term_df2$Term_Freq[i])^(seq(0,GO_info_by_term_df2$Overlap[i])
+                                         ))*(1 - GO_info_by_term_df2$Term_Freq[i])^(seq(length(aDRG_DEG_list),
+                                                                                      GO_info_by_term_df2$Overlap[i]
+                                                                                     
+                                                                                     )
+                                                                                 )
+    )
+    }
+}
+
+```
+
++ Compute p-values using `rstatix`'s binomial test for both `df`s
+
+```r
+
+GO_info_by_term_df2$binom_pval = NA_real_
+
+for (i in seq_along(nrow(GO_info_by_term_df2)) ) {
+  GO_info_by_term_df2$binom_pval[i] = rstatix::binom_test(
+    
+    x = c(GO_info_by_term_df2$Overlap[i],
+          GO_info_by_term_df2$GO_Term_Size[i]-GO_info_by_term_df2$Overlap[i]),
+    
+    p = (GO_info_by_term_df2$GO_Term_Size[i]/Genes_in_Mouse_Genome),
+    
+    alternative = 'two.sided',
+    conf.level = 0.95,
+    detailed = TRUE) |> 
+    dplyr::select(p) |> unlist() |> as.character() |> as.numeric()
+}
+
+```
+
++ Add **Adjusted P-values** using `BHM`
+
++ Note these, and all p-values, do not match those from all the same results from
+the `geneontology.org` website (the image in the `get_GO_info` function 
+**Background** section)
+
+```r
+
+GO_info_by_term_df2$binom_adjp = NA_real_
+
+for (i in seq_along(nrow(GO_info_by_term_df2)) ) {
+  GO_info_by_term_df2$binom_adjp[i] = rstatix::binom_test(
+    
+    x = c(GO_info_by_term_df2$Overlap[i],
+          GO_info_by_term_df2$GO_Term_Size[i]-GO_info_by_term_df2$Overlap[i]),
+    
+    p = (GO_info_by_term_df2$GO_Term_Size[i]/Genes_in_Mouse_Genome),
+    
+    alternative = 'two.sided',
+    conf.level = 0.95,
+    detailed = TRUE) |> 
+    dplyr::select(p) |> unlist() |> as.character() |> as.numeric()
+}
+
+GO_info_by_term_df2 <- GO_info_by_term_df2 |> 
+  dplyr::mutate(adjp = p.adjust(p = GO_info_by_term_df2$pval,
+                                method = 'BH'), .after= pval)
+
+GO_info_by_term_df2$binom_adjp = p.adjust(p = GO_info_by_term_df2$binom_pval,
+                                          method = 'BH')
+```
+
+```r
+head(GO_info_by_term_df2 |> dplyr::select(-contains("Gene_IDs")))
 ```

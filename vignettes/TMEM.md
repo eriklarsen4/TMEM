@@ -81,7 +81,7 @@ data("aDRG_DEG_list")
 Next, pass the variable into the function (data was derived from mouse)
 
 ``` r
-results <- TMEM::get_GO_info(list_of_interest = aDRG_DEG_list[c(1:30)],
+results <- TMEM::get_GO_info(list_of_interest = aDRG_DEG_list[c(1:6)],
                              species = 'mouse')
 ```
 
@@ -135,7 +135,7 @@ Since the data is derived from `mouse`, `mouse` will serve as the `ref_species`
 
 ```r
 ortholog_df <- TMEM::get_orthologs_and_aliases(ref_species = 'mouse', 
-                                               list_of_interest = aDRG_DEG_list[c(1:30)])
+                                               list_of_interest = aDRG_DEG_list[c(1:5)])
 ```
 
 Print the `get_orthologs_and_aliases` function output to console
@@ -214,7 +214,7 @@ This is highly useful for generating transcriptional heatmaps
 
 ```r
 data("aDRG_TPM")
-head(TMEM::find_row_Z(Expression_Profile = aDRG_TPM[c(1:10),]))
+head(TMEM::find_row_Z(Expression_Profile = aDRG_TPM[c(1:6),]))
 ```
 ```r
           GeneID          WT1         WT2        WT3        WT4       Mut1
@@ -318,7 +318,7 @@ c(GO_info_by_term_df |>
       as.character() %>%
       paste0(., collapse = ';') %>% 
       stringr::str_split_1(., pattern = ';') |> 
-      unique() ) == T
+      unique() ) == TRUE
 )
 ] # All the genes in all the GO Terms indexed by those that are NOT in the list 
     # of interest
@@ -355,7 +355,7 @@ c(GO_info_by_term_df |>
   as.character() %>%
   paste0(., collapse = ';') %>%
   stringr::str_split_1(., pattern = ';') |> 
-  duplicated() == T
+  duplicated() == TRUE
 )]
 ```
 ```r

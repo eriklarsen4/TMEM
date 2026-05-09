@@ -1,0 +1,33 @@
+# Ignore everything by default
+**
+
+# Un-ignore the TMEM package (repo root)
+!DESCRIPTION
+!NAMESPACE
+!R/
+!man/
+!inst/
+!data/
+
+# Ignore Windows binary packages
+TMEM_*.zip
+
+# Allow Docker build files
+!Dockerfile
+!.dockerignore
+
+# Allow documentation and metadata
+!README.md
+!LICENSE
+!CITATION
+
+# Preserve your existing ignore rules
+.github/
+.gitignore
+.Rproj.user/
+TMEM.Rproj
+*.Rhistory
+TMEMapp/
+vignettes/
+*.md
+^CRAN*

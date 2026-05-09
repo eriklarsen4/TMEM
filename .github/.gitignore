@@ -1,1 +1,3 @@
 *.html
+check-bioc.yml
+pkg_build.yaml

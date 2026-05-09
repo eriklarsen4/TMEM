@@ -67,9 +67,7 @@ Queries the Bioconductor db to extract the GO info for each gene/protein in a
 }
 }
 \examples{
-data(aDRG_DEG_list)
-\donttest{
-get_GO_info(list_of_interest = aDRG_DEG_list, species = 'mouse')
-}
+aDRG_DEG_list <- TMEM::aDRG_DEG_list
+get_GO_info(list_of_interest = aDRG_DEG_list[c(1:5)], species = 'mouse')
 
 }

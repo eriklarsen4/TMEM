@@ -23,9 +23,7 @@ Z-scores are \strong{row-wise} across all columns containing samples
 (column 2 through the end of the dataframe)
 }
 \examples{
-\donttest{
-data(aDRG_TPM)
-find_row_Z(Expression_Profile = aDRG_TPM)
-}
+aDRG_TPM <- TMEM::aDRG_TPM
+find_row_Z(Expression_Profile = aDRG_TPM[c(1:5),])
 
 }

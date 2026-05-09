@@ -5,5 +5,8 @@
 ^CRAN-SUBMISSION$
 ^.*devpkg\.R$
 ^Dockerfile$
+^.app
+^TMEMapp
+.docker
 ^\.positai$
 ^\.claude$

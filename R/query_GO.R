@@ -37,12 +37,10 @@
 #'  (complexes, etc.)
 #'
 #' @examples
-#' \donttest{
 #' query_GO(
 #'          model_org = 'human',
 #'          string_terms = 'dense core vesicle'
 #'          )
-#' }
 #'
 #' @importFrom AnnotationDbi keys
 #' @importFrom AnnotationDbi mapIds
@@ -69,11 +67,11 @@ query_GO <- function(model_org, string_terms) {
   # GO_db<- eval(parse(text = GO.db::GO.db))
   abbrev_species_name <- vector()
 
-  if (grepl(model_org, pattern = 'human|HS|homo sapiens', ignore.case = T)) {
+  if (grepl(model_org, pattern = 'human|HS|homo sapiens', ignore.case = TRUE)) {
     abbrev_species_name <- org.Hs.eg.db
-  } else if (grepl(model_org, pattern = 'mouse|MM|mus musculus', ignore.case = T)) {
+  } else if (grepl(model_org, pattern = 'mouse|MM|mus musculus', ignore.case = TRUE)) {
     abbrev_species_name <- org.Mm.eg.db
-  } else if (grepl(model_org, pattern = 'drosophila|DM|fly|fruit fly', ignore.case = T)) {
+  } else if (grepl(model_org, pattern = 'drosophila|DM|fly|fruit fly', ignore.case = TRUE)) {
     abbrev_species_name <- org.Dm.eg.db
   } else {
     message("invalid 'model_org' input!")
@@ -88,19 +86,19 @@ query_GO <- function(model_org, string_terms) {
 
   if (length(keys_var) > 0 ) {
 
-    GO.Terms = c(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM')[
+    GO.Terms <- c(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM')[
       which(
         grepl(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM'), pattern = string_terms) == TRUE
       )
     ])
 
-    GO.IDs = c(AnnotationDbi::keys(GO.db::GO.db, keytype = 'GOID')[
+    GO.IDs <- c(AnnotationDbi::keys(GO.db::GO.db, keytype = 'GOID')[
       which(
         grepl(AnnotationDbi::keys(GO.db::GO.db, keytype = 'TERM'), pattern = string_terms) == TRUE
       )
     ])
 
-    GO.list = c(suppressMessages(AnnotationDbi::mapIds(abbrev_species_name,
+    GO.list <- c(suppressMessages(AnnotationDbi::mapIds(abbrev_species_name,
                                                        keys = c(as.character(
                                                          suppressMessages(AnnotationDbi::mapIds(GO.db::GO.db,
                                                                                                 keys = c(
@@ -121,34 +119,34 @@ query_GO <- function(model_org, string_terms) {
     )
     )
 
-    rm_idx = c(which(as.character(is.na(GO.list[][])) == "TRUE"))
+    rm_idx <- c(which(as.character(is.na(GO.list[][])) == "TRUE"))
 
     if (length(rm_idx) > 0) {
 
-      GO.list = GO.list[-rm_idx]
-      GO.terms = GO.Terms[-rm_idx]
-      GO.IDs = GO.IDs[-rm_idx]
+      GO.list <- GO.list[-rm_idx]
+      GO.terms <- GO.Terms[-rm_idx]
+      GO.IDs <- GO.IDs[-rm_idx]
 
     }
 
-    df = matrix(nrow = length(c(GO.Terms)), ncol = 4)
+    df <- matrix(nrow = length(c(GO.Terms)), ncol = 4)
     colnames(df) = c("GO Term ID", "GO Term", "# of Genes", "Genes")
 
-    df[ , c(1,2,4)] = ''
-    df[ , 3] = 0
+    df[ , c(1,2,4)] <- ''
+    df[ , 3] <- 0
 
-    for (i in 1:length(GO.Terms)) {
+    for (i in seq_len(length(GO.Terms)) ) {
 
-      df[i,1] = GO.IDs[i]
-      df[i,2] = GO.Terms[i]
-      x = c(as.character(unlist(as.vector(GO.list[i][]))))
-      df[i,3] = paste(as.numeric(length(unique(x))))
-      df[i,4] = paste(unique(x), collapse = ';')
+      df[i,1] <- GO.IDs[i]
+      df[i,2] <- GO.Terms[i]
+      x <- c(as.character(unlist(as.vector(GO.list[i][]))))
+      df[i,3] <- paste(as.numeric(length(unique(x))))
+      df[i,4] <- paste(unique(x), collapse = ';')
 
     }
     df <- df |> as.data.frame()
 
-    all_unique_genes =
+    all_unique_genes <-
       unique(
         as.character(
           unlist(
@@ -168,7 +166,7 @@ query_GO <- function(model_org, string_terms) {
           )
         )
       )
-    aliases = unique(
+    aliases <- unique(
       as.character(
         unlist(
           suppressMessages(AnnotationDbi::mapIds(abbrev_species_name,
@@ -192,48 +190,41 @@ query_GO <- function(model_org, string_terms) {
                           "GO.list" = GO.list,
                           "GO_df" = df,
                           "aliases" = aliases)
-    # GO.Terms <<- GO.Terms
-    # GO.IDs <<- GO.IDs
-    # all_unique_genes = all_unique_genes[!is.na(all_unique_genes)]
-    # all_unique_genes <<- all_unique_genes
-    # GO.list <<- GO.list
-    # GO_df <<- df
-    # aliases <<- aliases
     return(Query_GO_list)
 
   } else {
 
-    GO.Terms = 'none'
-    GO.IDs = 'none'
-    all_unique_genes = 'none'
-    GO.list = 'none'
-    aliases = 'none'
+    GO.Terms <- 'none'
+    GO.IDs <- 'none'
+    all_unique_genes <- 'none'
+    GO.list <- 'none'
+    aliases <- 'none'
 
     if (grepl(string_terms, pattern = '\\|') == TRUE ) {
 
-      string_terms = c(stringr::str_split(as.vector(string_terms), pattern = '\\|', simplify = T))
+      string_terms <- c(stringr::str_split(as.vector(string_terms), pattern = '\\|', simplify = T))
 
-      df = matrix(nrow = length(string_terms), ncol = 4)
-      colnames(df) = c("GO Term ID", "GO Term", "# of Genes", "Genes")
+      df <- matrix(nrow = length(string_terms), ncol = 4)
+      colnames(df) <- c("GO Term ID", "GO Term", "# of Genes", "Genes")
 
-      for (i in 1:length(string_terms)) {
+      for (i in seq_len(length(string_terms))) {
 
-        df[i,2] = string_terms[i]
+        df[i,2] <- string_terms[i]
 
       }
-      df[,3] = 0
-      df[,c(1,4)] = ""
+      df[,3] <- 0
+      df[,c(1,4)] <- ""
       df <- df %>% as.data.frame()
 
     } else {
 
-      df = matrix(nrow = 1, ncol = 4)
-      colnames(df) = c("GO Term ID", "GO Term", "# of Genes", "Genes")
+      df <- matrix(nrow = 1, ncol = 4)
+      colnames(df) <- c("GO Term ID", "GO Term", "# of Genes", "Genes")
       df <- df |> as.data.frame()
-      df$`GO Term` = string_terms
-      df$`GO Term ID` = ''
-      df$`# of Genes` = 0
-      df$Genes = ''
+      df$`GO Term` <- string_terms
+      df$`GO Term ID` <- ''
+      df$`# of Genes` <- 0
+      df$Genes <- ''
 
     }
 
@@ -248,12 +239,6 @@ query_GO <- function(model_org, string_terms) {
                           "GO.list" = GO.list,
                           "GO_df" = df,
                           "aliases" = aliases)
-    # GO.Terms <<- GO.Terms
-    # GO.IDs <<- GO.IDs
-    # all_unique_genes <<- all_unique_genes
-    # GO.list <<- GO.list
-    # GO_df <<- GO_df
-    # aliases <<- aliases
     return(Query_GO_list)
   }
 

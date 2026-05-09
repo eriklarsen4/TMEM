@@ -1,0 +1,89 @@
+name: docker-build-and-push
+
+# TMEM Docker workflow
+# Builds and publishes the TMEM Docker image.
+# Triggered by:
+# - Push to main → publish "latest"
+# - Push to develop → publish "dev"
+# - Push a tag v* → publish versioned tags
+# - Pull requests → build only (no push)
+
+on:
+  push:
+    branches: [main, develop]
+    tags:
+      - "v*"
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Required for provenance, SBOM, and registry access
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      # Pull the TMEM repository contents
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Generate Docker tags and labels for TMEM.
+      # tagging rules:
+      # - main → latest
+      # - develop → dev
+      # - tags v1.2.3 → v1.2.3, 1.2.3
+      # - SHA tag always included
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ vars.DOCKER_USERNAME }}/tmem
+          tags: |
+            # Branch tags
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=ref,event=branch,pattern=develop,value=dev
+            # Version tags
+            type=ref,event=tag
+            type=semver,pattern={{version}}
+            # SHA tag
+            type=sha
+
+      # Enable multi-architecture builds for TMEM (amd64 + arm64)
+      # NOTE: Bioconductor images are x86_64-only, so we restrict to amd64.
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Log in to Docker Hub only for non-PR events
+      # PRs build TMEM images but never push them
+      - name: Log in to Docker Hub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Build and push the TMEM Docker image.
+      # - Multi-arch: linux/amd64 + linux/arm64
+      #   (ARM64 removed because Bioconductor base images are amd64-only)
+      # - GitHub Actions cache for faster rebuilds
+      # - Push disabled for PRs
+      # - SBOM + provenance included for supply-chain security
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          platforms: linux/amd64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: true
+          sbom: true
+
+      # TMEM Docker workflow completed
+      - name: Done
+        run: echo "TMEM Docker build workflow completed."
